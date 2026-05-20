@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nimbus — Progress toward alpha</title>
+<meta property="og:title" content="Nimbus — Progress toward alpha">
+<meta property="og:description" content="A continuous personal AI companion — knows you, remembers you, grows with you. Progress tracker toward Phase 1 closed alpha.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Base palette — light, slick, futuristic */
+    --bg: #f8fafc;
+    --bg-gradient-a: rgba(139, 92, 246, 0.05);   /* pale violet */
+    --bg-gradient-b: rgba(6, 182, 212, 0.04);    /* pale cyan */
+    --bg-gradient-c: rgba(99, 102, 241, 0.03);   /* pale indigo */
+
+    --card: #ffffff;
+    --card-elevated: #ffffff;
+    --card-hover: #fafbff;
+    --card-glass: rgba(255, 255, 255, 0.78);
+
+    --border: #e6e9ef;
+    --border-soft: #eef0f4;
+    --border-bright: #c8cfdb;
+    --border-accent: rgba(99, 102, 241, 0.22);
+
+    --text: #0b1220;
+    --text-strong: #0f172a;
+    --text-mid: #475569;
+    --text-dim: #94a3b8;
+    --text-faint: #cbd5e1;
+
+    /* Futuristic accents */
+    --accent: #6366f1;            /* indigo */
+    --accent-bright: #818cf8;
+    --accent-violet: #8b5cf6;
+    --accent-cyan: #06b6d4;
+    --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+
+    --done: #10b981;
+    --done-soft: rgba(16, 185, 129, 0.12);
+    --warn: #f59e0b;
+    --warn-soft: rgba(245, 158, 11, 0.10);
+    --danger: #ef4444;
+
+    --bar-bg: #f1f5f9;
+    --shadow-xs: 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06), 0 1px 2px rgba(15, 23, 42, 0.04);
+    --shadow-md: 0 8px 24px -8px rgba(15, 23, 42, 0.10), 0 2px 6px rgba(15, 23, 42, 0.04);
+    --shadow-lg: 0 24px 48px -16px rgba(99, 102, 241, 0.18), 0 8px 16px -8px rgba(15, 23, 42, 0.08);
+    --shadow-glow: 0 0 0 1px rgba(99, 102, 241, 0.08), 0 12px 32px -8px rgba(139, 92, 246, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background:
+      radial-gradient(1400px 800px at 8% -8%, var(--bg-gradient-a), transparent 55%),
+      radial-gradient(1100px 700px at 100% 0%, var(--bg-gradient-b), transparent 55%),
+      radial-gradient(900px 600px at 50% 110%, var(--bg-gradient-c), transparent 60%),
+      linear-gradient(180deg, var(--bg) 0%, #ffffff 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
+    font-feature-settings: "ss01", "cv11";
+  }
+  .container { max-width: 920px; margin: 0 auto; padding: 56px 24px 96px; }
+
+  /* === Header ============================================================ */
+  header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 4px;
+  }
+  .brand-mark {
+    width: 40px; height: 40px; border-radius: 14px;
+    background: var(--accent-gradient);
+    position: relative;
+    box-shadow:
+      0 8px 20px -4px rgba(99, 102, 241, 0.35),
+      inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  }
+  .brand-mark::after {
+    content: "";
+    position: absolute; inset: 6px;
+    border-radius: 8px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0) 60%);
+    opacity: 0.7;
+  }
+  .brand-text {
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  h1 {
+    font-size: 30px; font-weight: 650; margin: 0;
+    letter-spacing: -0.025em;
+    color: var(--text-strong);
+    line-height: 1.1;
+  }
+  .working-title-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid var(--border-accent);
+    width: fit-content;
+  }
+  .working-title-badge::before {
+    content: "";
+    width: 5px; height: 5px;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 6px var(--accent);
+  }
+
+  .subtitle {
+    color: var(--text-dim); font-size: 13px;
+    margin: 22px 0 26px;
+    font-weight: 450;
+  }
+
+  /* === About / pitch card ================================================ */
+  .pitch-card {
+    background: var(--card-glass);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 26px 30px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
+  }
+  .pitch-card::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent-gradient);
+    opacity: 0.85;
+  }
+  .pitch-card p {
+    margin: 0;
+    color: var(--text-mid);
+    font-size: 14.5px;
+    line-height: 1.65;
+  }
+  .pitch-card p + p { margin-top: 12px; }
+  .pitch-card strong { color: var(--text-strong); font-weight: 600; }
+  .pitch-card em {
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 550;
+    background: linear-gradient(135deg, var(--accent) 0%, var(--accent-violet) 60%, var(--accent-cyan) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* === Overall card ====================================================== */
+  .overall-card {
+    background: var(--card-elevated);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px 32px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+  .overall-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 22px;
+  }
+  .overall-stat-label {
+    font-size: 10.5px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin-bottom: 10px; font-weight: 600;
+  }
+  .overall-percent {
+    font-size: 48px; font-weight: 650;
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .overall-detail {
+    font-size: 12.5px; color: var(--text-mid);
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .ship-bar-block {
+    border-left: 2px solid var(--border-accent);
+    padding-left: 20px;
+  }
+  .ship-bar-target {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-strong);
+    line-height: 1.4;
+  }
+  .ship-bar-window {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+
+  /* === Progress bars ===================================================== */
+  .bar-track {
+    background: var(--bar-bg);
+    border-radius: 999px;
+    overflow: hidden;
+    position: relative;
+    height: 8px;
+    box-shadow: inset 0 1px 1px rgba(15, 23, 42, 0.05);
+  }
+  .bar-fill {
+    background: var(--accent-gradient);
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.6s cubic-bezier(.16,.84,.30,1);
+    position: relative;
+  }
+  .bar-fill::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.32) 50%, rgba(255,255,255,0) 100%);
+    border-radius: 999px;
+  }
+  .bar-fill.done {
+    background: linear-gradient(135deg, var(--done) 0%, #34d399 100%);
+  }
+  .bar-fill.empty {
+    background: var(--border-soft);
+  }
+  .bar-fill.empty::after { display: none; }
+  .overall-card .bar-track { height: 12px; border-radius: 999px; }
+
+  /* === Methodology note ================================================== */
+  .methodology {
+    background: rgba(99, 102, 241, 0.04);
+    border: 1px solid var(--border-accent);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 22px;
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 12.5px;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+  .methodology-icon {
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.4;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .methodology strong { color: var(--text-strong); font-weight: 600; }
+
+  /* === Expand hint ======================================================= */
+  .expand-hint {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin: 22px 4px 14px;
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 500;
+  }
+  .expand-hint .key {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 2px 9px;
+    font-size: 11px;
+    color: var(--text-mid);
+    font-family: "JetBrains Mono", ui-monospace, "SF Mono", Consolas, monospace;
+    box-shadow: var(--shadow-xs);
+  }
+
+  /* === Modules =========================================================== */
+  .module {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    margin-bottom: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s, background 0.2s;
+    box-shadow: var(--shadow-xs);
+  }
+  .module:hover {
+    border-color: var(--border-bright);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+    background: var(--card-hover);
+  }
+  .module.open {
+    border-color: var(--border-accent);
+    box-shadow: var(--shadow-glow);
+  }
+  .module.timeline {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.025) 0%, rgba(6, 182, 212, 0.02) 100%);
+  }
+  .module-header {
+    padding: 18px 22px;
+    cursor: pointer;
+    user-select: none;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: center;
+  }
+  .module-name-row {
+    display: flex; align-items: center; gap: 12px; min-width: 0;
+  }
+  .module-name {
+    font-weight: 600; font-size: 15.5px; color: var(--text-strong);
+    letter-spacing: -0.008em;
+  }
+  .module-meta { display: flex; align-items: center; gap: 16px; }
+  .module-percent {
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    font-size: 15px; font-weight: 650;
+    letter-spacing: -0.015em;
+  }
+  .module-percent.empty {
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .module-bar { grid-column: 1 / -1; margin-top: 8px; }
+  .module-bar .bar-track { height: 5px; }
+
+  /* Chevron */
+  .chevron {
+    color: var(--accent);
+    font-size: 14px;
+    line-height: 1;
+    width: 28px; height: 28px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 9px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid var(--border-accent);
+    transition: transform 0.25s cubic-bezier(.16,.84,.30,1), background 0.18s;
+    flex-shrink: 0;
+  }
+  .module:hover .chevron { background: rgba(99, 102, 241, 0.14); }
+  .module.open .chevron {
+    transform: rotate(180deg);
+    background: rgba(99, 102, 241, 0.20);
+  }
+
+  .status-dot {
+    width: 8px; height: 8px;
+    border-radius: 999px;
+    flex-shrink: 0;
+  }
+  .dot-warn { background: var(--warn); box-shadow: 0 0 8px rgba(245, 158, 11, 0.4); }
+  .dot-done { background: var(--done); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
+  .dot-info { background: var(--text-dim); box-shadow: 0 0 6px rgba(148, 163, 184, 0.4); }
+  .dot-progress { background: var(--accent); box-shadow: 0 0 8px rgba(99, 102, 241, 0.4); }
+
+  /* === Module body ======================================================= */
+  .module-body {
+    display: none;
+    padding: 4px 24px 24px;
+    border-top: 1px solid var(--border-soft);
+    background: linear-gradient(180deg, rgba(248, 250, 252, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+  }
+  .module.open .module-body { display: block; }
+
+  .section-label {
+    font-size: 10.5px; color: var(--text-dim);
+    text-transform: uppercase; letter-spacing: 0.12em;
+    margin: 18px 0 12px;
+    font-weight: 600;
+  }
+  .section-label:first-child { margin-top: 16px; }
+
+  /* === Submodule rows ==================================================== */
+  .sub {
+    padding: 11px 0 14px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .sub:last-of-type { border-bottom: none; }
+  .sub-top {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    gap: 14px;
+    align-items: baseline;
+    margin-bottom: 7px;
+  }
+  .sub-name {
+    color: var(--text-mid);
+    font-size: 13.5px;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .sub-percent {
+    color: var(--text-strong);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    font-size: 12.5px; font-weight: 600;
+    letter-spacing: -0.01em;
+    min-width: 42px;
+  }
+  .sub-percent.empty { color: var(--text-dim); font-weight: 500; }
+  .sub-status {
+    text-align: right;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+    min-width: 64px;
+  }
+  .status-done { color: var(--done); }
+  .status-partial { color: var(--accent); }
+  .status-todo { color: var(--text-dim); }
+  .status-planned { color: var(--text-dim); font-style: italic; opacity: 0.85; }
+  .status-progress { color: var(--accent-violet); }
+  .status-untested { color: var(--text-dim); opacity: 0.75; font-style: italic; }
+
+  /* === Confidence row ==================================================== */
+  .confidence-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin: 4px 0 12px;
+    font-size: 13px;
+    border: 1px solid var(--border);
+  }
+  .confidence-label {
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .confidence-hint {
+    font-size: 10.5px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+  .confidence-untested {
+    background: rgba(148, 163, 184, 0.05);
+    color: var(--text-dim);
+    border-color: var(--border);
+  }
+  .confidence-untested .confidence-label { font-style: italic; }
+  .confidence-low {
+    background: rgba(239, 68, 68, 0.05);
+    color: var(--danger);
+    border-color: rgba(239, 68, 68, 0.18);
+  }
+  .confidence-medium {
+    background: var(--warn-soft);
+    color: var(--warn);
+    border-color: rgba(245, 158, 11, 0.22);
+  }
+  .confidence-high {
+    background: var(--done-soft);
+    color: var(--done);
+    border-color: rgba(16, 185, 129, 0.22);
+  }
+
+  .sub-bar .bar-track { height: 4px; }
+
+  /* === Timeline ========================================================== */
+  .timeline-list { margin: 0; padding: 0; list-style: none; }
+  .timeline-item {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .timeline-item:last-of-type { border-bottom: none; }
+  .timeline-marker {
+    width: 28px; height: 28px;
+    border-radius: 999px;
+    border: 2px solid var(--border-bright);
+    background: var(--card);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text-dim);
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+  }
+  .timeline-marker.active {
+    border-color: var(--accent);
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: 0 4px 12px -2px rgba(99, 102, 241, 0.4);
+  }
+  .timeline-marker.done {
+    border-color: var(--done);
+    background: var(--done);
+    color: white;
+  }
+  .timeline-content { font-size: 13.5px; color: var(--text-mid); line-height: 1.5; }
+  .timeline-content strong { color: var(--text-strong); font-weight: 600; display: block; margin-bottom: 2px; }
+  .timeline-status {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .timeline-status.active {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.10);
+    border: 1px solid var(--border-accent);
+  }
+  .timeline-status.planned {
+    color: var(--text-dim);
+    background: var(--bar-bg);
+    border: 1px solid var(--border);
+  }
+
+  /* === Issues ============================================================ */
+  .issues-list { margin: 0; padding: 0; list-style: none; }
+  .issue {
+    display: flex; align-items: flex-start; gap: 11px;
+    padding: 10px 0;
+    font-size: 13px; color: var(--text-mid);
+    line-height: 1.55;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .issue:last-of-type { border-bottom: none; }
+  .issue-icon {
+    color: var(--warn);
+    flex-shrink: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    margin-top: 1px;
+    font-weight: 700;
+  }
+
+  /* === Footer ============================================================ */
+  footer {
+    margin-top: 42px;
+    color: var(--text-dim);
+    font-size: 12px;
+    text-align: center;
+    line-height: 1.7;
+    font-weight: 450;
+  }
+  footer a {
+    color: var(--text-mid);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--border-bright);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  footer a:hover { color: var(--accent); border-color: var(--accent); }
+  .footer-divider {
+    margin: 0 10px;
+    color: var(--text-faint);
+  }
+
+  /* Small screens */
+  @media (max-width: 600px) {
+    .container { padding: 32px 18px 80px; }
+    h1 { font-size: 24px; }
+    .overall-percent { font-size: 38px; }
+    .overall-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .ship-bar-block {
+      border-left: none;
+      border-top: 1px solid var(--border-soft);
+      padding-left: 0;
+      padding-top: 20px;
+    }
+    .module-name { font-size: 14px; }
+    .sub-status { display: none; }
+    .sub-top { grid-template-columns: 1fr auto; }
+    .pitch-card { padding: 22px 22px; }
+    .overall-card { padding: 24px 22px; }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand-mark" aria-hidden="true"></div>
+      <div class="brand-text">
+        <h1>Nimbus — Progress</h1>
+        <span class="working-title-badge">Working title — product name TBD</span>
+      </div>
+    </header>
+    <div class="subtitle" id="subtitle"></div>
+
+    <div class="pitch-card">
+      <p>
+        <strong>Nimbus</strong> is a <em>continuous personal AI companion</em> — server-hosted, accessible
+        via voice and chat — that develops a persistent relationship with each user over years.
+      </p>
+      <p>
+        Built on a five-verb framework — <strong>Serve, Anticipate, Guide, Safeguard, Represent</strong> —
+        and powered by licensed frontier models (Claude, GPT, Gemini) orchestrated by a personal-identity
+        layer Nimbus owns. One Nimbus per user. Deeply personalised. Not a chatbot in front of someone else's model.
+      </p>
+      <p>
+        This tracker measures honest progress toward <strong>Phase 1 closed alpha</strong>:
+        50–100 invited users on working SaaS infrastructure.
+        Numbers are deliberately conservative.
+      </p>
+    </div>
+
+    <div class="overall-card">
+      <div class="overall-grid">
+        <div>
+          <div class="overall-stat-label">Overall progress</div>
+          <div class="overall-percent" id="overall-percent">0%</div>
+          <div class="overall-detail" id="overall-detail"></div>
+        </div>
+        <div class="ship-bar-block">
+          <div class="overall-stat-label">Ship bar</div>
+          <div class="ship-bar-target">Phase 1 closed alpha — 50–100 invited users on working SaaS</div>
+          <div class="ship-bar-window">Target window: 6 months from Phase 1 compute commitment</div>
+        </div>
+      </div>
+      <div class="bar-track"><div class="bar-fill" id="overall-bar" style="width: 0%"></div></div>
+    </div>
+
+    <div class="methodology">
+      <span class="methodology-icon">◆</span>
+      <span>
+        <strong>How progress is scored.</strong> Each module's percent blends design completeness with
+        build progress and folds in test confidence — untested work is significantly discounted.
+        Nimbus inherits architectural design from a sibling personal-kernel codebase, which contributes to
+        module designs but adds zero implementation credit. No Nimbus code has shipped yet, so test
+        confidence is currently <strong>not measurable</strong> across the surface. Numbers will rise
+        meaningfully only when code lands and dedicated test passes run.
+      </span>
+    </div>
+
+    <div class="expand-hint">
+      <span class="key">Click</span>
+      <span>any section below to expand sub-items, progress, and current focus</span>
+    </div>
+
+    <div id="modules"></div>
+
+    <footer id="footer"></footer>
+  </div>
+
+  <script>
+    /* =====================================================================
+       DATA — edit this block to update the tracker. Each section reflects
+       a layer of Nimbus's Phase 1 alpha architecture. Percentages bake in
+       testing confidence; untested work is heavily discounted. The
+       "Phase 1 closed alpha" module is the ship bar.
+       ===================================================================== */
+    const DATA = {
+      generated_at: "2026-05-20",
+      source: "Nimbus pitch deck + Bubbles/Nimbus delineation memo",
+      ship_target: "Phase 1 closed alpha (50–100 invited users on working SaaS)",
+      overall_percent: 5,
+      overall_detail: "Architecture inherited from sibling personal-kernel codebase; no Nimbus-side code has shipped yet. Test confidence currently 0 across the surface.",
+      modules: [
+        {
+          name: "Phase 1 closed alpha (ship bar)",
+          percent: 3,
+          confidence: null,
+          submodules: [
+            { name: "Multi-tenant orchestration layer (Python + Rust)", percent: 0 },
+            { name: "Per-user state DB (server-held, encrypted)", percent: 0 },
+            { name: "Frontier model routing (Claude / GPT / Gemini)", percent: 0 },
+            { name: "Web chat surface", percent: 0 },
+            { name: "Voice surface", percent: 0 },
+            { name: "Core plugin — Google Drive", percent: 0 },
+            { name: "Core plugin — Gmail", percent: 0 },
+            { name: "Core plugin — Calendar", percent: 0 },
+            { name: "User signup + auth (biometric / 2FA)", percent: 0 },
+            { name: "Billing wiring (subscription tiers)", percent: 0 },
+            { name: "Admin / operator surfaces", percent: 0 },
+            { name: "Closed alpha invite system", percent: 0 },
+            { name: "50–100 invited users onboarded", percent: 0 },
+          ],
+          issues: [
+            "No Nimbus-side code has been written yet. Implementation begins after Phase 1 compute commitment lands.",
+            "Server-partnership compute pitch is out; awaiting response.",
+            "Nimbus templates from a sibling personal-kernel codebase at build time, then strips features inappropriate for multi-tenant SaaS.",
+          ],
+        },
+        {
+          name: "Product foundation — Five Verbs framework",
+          percent: 12,
+          confidence: null,
+          submodules: [
+            { name: "Serve — task execution (messages, transactions, research, drafting)", percent: 18 },
+            { name: "Anticipate — proactive needs surfacing", percent: 14 },
+            { name: "Guide — honest counsel with tradeoffs", percent: 10 },
+            { name: "Safeguard — privacy + threat protection", percent: 10 },
+            { name: "Represent — delegated action on user's behalf", percent: 6 },
+            { name: "Care — emotional posture across verbs", percent: 14 },
+          ],
+          issues: [
+            "Five-verb design lifted from sibling kernel; not yet tested in multi-tenant SaaS context.",
+            "Verb behaviour under licensed (non-modified) frontier models needs validation.",
+          ],
+        },
+        {
+          name: "Persistent personal identity",
+          percent: 7,
+          confidence: null,
+          submodules: [
+            { name: "Knowledge-of-user model (preferences, projects, relationships, goals)", percent: 18 },
+            { name: "Server-held encrypted per-user state", percent: 0 },
+            { name: "Identity continuity across sessions, devices, years", percent: 6 },
+            { name: "User data export + portability", percent: 0 },
+          ],
+          issues: [
+            "Server-side state architecture is the largest gap — sibling kernel's local-first model does not transfer directly.",
+            "Compliance review (data residency, retention, deletion-on-request) pending.",
+          ],
+        },
+        {
+          name: "Continuous ambient presence",
+          percent: 5,
+          confidence: null,
+          submodules: [
+            { name: "Topic + project model (utterance → topic → project graduation)", percent: 14 },
+            { name: "Proactive surfacing (anticipates, not just task-triggered)", percent: 4 },
+            { name: "Live person-context awareness (with explicit consent)", percent: 0 },
+            { name: "Ambient activity feed UI", percent: 0 },
+          ],
+          issues: [
+            "Topic + project model designed in sibling kernel; needs SaaS port.",
+            "Sensor / context awareness depends on cross-platform clients not yet built.",
+          ],
+        },
+        {
+          name: "Plugin ecosystem",
+          percent: 2,
+          confidence: null,
+          submodules: [
+            { name: "Plugin protocol (two-round-trip contract)", percent: 8 },
+            { name: "Google Drive plugin", percent: 0 },
+            { name: "Gmail plugin", percent: 0 },
+            { name: "Calendar plugin", percent: 0 },
+            { name: "Web search / browsing plugin", percent: 0 },
+            { name: "Payment plugin", percent: 0 },
+            { name: "Sandboxed third-party plugin runtime", percent: 0 },
+          ],
+          issues: [
+            "Plugin protocol designed in sibling kernel; no plugin instance built yet in either product.",
+            "Drive + Gmail + Calendar are the Phase 1 alpha plugin set.",
+          ],
+        },
+        {
+          name: "Skills + workflows tier",
+          percent: 3,
+          confidence: null,
+          submodules: [
+            { name: "User-authored Skills (named, invokable)", percent: 7 },
+            { name: "Workflow library (composable patterns)", percent: 4 },
+            { name: "Skill / workflow recommendation engine", percent: 0 },
+            { name: "Skill / workflow gallery + discovery surface", percent: 0 },
+          ],
+          issues: [
+            "Skills + workflows tier is greenfield in both products; design captured in delineation memo.",
+            "Recommendation engine is Nimbus-specific (replaces the sibling kernel's principal-only Judge daemon).",
+          ],
+        },
+        {
+          name: "Cross-platform surfaces",
+          percent: 2,
+          confidence: null,
+          submodules: [
+            { name: "Web chat (Phase 1)", percent: 5 },
+            { name: "Voice (Phase 1)", percent: 0 },
+            { name: "Mobile apps (Phase 4)", percent: 0 },
+            { name: "Desktop client (post-alpha)", percent: 0 },
+          ],
+          issues: [
+            "Web chat UI design draws from sibling kernel's Electron UI; SaaS-specific rework needed for auth + server routing.",
+            "Voice surface for Phase 1 alpha — vendor + integration approach TBD.",
+          ],
+        },
+        {
+          name: "Infrastructure + operations",
+          percent: 1,
+          confidence: null,
+          submodules: [
+            { name: "Multi-tenant infrastructure (compute + storage)", percent: 0 },
+            { name: "Observability + monitoring", percent: 0 },
+            { name: "Security posture (SOC2-ready baseline)", percent: 0 },
+            { name: "Scalability path (1k → 10k → 100k users)", percent: 0 },
+            { name: "Phase 1 compute partnership", percent: 5 },
+          ],
+          issues: [
+            "Compute partnership pitch out to a server-side counterparty; commitment pending.",
+            "Multi-tenant infrastructure design at high level in pitch deck; no implementation.",
+          ],
+        },
+        {
+          name: "Phased roadmap (informational)",
+          percent: null,
+          is_timeline: true,
+          timeline: [
+            { phase: "1", title: "Dev + closed alpha", detail: "Core architecture; 50–100 alpha users on invite", status: "active", window: "Months 1–6" },
+            { phase: "2", title: "Open beta", detail: "Open signup; 1,000–10,000 paying users", status: "planned", window: "Months 7–12" },
+            { phase: "3", title: "General availability", detail: "Marketing push; 50,000–100,000 users", status: "planned", window: "Months 13–18" },
+            { phase: "4", title: "Mobile + scale", detail: "Mobile apps; 500,000+ users", status: "planned", window: "Months 19–24" },
+          ],
+        },
+        {
+          name: "Testing confidence",
+          percent: 0,
+          is_testing_section: true,
+          submodules: [
+            { name: "Phase 1 closed alpha (ship bar)", percent: null, is_confidence: true },
+            { name: "Five verbs framework", percent: null, is_confidence: true },
+            { name: "Persistent personal identity", percent: null, is_confidence: true },
+            { name: "Continuous ambient presence", percent: null, is_confidence: true },
+            { name: "Plugin ecosystem", percent: null, is_confidence: true },
+            { name: "Skills + workflows tier", percent: null, is_confidence: true },
+            { name: "Cross-platform surfaces", percent: null, is_confidence: true },
+            { name: "Infrastructure + operations", percent: null, is_confidence: true },
+          ],
+          issues: [
+            "No Nimbus-side testing has occurred. Test confidence will populate once Nimbus code exists and dedicated test passes are run.",
+            "Sibling personal-kernel test coverage does not transfer as Nimbus confidence — different code surface, different substrate, different tenant model.",
+          ],
+        },
+      ],
+    };
+
+    /* === Render ========================================================== */
+
+    function el(tag, attrs, children) {
+      const node = document.createElement(tag);
+      if (attrs) {
+        for (const k in attrs) {
+          if (k === "class") node.className = attrs[k];
+          else if (k === "html") node.innerHTML = attrs[k];
+          else if (k === "style") node.setAttribute("style", attrs[k]);
+          else node.setAttribute(k, attrs[k]);
+        }
+      }
+      const list = children == null ? [] : (Array.isArray(children) ? children : [children]);
+      for (const child of list) {
+        if (child == null) continue;
+        node.appendChild(typeof child === "string" ? document.createTextNode(child) : child);
+      }
+      return node;
+    }
+
+    function pct(n) { return n == null ? "—" : n + "%"; }
+
+    function statusFor(p, opts) {
+      if (opts && opts.isConfidence && p == null) return { cls: "status-untested", text: "untested" };
+      if (p == null) return { cls: "status-planned", text: "planned" };
+      if (p >= 100) return { cls: "status-done", text: "done" };
+      if (p <= 0) return { cls: "status-todo", text: "todo" };
+      return { cls: "status-partial", text: "in design" };
+    }
+
+    function fillClassFor(p) {
+      if (p == null) return "bar-fill empty";
+      if (p >= 100) return "bar-fill done";
+      if (p <= 0) return "bar-fill empty";
+      return "bar-fill";
+    }
+
+    function confidenceClsFor(c) {
+      if (c == null) return "confidence-untested";
+      if (c >= 70) return "confidence-high";
+      if (c >= 40) return "confidence-medium";
+      return "confidence-low";
+    }
+
+    function confidenceLabel(c) {
+      return c == null ? "Not yet measurable" : c + " / 100";
+    }
+
+    function progressBar(percent, fillClass) {
+      const safePct = percent == null ? 0 : Math.max(0, Math.min(100, percent));
+      return el("div", { class: "bar-track" }, [
+        el("div", {
+          class: fillClass || fillClassFor(percent),
+          style: "width: " + safePct + "%",
+        }),
+      ]);
+    }
+
+    function renderHeader() {
+      document.getElementById("overall-percent").textContent = pct(DATA.overall_percent);
+      document.getElementById("overall-bar").style.width = pct(DATA.overall_percent);
+      const fillEl = document.getElementById("overall-bar");
+      fillEl.className = fillClassFor(DATA.overall_percent);
+      document.getElementById("overall-detail").textContent = DATA.overall_detail || "";
+      const subtitle = document.getElementById("subtitle");
+      subtitle.textContent = "Snapshot generated " + DATA.generated_at + " · source: " + DATA.source;
+      document.getElementById("footer").innerHTML =
+        "Last updated " + DATA.generated_at +
+        " <span class=\"footer-divider\">·</span> " +
+        "<a href=\"https://github.com/gouthamreddym22-collab/Nimbus-progress\" target=\"_blank\" rel=\"noopener\">view source on GitHub</a>" +
+        " <span class=\"footer-divider\">·</span> " +
+        "Nimbus is a working title — final product name TBD before launch";
+    }
+
+    function renderTimelineBody(timeline) {
+      const ul = el("ul", { class: "timeline-list" });
+      timeline.forEach(function (t) {
+        const markerCls = "timeline-marker" + (t.status === "active" ? " active" : (t.status === "done" ? " done" : ""));
+        const statusCls = "timeline-status " + (t.status === "active" ? "active" : "planned");
+        ul.appendChild(el("li", { class: "timeline-item" }, [
+          el("div", { class: markerCls }, t.phase),
+          el("div", { class: "timeline-content" }, [
+            el("strong", null, t.title),
+            t.detail + " · " + t.window,
+          ]),
+          el("span", { class: statusCls }, t.status === "active" ? "In progress" : "Planned"),
+        ]));
+      });
+      return ul;
+    }
+
+    function renderModule(m, opts) {
+      const openByDefault = !!(opts && opts.openByDefault);
+      const hasIssues = m.issues && m.issues.length > 0;
+      const isTimeline = !!m.is_timeline;
+      const isTestingSection = !!m.is_testing_section;
+      const hasConfidence = Object.prototype.hasOwnProperty.call(m, "confidence");
+
+      let iconEl = null;
+      if (isTimeline) iconEl = el("span", { class: "status-dot dot-info", title: "timeline" });
+      else if (isTestingSection) iconEl = el("span", { class: "status-dot dot-info", title: "testing section" });
+      else if (m.percent >= 100) iconEl = el("span", { class: "status-dot dot-done", title: "complete" });
+      else if (hasIssues) iconEl = el("span", { class: "status-dot dot-progress", title: "in progress" });
+
+      const nameRow = el("div", { class: "module-name-row" }, [
+        iconEl,
+        el("span", { class: "module-name" }, m.name),
+      ]);
+
+      const percentSpan = m.percent == null
+        ? el("span", { class: "module-percent empty" }, "—")
+        : el("span", { class: "module-percent" }, pct(m.percent));
+
+      const meta = el("div", { class: "module-meta" }, [
+        percentSpan,
+        el("span", { class: "chevron", title: "expand / collapse" }, "▾"),
+      ]);
+      const bar = el("div", { class: "module-bar" }, [progressBar(m.percent)]);
+      const header = el("div", {
+        class: "module-header",
+        role: "button",
+        tabindex: "0",
+        "aria-expanded": openByDefault ? "true" : "false",
+      }, [nameRow, meta, bar]);
+
+      const bodyChildren = [];
+      if (isTimeline && m.timeline) {
+        bodyChildren.push(el("div", { class: "section-label" }, "Phases"));
+        bodyChildren.push(renderTimelineBody(m.timeline));
+      }
+      if (m.submodules && m.submodules.length) {
+        bodyChildren.push(el("div", { class: "section-label" }, isTestingSection ? "Module confidence scores" : "Sub-items"));
+        for (const s of m.submodules) {
+          const isSubConfidence = !!s.is_confidence;
+          const st = statusFor(s.percent, { isConfidence: isSubConfidence });
+          const statusText = isSubConfidence && s.percent == null ? "not measurable" : st.text;
+          const percentLabel = isSubConfidence
+            ? (s.percent == null ? "—" : s.percent + " / 100")
+            : pct(s.percent);
+          const percentCls = "sub-percent" + (s.percent == null ? " empty" : "");
+          const subTop = el("div", { class: "sub-top" }, [
+            el("span", { class: "sub-name" }, s.name),
+            el("span", { class: percentCls }, percentLabel),
+            el("span", { class: "sub-status " + st.cls }, statusText),
+          ]);
+          const subBar = el("div", { class: "sub-bar" }, [progressBar(s.percent)]);
+          bodyChildren.push(el("div", { class: "sub" }, [subTop, subBar]));
+        }
+      }
+      if (hasConfidence && !isTestingSection && !isTimeline) {
+        bodyChildren.push(el("div", { class: "section-label" }, "Test confidence"));
+        const cls = confidenceClsFor(m.confidence);
+        bodyChildren.push(el("div", { class: "confidence-row " + cls }, [
+          el("span", { class: "confidence-label" }, confidenceLabel(m.confidence)),
+          el("span", { class: "confidence-hint" }, m.confidence == null ? "populates once Nimbus code lands + dedicated test runs" : "score / 100"),
+        ]));
+      }
+      if (hasIssues) {
+        const label = isTimeline ? "Notes" : (isTestingSection ? "Notes" : "Current focus / open items");
+        bodyChildren.push(el("div", { class: "section-label" }, label));
+        const ul = el("ul", { class: "issues-list" });
+        for (const issue of m.issues) {
+          ul.appendChild(el("li", { class: "issue" }, [
+            el("span", { class: "issue-icon" }, isTimeline || isTestingSection ? "◆" : "→"),
+            el("span", { html: issue }),
+          ]));
+        }
+        bodyChildren.push(ul);
+      }
+      const body = el("div", { class: "module-body" }, bodyChildren);
+
+      const rootCls = "module"
+        + (openByDefault ? " open" : "")
+        + (isTimeline ? " timeline" : "");
+      const root = el("div", { class: rootCls }, [header, body]);
+
+      function toggle() {
+        const willOpen = !root.classList.contains("open");
+        root.classList.toggle("open");
+        header.setAttribute("aria-expanded", willOpen ? "true" : "false");
+      }
+      header.addEventListener("click", toggle);
+      header.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle();
+        }
+      });
+      return root;
+    }
+
+    function renderModules() {
+      const host = document.getElementById("modules");
+      DATA.modules.forEach(function (m, idx) {
+        host.appendChild(renderModule(m, { openByDefault: idx === 0 }));
+      });
+    }
+
+    renderHeader();
+    renderModules();
+  </script>
+</body>
+</html>
