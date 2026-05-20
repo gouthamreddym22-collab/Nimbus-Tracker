@@ -644,14 +644,12 @@
     <div class="methodology">
       <span class="methodology-icon">◆</span>
       <span>
-        <strong>How progress is scored.</strong> Each module's percent blends design completeness
-        with build progress and folds in test confidence. Foundational product layers — identity,
-        the five-verb framework, topic + project model, plugin protocol, autonomous orchestration —
-        have working implementations and are further along. SaaS-specific surfaces (multi-tenant
-        infrastructure, billing, signup, server-side state) are weighted heavily in the Phase 1
-        ship bar and start nearer zero. Dedicated test passes run per phase; until then, module
-        confidence is held as <strong>not yet measurable</strong> and the percent carries an
-        untested-work discount.
+        <strong>How progress is scored.</strong> Each module's bar shows its raw build progress.
+        The overall figure folds in test confidence per module: strong-confidence work
+        (&ge;80&thinsp;/&thinsp;100) gets full credit; moderate (60&ndash;79) takes a 15%
+        discount; weak or untested work takes a 30% discount. Dedicated test passes run per
+        phase; until then, module confidence is held as <strong>not yet measurable</strong>
+        and the overall carries the untested-work discount.
       </span>
     </div>
 
@@ -682,6 +680,7 @@
         {
           name: "Phase 1 closed alpha (ship bar)",
           percent: 16,
+          weight: 3,
           confidence: null,
           submodules: [
             { name: "Multi-tenant orchestration layer (Python + Rust)", percent: 30 },
@@ -707,6 +706,7 @@
         {
           name: "Product foundation — Five Verbs framework",
           percent: 52,
+          weight: 1,
           confidence: null,
           submodules: [
             { name: "Serve — task execution (messages, transactions, research, drafting)", percent: 62 },
@@ -725,6 +725,7 @@
         {
           name: "Persistent personal identity",
           percent: 64,
+          weight: 1,
           confidence: null,
           submodules: [
             { name: "Knowledge-of-user model (preferences, projects, relationships, goals)", percent: 70 },
@@ -743,6 +744,7 @@
         {
           name: "Continuous ambient presence",
           percent: 55,
+          weight: 1,
           confidence: null,
           submodules: [
             { name: "Topic + project model (utterance → topic → project graduation)", percent: 78 },
@@ -759,6 +761,7 @@
         {
           name: "Plugin ecosystem",
           percent: 25,
+          weight: 1,
           confidence: null,
           submodules: [
             { name: "Plugin protocol (two-round-trip contract)", percent: 88 },
@@ -778,6 +781,7 @@
         {
           name: "Skills + workflows tier",
           percent: 12,
+          weight: 1,
           confidence: null,
           submodules: [
             { name: "User-authored Skills (named, invokable)", percent: 20 },
@@ -795,6 +799,7 @@
         {
           name: "Cross-platform surfaces",
           percent: 22,
+          weight: 1,
           confidence: null,
           submodules: [
             { name: "Web chat (Phase 1)", percent: 38 },
@@ -812,6 +817,7 @@
         {
           name: "Infrastructure + operations",
           percent: 22,
+          weight: 1,
           confidence: null,
           submodules: [
             { name: "Multi-tenant infrastructure (compute + storage)", percent: 6 },
@@ -880,6 +886,33 @@
       return node;
     }
 
+    /* ----- Test-confidence-weighted overall progress ----- */
+    function confidenceMultiplier(c) {
+      if (c == null) return 0.70;           // untested
+      if (c >= 80) return 1.00;             // strong confidence — full credit
+      if (c >= 60) return 0.85;             // moderate confidence — mild discount
+      return 0.70;                          // weak confidence — significant discount
+    }
+    function effectivePercent(m) {
+      if (typeof m.percent !== "number") return null;
+      return m.percent * confidenceMultiplier(m.confidence);
+    }
+    function computeOverallPercent(modules) {
+      var weightedSum = 0, totalWeight = 0;
+      for (var i = 0; i < modules.length; i++) {
+        var m = modules[i];
+        if (m.is_testing_section || m.is_timeline) continue;
+        if (typeof m.percent !== "number") continue;
+        var w = (typeof m.weight === "number") ? m.weight : 1;
+        if (w <= 0) continue;
+        var eff = effectivePercent(m);
+        if (eff == null) continue;
+        weightedSum += eff * w;
+        totalWeight += w;
+      }
+      return totalWeight === 0 ? 0 : Math.round(weightedSum / totalWeight);
+    }
+
     function pct(n) { return n == null ? "—" : n + "%"; }
 
     function statusFor(p, opts) {
@@ -919,10 +952,12 @@
     }
 
     function renderHeader() {
-      document.getElementById("overall-percent").textContent = pct(DATA.overall_percent);
-      document.getElementById("overall-bar").style.width = pct(DATA.overall_percent);
+      var computedOverall = computeOverallPercent(DATA.modules);
+      DATA.overall_percent = computedOverall;
+      document.getElementById("overall-percent").textContent = pct(computedOverall);
+      document.getElementById("overall-bar").style.width = pct(computedOverall);
       const fillEl = document.getElementById("overall-bar");
-      fillEl.className = fillClassFor(DATA.overall_percent);
+      fillEl.className = fillClassFor(computedOverall);
       document.getElementById("overall-detail").textContent = DATA.overall_detail || "";
       const subtitle = document.getElementById("subtitle");
       subtitle.textContent = "Snapshot generated " + DATA.generated_at + " · source: " + DATA.source;
