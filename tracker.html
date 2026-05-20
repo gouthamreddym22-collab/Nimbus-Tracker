@@ -645,11 +645,12 @@
       <span class="methodology-icon">◆</span>
       <span>
         <strong>How progress is scored.</strong> Each module's percent blends design completeness with
-        build progress and folds in test confidence — untested work is significantly discounted.
-        Nimbus inherits architectural design from a sibling personal-kernel codebase, which contributes to
-        module designs but adds zero implementation credit. No Nimbus code has shipped yet, so test
-        confidence is currently <strong>not measurable</strong> across the surface. Numbers will rise
-        meaningfully only when code lands and dedicated test passes run.
+        build progress and folds in test confidence. Nimbus inherits architecture, design patterns,
+        and significant working code from a sibling personal-kernel codebase (1,672 tests passing
+        there) — that transferring work earns partial credit, discounted for the SaaS port + retest
+        gap. SaaS-specific surfaces (multi-tenant infra, billing, signup, server-side state) start
+        from zero. Nimbus-side test confidence is currently <strong>not measurable</strong>;
+        confidence scores populate once Nimbus code lands and dedicated test passes run.
       </span>
     </div>
 
@@ -672,20 +673,20 @@
        ===================================================================== */
     const DATA = {
       generated_at: "2026-05-20",
-      source: "Nimbus pitch deck + Bubbles/Nimbus delineation memo",
+      source: "Nimbus pitch deck + Bubbles/Nimbus delineation memo + sibling-kernel architecture audit",
       ship_target: "Phase 1 closed alpha (50–100 invited users on working SaaS)",
-      overall_percent: 5,
-      overall_detail: "Architecture inherited from sibling personal-kernel codebase; no Nimbus-side code has shipped yet. Test confidence currently 0 across the surface.",
+      overall_percent: 12,
+      overall_detail: "Substantial design + architecture inherited from a working, tested sibling personal-kernel codebase (1672 tests passing). Nimbus-side SaaS implementation has not yet started; Nimbus-context test confidence currently zero. Progress credits transferring design and code patterns, discounted for the SaaS port + retest gap.",
       modules: [
         {
           name: "Phase 1 closed alpha (ship bar)",
-          percent: 3,
+          percent: 4,
           confidence: null,
           submodules: [
-            { name: "Multi-tenant orchestration layer (Python + Rust)", percent: 0 },
-            { name: "Per-user state DB (server-held, encrypted)", percent: 0 },
-            { name: "Frontier model routing (Claude / GPT / Gemini)", percent: 0 },
-            { name: "Web chat surface", percent: 0 },
+            { name: "Multi-tenant orchestration layer (Python + Rust)", percent: 8 },
+            { name: "Per-user state DB (server-held, encrypted)", percent: 6 },
+            { name: "Frontier model routing (Claude / GPT / Gemini)", percent: 5 },
+            { name: "Web chat surface", percent: 15 },
             { name: "Voice surface", percent: 0 },
             { name: "Core plugin — Google Drive", percent: 0 },
             { name: "Core plugin — Gmail", percent: 0 },
@@ -697,120 +698,131 @@
             { name: "50–100 invited users onboarded", percent: 0 },
           ],
           issues: [
-            "No Nimbus-side code has been written yet. Implementation begins after Phase 1 compute commitment lands.",
-            "Server-partnership compute pitch is out; awaiting response.",
-            "Nimbus templates from a sibling personal-kernel codebase at build time, then strips features inappropriate for multi-tenant SaaS.",
+            "Orchestration + state schema patterns inherited from the sibling kernel's working Rust implementation; SaaS multi-tenant port not yet started.",
+            "Web chat surface inherits UI design + interaction patterns from the sibling kernel's standalone Electron UI; web port + multi-tenant auth wiring remain.",
+            "Server-partnership compute pitch is out; awaiting response. Implementation gates on Phase 1 compute commitment.",
           ],
         },
         {
           name: "Product foundation — Five Verbs framework",
-          percent: 12,
+          percent: 30,
           confidence: null,
           submodules: [
-            { name: "Serve — task execution (messages, transactions, research, drafting)", percent: 18 },
-            { name: "Anticipate — proactive needs surfacing", percent: 14 },
-            { name: "Guide — honest counsel with tradeoffs", percent: 10 },
-            { name: "Safeguard — privacy + threat protection", percent: 10 },
-            { name: "Represent — delegated action on user's behalf", percent: 6 },
-            { name: "Care — emotional posture across verbs", percent: 14 },
+            { name: "Serve — task execution (messages, transactions, research, drafting)", percent: 38 },
+            { name: "Anticipate — proactive needs surfacing", percent: 32 },
+            { name: "Guide — honest counsel with tradeoffs", percent: 38 },
+            { name: "Safeguard — privacy + threat protection (SaaS-context)", percent: 14 },
+            { name: "Represent — delegated action on user's behalf", percent: 14 },
+            { name: "Care — emotional posture across verbs", percent: 42 },
           ],
           issues: [
-            "Five-verb design lifted from sibling kernel; not yet tested in multi-tenant SaaS context.",
-            "Verb behaviour under licensed (non-modified) frontier models needs validation.",
+            "Five-verb framework is implemented and tested in the sibling kernel — Serve (chat + delegation), Guide (surfaces concerns), Anticipate (autonomous loops), Care (persona) all have working code with passing tests.",
+            "Safeguard credit is partial — the sibling kernel's Hard-Rules infrastructure is Bubbles-only; Nimbus's SaaS-context Safeguard (data handling, threat protection, abuse policy) is a separate surface.",
+            "Verb behaviour under licensed (non-modified) frontier models needs validation in the SaaS context.",
           ],
         },
         {
           name: "Persistent personal identity",
-          percent: 7,
+          percent: 20,
           confidence: null,
           submodules: [
-            { name: "Knowledge-of-user model (preferences, projects, relationships, goals)", percent: 18 },
-            { name: "Server-held encrypted per-user state", percent: 0 },
-            { name: "Identity continuity across sessions, devices, years", percent: 6 },
-            { name: "User data export + portability", percent: 0 },
+            { name: "Knowledge-of-user model (preferences, projects, relationships, goals)", percent: 35 },
+            { name: "Server-held encrypted per-user state", percent: 6 },
+            { name: "Identity continuity across sessions, devices, years", percent: 28 },
+            { name: "User data export + portability", percent: 8 },
+            { name: "Auditability (append-only audit log + hash chain)", percent: 35 },
           ],
           issues: [
-            "Server-side state architecture is the largest gap — sibling kernel's local-first model does not transfer directly.",
-            "Compliance review (data residency, retention, deletion-on-request) pending.",
+            "Knowledge-of-user accumulation patterns + identity continuity primitives + auditability infrastructure all exist in the sibling kernel with working code and passing tests.",
+            "Server-side state architecture is the largest gap — sibling kernel's local-first state model does not transfer directly; Nimbus needs a server-held encrypted variant with the same continuity guarantees.",
+            "Compliance review (data residency, retention, deletion-on-request) pending — SaaS-specific surface.",
           ],
         },
         {
           name: "Continuous ambient presence",
-          percent: 5,
+          percent: 28,
           confidence: null,
           submodules: [
-            { name: "Topic + project model (utterance → topic → project graduation)", percent: 14 },
-            { name: "Proactive surfacing (anticipates, not just task-triggered)", percent: 4 },
-            { name: "Live person-context awareness (with explicit consent)", percent: 0 },
-            { name: "Ambient activity feed UI", percent: 0 },
+            { name: "Topic + project model (utterance → topic → project graduation)", percent: 50 },
+            { name: "Proactive surfacing (autonomous loops, anticipates rather than only task-triggered)", percent: 32 },
+            { name: "Live person-context awareness (with explicit consent)", percent: 4 },
+            { name: "Ambient activity feed UI (right-rail surface)", percent: 28 },
           ],
           issues: [
-            "Topic + project model designed in sibling kernel; needs SaaS port.",
-            "Sensor / context awareness depends on cross-platform clients not yet built.",
+            "Topic + project model has substantial working implementation in the sibling kernel (~80% complete there) — utterance routing, topic graduation, project navigation all running with tests.",
+            "Proactive surfacing inherits autonomous-loop infrastructure + four-panel right-rail UI patterns from the sibling kernel.",
+            "Sensor / context awareness depends on cross-platform clients not yet built in either product.",
           ],
         },
         {
           name: "Plugin ecosystem",
-          percent: 2,
+          percent: 14,
           confidence: null,
           submodules: [
-            { name: "Plugin protocol (two-round-trip contract)", percent: 8 },
+            { name: "Plugin protocol (two-round-trip contract)", percent: 50 },
             { name: "Google Drive plugin", percent: 0 },
             { name: "Gmail plugin", percent: 0 },
             { name: "Calendar plugin", percent: 0 },
-            { name: "Web search / browsing plugin", percent: 0 },
+            { name: "Web search / browsing plugin", percent: 6 },
             { name: "Payment plugin", percent: 0 },
-            { name: "Sandboxed third-party plugin runtime", percent: 0 },
+            { name: "Sandboxed third-party plugin runtime", percent: 18 },
           ],
           issues: [
-            "Plugin protocol designed in sibling kernel; no plugin instance built yet in either product.",
-            "Drive + Gmail + Calendar are the Phase 1 alpha plugin set.",
+            "Plugin protocol design + invocation pattern are at ~90% in the sibling kernel — the two-round-trip contract, supervisor loop, and round-2 wiring all have working implementations.",
+            "Drive + Gmail + Calendar are the Phase 1 alpha plugin set; no first-party plugin instances built yet in either product.",
+            "Sandboxed third-party runtime needs SaaS-context security review beyond what the sibling kernel addresses.",
           ],
         },
         {
           name: "Skills + workflows tier",
-          percent: 3,
+          percent: 8,
           confidence: null,
           submodules: [
-            { name: "User-authored Skills (named, invokable)", percent: 7 },
-            { name: "Workflow library (composable patterns)", percent: 4 },
+            { name: "User-authored Skills (named, invokable)", percent: 14 },
+            { name: "Workflow library (composable patterns)", percent: 10 },
             { name: "Skill / workflow recommendation engine", percent: 0 },
             { name: "Skill / workflow gallery + discovery surface", percent: 0 },
+            { name: "Task contract schema (orchestration ↔ tool-caller seam)", percent: 12 },
           ],
           issues: [
-            "Skills + workflows tier is greenfield in both products; design captured in delineation memo.",
+            "Skills + workflows tier architecture is locked in the sibling kernel's planning docs; greenfield implementation in both products.",
+            "Task contract schema is upcoming work in the sibling kernel's refactor plan; transfers as architecture once designed.",
             "Recommendation engine is Nimbus-specific (replaces the sibling kernel's principal-only Judge daemon).",
           ],
         },
         {
           name: "Cross-platform surfaces",
-          percent: 2,
+          percent: 10,
           confidence: null,
           submodules: [
-            { name: "Web chat (Phase 1)", percent: 5 },
+            { name: "Web chat (Phase 1)", percent: 20 },
             { name: "Voice (Phase 1)", percent: 0 },
             { name: "Mobile apps (Phase 4)", percent: 0 },
-            { name: "Desktop client (post-alpha)", percent: 0 },
+            { name: "Desktop client (post-alpha)", percent: 18 },
+            { name: "UI excellence — slick + smooth bar across surfaces", percent: 35 },
           ],
           issues: [
-            "Web chat UI design draws from sibling kernel's Electron UI; SaaS-specific rework needed for auth + server routing.",
-            "Voice surface for Phase 1 alpha — vendor + integration approach TBD.",
+            "Sibling kernel ships a standalone Electron desktop UI at full feature completion — design language, interaction patterns, and polish-bar all transfer.",
+            "Web chat surface for Phase 1 is the SaaS port of the desktop UI — multi-tenant auth + server routing are the new work.",
+            "Voice surface for Phase 1 — vendor + integration approach TBD.",
           ],
         },
         {
           name: "Infrastructure + operations",
-          percent: 1,
+          percent: 4,
           confidence: null,
           submodules: [
-            { name: "Multi-tenant infrastructure (compute + storage)", percent: 0 },
+            { name: "Multi-tenant infrastructure (compute + storage)", percent: 4 },
             { name: "Observability + monitoring", percent: 0 },
             { name: "Security posture (SOC2-ready baseline)", percent: 0 },
             { name: "Scalability path (1k → 10k → 100k users)", percent: 0 },
-            { name: "Phase 1 compute partnership", percent: 5 },
+            { name: "Op-speed discipline (fast/slow path, caching, async pipelining)", percent: 35 },
+            { name: "Phase 1 compute partnership", percent: 10 },
           ],
           issues: [
+            "Op-speed discipline (fast/slow-path separation, intent caching, async pipelining) is largely implemented in the sibling kernel — patterns transfer; SaaS-context latency budgets need recalibration.",
             "Compute partnership pitch out to a server-side counterparty; commitment pending.",
-            "Multi-tenant infrastructure design at high level in pitch deck; no implementation.",
+            "Multi-tenant infrastructure + observability + security posture are entirely Nimbus-side new work.",
           ],
         },
         {
