@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nimbus — Progress toward alpha</title>
-<meta property="og:title" content="Nimbus — Progress toward alpha">
-<meta property="og:description" content="A continuous personal AI companion — knows you, remembers you, grows with you. Progress tracker toward Phase 1 closed alpha.">
+<title>Nimbus — Progress toward V1 demo + Alpha closed</title>
+<meta property="og:title" content="Nimbus — Progress toward V1 demo + Alpha closed">
+<meta property="og:description" content="A continuous personal AI companion — knows you, remembers you, grows with you. Two-rung tracker: V1 single-client demo + Alpha closed alpha.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;550;600;650;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -39,6 +39,10 @@
     --accent-violet: #8b5cf6;
     --accent-cyan: #06b6d4;
     --accent-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #06b6d4 100%);
+    --accent-v1: #06b6d4;         /* cyan for V1 — demo rung */
+    --accent-v1-gradient: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+    --accent-alpha: #8b5cf6;      /* violet for Alpha — production rung */
+    --accent-alpha-gradient: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
 
     --done: #10b981;
     --done-soft: rgba(16, 185, 129, 0.12);
@@ -166,34 +170,79 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* === Overall card ====================================================== */
+  /* === Overall card (dual rung) ========================================== */
   .overall-card {
     background: var(--card-elevated);
     border: 1px solid var(--border);
     border-radius: 20px;
-    padding: 30px 32px;
-    margin-bottom: 18px;
+    padding: 26px 30px;
+    margin-bottom: 14px;
     box-shadow: var(--shadow-md);
     position: relative;
+    overflow: hidden;
   }
+  .overall-card::before {
+    content: "";
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 3px;
+    opacity: 0.95;
+  }
+  .overall-card.v1-card::before { background: var(--accent-v1-gradient); }
+  .overall-card.alpha-card::before { background: var(--accent-alpha-gradient); }
+  .rung-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-bottom: 14px;
+  }
+  .rung-badge.v1 {
+    color: var(--accent-v1);
+    background: rgba(6, 182, 212, 0.08);
+    border: 1px solid rgba(6, 182, 212, 0.22);
+  }
+  .rung-badge.alpha {
+    color: var(--accent-alpha);
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.22);
+  }
+  .rung-badge::before {
+    content: "";
+    width: 5px; height: 5px;
+    border-radius: 999px;
+  }
+  .rung-badge.v1::before { background: var(--accent-v1); box-shadow: 0 0 6px var(--accent-v1); }
+  .rung-badge.alpha::before { background: var(--accent-alpha); box-shadow: 0 0 6px var(--accent-alpha); }
+
   .overall-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 28px;
-    margin-bottom: 22px;
+    gap: 24px;
+    margin-bottom: 18px;
   }
   .overall-stat-label {
     font-size: 10.5px; color: var(--text-dim);
     text-transform: uppercase; letter-spacing: 0.12em;
-    margin-bottom: 10px; font-weight: 600;
+    margin-bottom: 8px; font-weight: 600;
   }
   .overall-percent {
-    font-size: 48px; font-weight: 650;
+    font-size: 42px; font-weight: 650;
     color: var(--text-strong);
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.035em;
     line-height: 1;
-    background: var(--accent-gradient);
+  }
+  .overall-percent.v1 {
+    background: var(--accent-v1-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .overall-percent.alpha {
+    background: var(--accent-alpha-gradient);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -205,16 +254,18 @@
   }
   .ship-bar-block {
     border-left: 2px solid var(--border-accent);
-    padding-left: 20px;
+    padding-left: 18px;
   }
+  .v1-card .ship-bar-block { border-left-color: rgba(6, 182, 212, 0.22); }
+  .alpha-card .ship-bar-block { border-left-color: rgba(139, 92, 246, 0.22); }
   .ship-bar-target {
-    font-size: 14.5px;
+    font-size: 13.5px;
     font-weight: 600;
     color: var(--text-strong);
     line-height: 1.4;
   }
   .ship-bar-window {
-    font-size: 12px;
+    font-size: 11.5px;
     color: var(--text-dim);
     margin-top: 4px;
     font-weight: 500;
@@ -236,6 +287,8 @@
     transition: width 0.6s cubic-bezier(.16,.84,.30,1);
     position: relative;
   }
+  .bar-fill.v1 { background: var(--accent-v1-gradient); }
+  .bar-fill.alpha { background: var(--accent-alpha-gradient); }
   .bar-fill::after {
     content: "";
     position: absolute; inset: 0;
@@ -249,7 +302,7 @@
     background: var(--border-soft);
   }
   .bar-fill.empty::after { display: none; }
-  .overall-card .bar-track { height: 12px; border-radius: 999px; }
+  .overall-card .bar-track { height: 11px; border-radius: 999px; }
 
   /* === Methodology note ================================================== */
   .methodology {
@@ -257,7 +310,7 @@
     border: 1px solid var(--border-accent);
     border-radius: 12px;
     padding: 14px 18px;
-    margin-bottom: 22px;
+    margin: 8px 0 22px;
     display: flex; align-items: flex-start; gap: 12px;
     font-size: 12.5px;
     color: var(--text-mid);
@@ -315,6 +368,12 @@
   .module.timeline {
     background: linear-gradient(135deg, rgba(99, 102, 241, 0.025) 0%, rgba(6, 182, 212, 0.02) 100%);
   }
+  .module.v1-ship {
+    border-left: 3px solid var(--accent-v1);
+  }
+  .module.alpha-ship {
+    border-left: 3px solid var(--accent-alpha);
+  }
   .module-header {
     padding: 18px 22px;
     cursor: pointer;
@@ -330,6 +389,24 @@
   .module-name {
     font-weight: 600; font-size: 15.5px; color: var(--text-strong);
     letter-spacing: -0.008em;
+  }
+  .module-scope-tag {
+    display: inline-flex; align-items: center;
+    font-size: 9.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 2px 7px;
+    border-radius: 999px;
+    margin-left: 8px;
+  }
+  .module-scope-tag.v1 {
+    color: var(--accent-v1);
+    background: rgba(6, 182, 212, 0.10);
+    border: 1px solid rgba(6, 182, 212, 0.22);
+  }
+  .module-scope-tag.alpha-only {
+    color: var(--accent-alpha);
+    background: rgba(139, 92, 246, 0.08);
+    border: 1px solid rgba(139, 92, 246, 0.18);
   }
   .module-meta { display: flex; align-items: center; gap: 16px; }
   .module-percent {
@@ -373,6 +450,8 @@
   .dot-done { background: var(--done); box-shadow: 0 0 8px rgba(16, 185, 129, 0.4); }
   .dot-info { background: var(--text-dim); box-shadow: 0 0 6px rgba(148, 163, 184, 0.4); }
   .dot-progress { background: var(--accent); box-shadow: 0 0 8px rgba(99, 102, 241, 0.4); }
+  .dot-v1 { background: var(--accent-v1); box-shadow: 0 0 8px rgba(6, 182, 212, 0.5); }
+  .dot-alpha { background: var(--accent-alpha); box-shadow: 0 0 8px rgba(139, 92, 246, 0.5); }
 
   /* === Module body ======================================================= */
   .module-body {
@@ -578,22 +657,22 @@
   @media (max-width: 600px) {
     .container { padding: 32px 18px 80px; }
     h1 { font-size: 24px; }
-    .overall-percent { font-size: 38px; }
+    .overall-percent { font-size: 34px; }
     .overall-grid {
       grid-template-columns: 1fr;
-      gap: 20px;
+      gap: 18px;
     }
     .ship-bar-block {
       border-left: none;
       border-top: 1px solid var(--border-soft);
       padding-left: 0;
-      padding-top: 20px;
+      padding-top: 16px;
     }
     .module-name { font-size: 14px; }
     .sub-status { display: none; }
     .sub-top { grid-template-columns: 1fr auto; }
     .pitch-card { padding: 22px 22px; }
-    .overall-card { padding: 24px 22px; }
+    .overall-card { padding: 22px 22px; }
   }
 </style>
 </head>
@@ -618,43 +697,65 @@
       </p>
       <p>
         Differentiating commitments: <em>full-duplex voice steering</em>, <em>trustless hybrid vault</em>,
-        <em>Device-Service Mesh</em> (universal device + service routing), <em>hot-GPU per-session conversational
-        inference</em>, <em>tile-disambiguation</em> as the consumer pattern for ambiguity, and an
-        <em>auto-Skill-acquisition</em> loop so the agent improves through use.
+        <em>Device-Service Mesh</em> (universal device + service routing), <em>hot-GPU per-session
+        inference</em>, <em>Private Inference Substrate</em> (Premium-tier sealed-enclave for private data),
+        <em>Common Knowledge Substrate</em> (centralized multimodal world-state ingest),
+        <em>tile-disambiguation</em> as the consumer ambiguity pattern, and an <em>auto-Skill-acquisition</em>
+        loop so the agent improves through use.
       </p>
       <p>
-        This tracker measures honest progress toward <strong>Phase 1 closed alpha</strong>:
-        50–100 invited users across consumer archetypes, on an 8-vertical kernel (Calendar / Comms / Food /
-        Home Auto / Information / Bills+Payments + desktop Document Editing + Local Files+Code).
-        Numbers are deliberately conservative.
+        This tracker measures honest progress toward two product rungs.
+        <strong>V1</strong> — single-client demo: phone + PC clients on a local PC server with Claude OAuth;
+        essential 5-verb surface; demoable to one prospect at a time; no partner-compute dependency.
+        <strong>Alpha</strong> — closed alpha: 50–100 invited users across consumer archetypes; full
+        feature suite on an 8-vertical kernel; partner-compute data centre.
       </p>
     </div>
 
-    <div class="overall-card">
+    <div class="overall-card v1-card">
+      <span class="rung-badge v1">V1 — single-client demo rung</span>
       <div class="overall-grid">
         <div>
-          <div class="overall-stat-label">Overall progress</div>
-          <div class="overall-percent" id="overall-percent">0%</div>
-          <div class="overall-detail" id="overall-detail"></div>
+          <div class="overall-stat-label">V1 progress</div>
+          <div class="overall-percent v1" id="v1-percent">0%</div>
+          <div class="overall-detail" id="v1-detail"></div>
         </div>
         <div class="ship-bar-block">
-          <div class="overall-stat-label">Ship bar</div>
-          <div class="ship-bar-target">Phase 1 closed alpha — 50–100 invited users on working SaaS</div>
-          <div class="ship-bar-window">Target window: 6 months from Phase 1 compute commitment</div>
+          <div class="overall-stat-label">V1 ship bar</div>
+          <div class="ship-bar-target" id="v1-target"></div>
+          <div class="ship-bar-window" id="v1-window"></div>
         </div>
       </div>
-      <div class="bar-track"><div class="bar-fill" id="overall-bar" style="width: 0%"></div></div>
+      <div class="bar-track"><div class="bar-fill v1" id="v1-bar" style="width: 0%"></div></div>
+    </div>
+
+    <div class="overall-card alpha-card">
+      <span class="rung-badge alpha">Alpha — closed-alpha rung</span>
+      <div class="overall-grid">
+        <div>
+          <div class="overall-stat-label">Alpha progress</div>
+          <div class="overall-percent alpha" id="alpha-percent">0%</div>
+          <div class="overall-detail" id="alpha-detail"></div>
+        </div>
+        <div class="ship-bar-block">
+          <div class="overall-stat-label">Alpha ship bar</div>
+          <div class="ship-bar-target" id="alpha-target"></div>
+          <div class="ship-bar-window" id="alpha-window"></div>
+        </div>
+      </div>
+      <div class="bar-track"><div class="bar-fill alpha" id="alpha-bar" style="width: 0%"></div></div>
     </div>
 
     <div class="methodology">
-      <span class="methodology-icon">◆</span>
+      <span class="methodology-icon">â—†</span>
       <span>
-        <strong>How progress is scored.</strong> Each module's bar shows its raw build progress.
-        The overall figure folds in test confidence per module: strong-confidence work
-        (&ge;80&thinsp;/&thinsp;100) gets full credit; moderate (60&ndash;79) takes a 15%
-        discount; weak or untested work takes a 30% discount. Dedicated test passes run per
-        phase; until then, module confidence is held as <strong>not yet measurable</strong>
-        and the overall carries the untested-work discount.
+        <strong>How progress is scored.</strong> Two rung-specific bars. V1 progress weighs the V1
+        ship-bar module heavily and credits other modules by their V1-relevant share. Alpha progress
+        weighs the Alpha ship-bar module heavily and uses each module's full Alpha scope. Module bars
+        show raw build progress. Confidence multipliers: strong (&ge;80&thinsp;/&thinsp;100) full credit;
+        moderate (60&ndash;79) 15% discount; weak/untested 30% discount. Until dedicated test passes run,
+        modules are <strong>not yet measurable</strong>; the rung percentages carry the untested-work
+        discount.
       </span>
     </div>
 
@@ -670,243 +771,345 @@
 
   <script>
     /* =====================================================================
-       DATA — edit this block to update the tracker. Each section reflects
-       a layer of Nimbus's Phase 1 alpha architecture. Percentages bake in
-       testing confidence; untested work is heavily discounted. The
-       "Phase 1 closed alpha" module is the ship bar.
+       DATA — edit this block to update the tracker. Two product rungs:
+       V1 (single-client demo) + Alpha (closed alpha). Each module declares
+       its v1_weight (how much it counts toward V1 progress) and weight
+       (how much it counts toward Alpha progress).
        ===================================================================== */
     const DATA = {
-      generated_at: "2026-05-24 (session 2 — vision-architecture-converged; all kernel locks in place)",
-      source: "internal vision-alignment + architecture-perfection-check Pass 1",
-      ship_target: "Phase 1 closed alpha (50–100 invited users across consumer archetypes; 8-vertical kernel)",
-      overall_percent: 18,
-      overall_detail: "Vision + architecture substantially locked across the three-layer stack (harness substrate / orchestration brain / regular-user kernel). Includes full-duplex voice steering, trustless hybrid vault, Device-Service Mesh, hot-GPU per-session conversational inference, tile-simplification + tile-disambiguation as core consumer patterns, auto-Skill-acquisition, invisible auto-handoff, Goal Tray, 32-primitive kernel surface, 8 alpha verticals. K=3 architecture-perfection-check Pass 1 complete: ~30 material gaps surfaced and locked. Implementation greenfield begins after partner-compute commitment + Contract v1 draft + harness-survey close.",
+      generated_at: "2026-05-25 (session 3 close)",
+      source: "session 3 close — Layer 3 vision-align convergence + 4-dim schema migration",
+
+      v1: {
+        label: "V1 — single-client demonstration",
+        target: "Phone + PC clients on local PC server with Claude OAuth; essential 5-verb surface; demoable to one prospect at a time",
+        window: "Target window: 2–3 months from V1 kickoff",
+        overall_detail: "Essential subset; no partner-compute dependency. Architecture locked; demo-infra build pending.",
+      },
+
+      alpha: {
+        label: "Alpha — closed alpha",
+        target: "50–100 invited users across consumer archetypes; full 8-vertical kernel; 3-tier matrix; partner-compute data centre",
+        window: "Target window: 6 months from data-centre commitment",
+        overall_detail: "Full feature suite. Architecture comprehensively locked; greenfield blocked on partner-compute + Contract v1 + harness-survey close.",
+      },
+
       modules: [
         {
-          name: "Phase 1 closed alpha (ship bar)",
-          percent: 8,
-          weight: 3,
+          name: "V1 — single-client demonstration (V1 ship bar)",
+          is_v1_ship: true,
+          percent: 13,
+          weight: 0,
+          v1_weight: 3,
           confidence: null,
           submodules: [
-            { name: "Harness substrate (Hermes-absorbed + Claude Code patterns)", percent: 4 },
-            { name: "Three-canvas kernel surface (Chat + Preview + Task Tray) — Preview backed by Preview Intelligence Layer + Nimbus Visual Framework", percent: 5 },
-            { name: "Voice-first full-duplex conversational loop", percent: 0 },
-            { name: "Trustless hybrid vault + biometric gates", percent: 3 },
-            { name: "Device-Service Mesh (alpha subset: phone + desktop + connected services)", percent: 0 },
-            { name: "Multi-model inference infrastructure (hot-GPU on partner DC)", percent: 0 },
-            { name: "VLM-action substrate (alpha apps + selector library)", percent: 0 },
-            { name: "Alpha mobile verticals (Calendar / Comms / Food / Home / Info / Bills+Payments)", percent: 0 },
-            { name: "Alpha desktop verticals (Document Editing + Local Files+Code)", percent: 0 },
-            { name: "Multi-tenant SaaS infrastructure (orchestration + state + billing)", percent: 0 },
-            { name: "Closed alpha invite system + archetype-based onboarding", percent: 0 },
-            { name: "50–100 invited users across user archetypes", percent: 0 },
+            { name: "Local PC server runtime (Python harness candidate)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Claude OAuth integration (model access without frontier routing)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "PC client app (essential UI)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Android phone client app (essential UI, paired with PC server; iOS deferred to Alpha)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "5-verb basic surface — push-to-talk voice (full-duplex deferred to Alpha)", vision: true, arch_impl: true, code: 20, test: null },
+            { name: "Anticipate verb — V1 degraded mode (calendar + vault + task-deadline signals; world-state via CKS at Alpha)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Persistent identity (basic vault, biometric optional)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "3 core canvases (Chat + Preview + Task Tray) — basic", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Tile patterns (simplification + disambiguation)", vision: true, arch_impl: true, code: 38, test: null },
+            { name: "Goal Tray + Task Tray with per-Goal/Task CLAUDE.md mirror + progress logic", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "DSM-basic (Android phone + PC pairing only, no IoT)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Deterministic Op Lane (DOL) — V1 11-op seed locked: vault.write/read/search + calendar.create_event/list_events + task.create/update + clipboard.copy+paste + file.read+write + web.fetch + payment.upi_intent (Android)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "V1 verticals: Calendar + Information Retrieval + Food Ordering", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "UPI Intent payments — Android phone-client; P2P + merchant via system intent", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Demoable end-to-end on Goutham's PC", vision: true, arch_impl: true, code: 0, test: null },
           ],
           issues: [
-            "Vision + architecture locks complete this session (session 2); implementation greenfield opens after partner-compute commitment + Contract v1 + harness survey close.",
+            "Essential subset for single-prospect demo. Excludes multi-tenant SaaS, frontier routing, hot-GPU, tier matrix, federated learning, marketplace, full DSM IoT, CKS, PIS.",
+            "V1 â†’ Alpha is additive — same architectural shape, expanded scope; no rebuilds.",
+            "Ships without partner-compute dependency; Goutham's PC is the server.",
+          ],
+        },
+        {
+          name: "Alpha — closed alpha (Alpha ship bar)",
+          is_alpha_ship: true,
+          percent: 8,
+          weight: 3,
+          v1_weight: 0,
+          confidence: null,
+          submodules: [
+            { name: "Harness substrate (Hermes-absorbed + Claude Code patterns)", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Three-canvas kernel surface (Chat + Preview + Task Tray) — Preview backed by Preview Intelligence Layer + Nimbus Visual Framework", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Voice-first full-duplex conversational loop", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Trustless hybrid vault + biometric gates", vision: true, arch_impl: true, code: 3, test: null },
+            { name: "Device-Service Mesh (alpha subset: phone + desktop + connected services)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Multi-model inference infrastructure (hot-GPU on partner DC)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "VLM-action substrate (alpha apps + selector library)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Alpha mobile verticals (Calendar / Comms / Food / Home / Info / Bills+Payments)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Alpha desktop verticals (Document Editing + Local Files+Code)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Multi-tenant SaaS infrastructure (orchestration + state + billing)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Common Knowledge Substrate (CKS) — centralized multimodal world-state ingest", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Private Inference Substrate (PIS) — Premium-tier sealed-enclave private-data inference", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Closed alpha invite system + archetype-based onboarding", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "50–100 invited users across user archetypes", vision: true, arch_impl: true, code: 0, test: null },
+          ],
+          issues: [
+            "Architecture comprehensively locked through session 3; implementation greenfield opens after partner-compute commitment + Contract v1 + harness survey close.",
             "Alpha verticals bounded to 8 deliberately; Travel / Shopping / Entertainment / Marketplace defer to Beta.",
-            "Alpha audience emphasises archetype diversity (Vihaan-class professional + Sneha-class mobile-native + Lakshmi-class voice-only senior) to stress-test cross-demographic accessibility.",
+            "Alpha audience emphasises archetype diversity (professional + mobile-native + voice-only senior) to stress-test cross-demographic accessibility.",
           ],
         },
         {
           name: "Layer 1 — Harness substrate (Hermes-absorbed + Claude Code patterns + Nimbus additions)",
           percent: 22,
           weight: 1,
+          v1_weight: 0.5,
           confidence: null,
           submodules: [
-            { name: "Cached prompt assembly (Hermes-pattern, Nimbus slot order)", percent: 30 },
-            { name: "Trinity persistence: Nimbus Contract + per-user Profile + per-user state DB", percent: 28 },
-            { name: "HookBus + 21+ lifecycle events (PreToolUse / PreActionBiometric / UserBargeIn / etc.)", percent: 25 },
-            { name: "Kanban data model (tasks + runs + links + decomposer + heartbeat + retry)", percent: 25 },
-            { name: "Periodic-nudges memory curation loop", percent: 18 },
-            { name: "Skill auto-distillation loop (post-task trajectory → Skill proposal)", percent: 15 },
-            { name: "Subagent fan-out (Claude Code Agent pattern absorbed)", percent: 20 },
-            { name: "Plan mode (separation of read-only investigation vs acting)", percent: 22 },
-            { name: "ToolSearch / deferred-tool catalog (Claude Code pattern)", percent: 20 },
-            { name: "MCP compatibility (tool protocol — free with absorbed patterns)", percent: 15 },
-            { name: "Streaming-first end-to-end (STT → intent → LLM → TTS → tool/VLM cancellable + restartable)", percent: 10 },
-            { name: "Action interruptibility contract (atomic blocks / interruptible boundaries declared per Skill)", percent: 18 },
+            { name: "Cached prompt assembly (Hermes-pattern, Nimbus slot order)", vision: true, arch_impl: true, code: 30, test: null },
+            { name: "Trinity persistence: Nimbus Contract + per-user Profile + per-user state DB", vision: true, arch_impl: true, code: 28, test: null },
+            { name: "HookBus + 21+ lifecycle events (PreToolUse / PreActionBiometric / UserBargeIn / etc.)", vision: true, arch_impl: true, code: 25, test: null },
+            { name: "Kanban data model (tasks + runs + links + decomposer + heartbeat + retry)", vision: true, arch_impl: true, code: 25, test: null },
+            { name: "Periodic-nudges memory curation loop", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Skill auto-distillation loop (post-task trajectory â†’ Skill proposal)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Subagent fan-out (Claude Code Agent pattern absorbed)", vision: true, arch_impl: true, code: 20, test: null },
+            { name: "Plan mode (separation of read-only investigation vs acting)", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "ToolSearch / deferred-tool catalog (Claude Code pattern)", vision: true, arch_impl: true, code: 20, test: null },
+            { name: "MCP compatibility (tool protocol — free with absorbed patterns)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Streaming-first end-to-end (STT â†’ intent â†’ LLM â†’ TTS â†’ tool/VLM cancellable + restartable)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Action interruptibility contract (atomic blocks / interruptible boundaries declared per Skill)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Deterministic Op Lane (DOL) — LLM does NLâ†’op+args mapping, Python op registry executes deterministically; zero LLM tokens per routine op; auto-extended per Hermes pattern; absorbs VLM-action Layer 1 as single dispatch surface", vision: true, arch_impl: true, code: 8, test: null },
           ],
           issues: [
-            "Architecture absorbed from Hermes Agent (trinity, hooks, Kanban, decomposer, periodic nudges, skill distillation) + Claude Code (subagents, plan mode, ToolSearch, MCP, permission system, steering primitives).",
-            "Designed natively for the four Nimbus differentiators: regular-user abstraction, first-class context switchers, VLM-action substrate, trustless vault.",
-            "Streaming-first end-to-end is the architectural floor for full-duplex voice steering; greenfield work begins on inference layer first.",
+            "Substrate absorbs Hermes Agent (trinity, hooks, Kanban, decomposer, periodic nudges, skill distillation) + Claude Code (subagents, plan mode, ToolSearch, MCP, permission, steering primitives).",
+            "Designed natively for Nimbus differentiators: regular-user abstraction, first-class context switchers, VLM-action substrate, trustless vault, DOL.",
+            "Streaming-first end-to-end is the floor for full-duplex voice steering; greenfield begins on inference layer first.",
           ],
         },
         {
           name: "Layer 2 — Orchestration brain (Five Verbs + persistent identity + emergent loops)",
           percent: 20,
           weight: 1,
+          v1_weight: 1.0,
           confidence: null,
           submodules: [
-            { name: "Serve — task execution (Kanban-routed via decomposer)", percent: 22 },
-            { name: "Anticipate — Anticipation Ribbon + background pattern detection (conservative-default + user-tunable)", percent: 18 },
-            { name: "Guide — Quick-reply chips + tile-disambiguation orchestration", percent: 25 },
-            { name: "Safeguard — sensitive-action sensitivity-screen + biometric routing", percent: 18 },
-            { name: "Represent — Live Action Ribbon + confirmation routing", percent: 18 },
-            { name: "Care — persona overlay + tone-aware ambient surfacing", percent: 22 },
-            { name: "Persistent personal identity (vault-backed knowledge-of-user)", percent: 20 },
-            { name: "Auto-Goal classification + Goal Tray management (per-user heuristics, ambiguity → tile-disambiguation)", percent: 15 },
-            { name: "Auto-Skill acquisition loop (5+ tool-call trajectories → proposal, rate-limited 1/day)", percent: 12 },
-            { name: "Invisible auto-handoff (3-tier hot/warm/cold + lossless-fact extraction + auto-rehydration)", percent: 15 },
-            { name: "Persistent context resolver ('the usual', 'Aarti', 'last year's shop')", percent: 18 },
-            { name: "Cross-vertical reasoning (e.g. battery + booking + traffic correlation)", percent: 10 },
+            { name: "Serve — task execution (Kanban-routed via decomposer)", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Anticipate — Anticipation Ribbon + background pattern detection (conservative-default + user-tunable)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Guide — Quick-reply chips + tile-disambiguation orchestration", vision: true, arch_impl: true, code: 25, test: null },
+            { name: "Safeguard — sensitive-action sensitivity-screen + biometric routing", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Represent — Live Action Ribbon + confirmation routing", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Care — persona overlay + tone-aware ambient surfacing", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Persistent personal identity (vault-backed knowledge-of-user)", vision: true, arch_impl: true, code: 20, test: null },
+            { name: "Auto-Goal classification + Goal Tray management (per-user heuristics, ambiguity â†’ tile-disambiguation)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Auto-Skill acquisition loop (5+ tool-call trajectories â†’ proposal, rate-limited 1/day)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Invisible auto-handoff (3-tier hot/warm/cold + lossless-fact extraction + auto-rehydration)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Persistent context resolver ('the usual', 'Aarti', 'last year's shop')", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Cross-vertical reasoning (e.g. battery + booking + traffic correlation)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Per-Goal/Task CLAUDE.md mirror — goal_context.md + task_context.md with declarative status fields; source-of-truth for any Claude instance entering context cold", vision: true, arch_impl: true, code: 8, test: null },
           ],
           issues: [
-            "Five-verb framework mapped 1:1 to kernel surfaces (Serve → Chat/Preview/Task Tray; Anticipate → Anticipation Ribbon; Guide → Quick-Reply Chips + tile disambiguation; Safeguard → Vault Transparency + biometric; Represent → Live Action Ribbon).",
-            "Auto-Goal classification heuristics: temporal scope / sub-task multiplicity / stakeholder coordination / ongoing-state-change. Ambiguity → tile-disambiguation. Promotion path Task → Goal supported.",
-            "Auto-Skill-acquisition rate-limited (max 1/day); per-user classification (no global consistency expectation).",
+            "Five-verb framework mapped 1:1 to kernel surfaces (Serve â†’ Chat/Preview/Task Tray; Anticipate â†’ Anticipation Ribbon; Guide â†’ Quick-Reply Chips + tile disambiguation; Safeguard â†’ Vault Transparency + biometric; Represent â†’ Live Action Ribbon).",
+            "Auto-Goal classification heuristics: temporal scope / sub-task multiplicity / stakeholder coordination / ongoing-state-change. Ambiguity â†’ tile-disambiguation. Promotion path Task â†’ Goal supported.",
+            "Per-Goal/Task CLAUDE.md mirror is the rehydration substrate behind invisible auto-handoff; declarative progress fields support Goal Tray + Task Tray rendering.",
           ],
         },
         {
           name: "Layer 3 — Regular-user kernel surface (3 canvases + 31 primitives + 8 systems + 4 hard rules)",
           percent: 30,
           weight: 1,
+          v1_weight: 0.6,
           confidence: null,
           submodules: [
-            { name: "Verb-mapped UI: Chat + Preview + Task Tray + Goal Tray + Anticipation Ribbon + Quick-Reply Chips + Vault Transparency + Live Action Ribbon + Widget Canvas", percent: 35 },
-            { name: "Tile patterns: tile-simplification (transactional) + tile-disambiguation (ambiguity resolution)", percent: 38 },
-            { name: "Cross-cutting kernel primitives (31): Camera/Capture + Map + Media Controls + Vault Search + Quick-Action Dock + Live Activity + Handoff + Permission Gates + Biometric + Undo + Cancel + Confirmation Overlay + Citation/Source + Quick-Capture Scratchpad + Cross-Device Clipboard + Focus Mode + At-a-Glance Card + Open-in-App + Why?/Reasoning Surface + Audit Log (with Replay) + Trust/Confidence Indicator + Status Pill + Privacy Mode (Incognito) + Snooze + Severity/Urgency Hierarchy + Pre-Send Preview + Side-by-Side/Split-View + Drag Manipulation + Accessibility Primitives Bundle + Continuity Digest + Multi-Party Presence Indicator + AskUser (composable multi-modal input request)", percent: 24 },
-            { name: "Kernel systems (8): DSM + Live Translation + SOS/Emergency + Eyes-Free Mode + Cross-Modal Feedback + Invisible Auto-Handoff + Shell Execution Surface (desktop) + Screen Watch (desktop)", percent: 20 },
-            { name: "Hard rules (4): no-ads / biometric-gated / vault-visible+forgettable / never-claim-memory-loss", percent: 100 },
-            { name: "Progressive-disclosure architecture (first-run minimal → day-30 full)", percent: 25 },
-            { name: "Archetype-based onboarding (Voice-first / Mobile-native / Productivity-rich / Custom)", percent: 18 },
-            { name: "Surface coordination hierarchy (Dock=user authority / Anticipation=Nimbus-proactive / Chips=conversational)", percent: 30 },
+            { name: "Verb-mapped UI: Chat + Preview + Task Tray + Goal Tray + Anticipation Ribbon + Quick-Reply Chips + Vault Transparency + Live Action Ribbon + Widget Canvas", vision: true, arch_impl: true, code: 35, test: null },
+            { name: "Tile patterns: tile-simplification (transactional) + tile-disambiguation (ambiguity resolution)", vision: true, arch_impl: true, code: 38, test: null },
+            { name: "Cross-cutting kernel primitives (31)", vision: true, arch_impl: true, code: 24, test: null },
+            { name: "Kernel systems (8): DSM + Live Translation + SOS/Emergency + Eyes-Free Mode + Cross-Modal Feedback + Invisible Auto-Handoff + Shell Execution Surface (desktop) + Screen Watch (desktop)", vision: true, arch_impl: true, code: 20, test: null },
+            { name: "Hard rules (4): no-ads / biometric-gated / vault-visible+forgettable / never-claim-memory-loss", vision: true, arch_impl: true, code: 100, test: null },
+            { name: "Progressive-disclosure architecture (first-run minimal â†’ day-30 full)", vision: true, arch_impl: true, code: 25, test: null },
+            { name: "Archetype-based onboarding (Voice-first / Mobile-native / Productivity-rich / Custom)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Surface coordination hierarchy (Dock=user authority / Anticipation=Nimbus-proactive / Chips=conversational)", vision: true, arch_impl: true, code: 30, test: null },
           ],
           issues: [
-            "Three-canvas + 30-primitive + 7-system kernel surface fully spec'd via K=3 perfection-check Pass 1 (~30 material gaps) + Pass 2 (13 new UX primitives + Shell Execution Surface as desktop kernel system).",
-            "Tile-disambiguation is the structural pattern for ambiguity resolution across all verticals (people, places, files, items, etc.).",
-            "Widget canvas user-authoring + BYO-models + plugin authoring + marketplace defer to Beta; alpha ships curated defaults + Nimbus-managed models only.",
-            "Shell Execution Surface is desktop-only (mobile OS sandboxes prevent it); tier-gated by command-class (read = light gate; write = biometric; system-modifying = biometric + explain + secondary confirm; elevation = explicit per-invocation approval); destructive ops always sandboxed-dry-run-preview first.",
+            "Three-canvas + 31-primitive + 8-system kernel surface fully spec'd via K=3 perfection-check Passes 1–3.",
+            "Tile-disambiguation is the structural pattern for ambiguity resolution across verticals (people, places, files, items, etc.).",
+            "Widget canvas user-authoring + BYO-models + plugin authoring + marketplace defer to Beta; alpha ships curated defaults.",
+            "Shell Execution Surface desktop-only; tier-gated by command-class; destructive ops sandboxed-dry-run-preview first.",
           ],
         },
         {
           name: "Device-Service Mesh (DSM)",
           percent: 15,
           weight: 1,
+          v1_weight: 0.2,
           confidence: null,
           submodules: [
-            { name: "Discovery: phone + desktop + accessory devices (alpha scope)", percent: 22 },
-            { name: "Capability signature modeling (display / audio / camera / biometric / payment / storage / etc.)", percent: 18 },
-            { name: "Routing engine (best-fit device per kernel function invocation)", percent: 15 },
-            { name: "Trust tiers: Personal (vault-readable) / Shared (vault-writable not readable) / Public (control-only)", percent: 25 },
-            { name: "Failover graceful degradation", percent: 12 },
-            { name: "User-preference learning over time", percent: 8 },
-            { name: "Cross-device session affinity + handoff (<2s pulse, Beta scope)", percent: 10 },
-            { name: "IoT / smart-home discovery (via Home Auto vertical, Beta-extended)", percent: 5 },
-            { name: "Vehicle / wearable / smart-speaker DSM expansion (Beta+ / V1.5+)", percent: 0 },
-            { name: "Remote device lifecycle management (Wake-on-LAN + remote shutdown + scheduled power)", percent: 10 },
-            { name: "Command queueing for offline devices (deliver-when-online + TTL + Task Tray surfacing)", percent: 8 },
-            { name: "Power-state field in device capability signature", percent: 12 },
-            { name: "Auto-Onboarding Loop — proactive discovery + identify on encounter + attempt autonomous connect + ask user for help when stuck + persist learning to vault", percent: 12 },
-            { name: "Curated protocol library (~200 device-class capability schemas at alpha; Matter / MQTT / Bluetooth profiles / HTTP-API / vendor APIs / Home Assistant 2000+ integration library as substrate)", percent: 15 },
-            { name: "Rich capability schemas per device class — state queries + actions + action parameters + per-action sensitivity tier + data streams + events + constraints (not just on/off)", percent: 12 },
-            { name: "Five-path capability discovery: (1) curated library; (2) Home Assistant absorption; (3) vendor cloud API enumeration; (4) VLM-driven companion-app exploration; (5) user-assisted gap-fill via demonstration", percent: 10 },
-            { name: "Live data streaming as DSM capability class (camera feeds + audio + sensor streams) — P2P-first routing, cloud-relay fallback", percent: 8 },
-            { name: "Device-action sensitivity tiers per capability (Hue color = low; lock unlock = high; camera recording = high) — drives biometric-gate behavior", percent: 10 },
-            { name: "Best-effort connection escalation (try most-likely protocol → fall back to alternatives → ask user at action boundary, never silent-fail)", percent: 10 },
-            { name: "Per-device-class one-time onboarding (first encounter establishes class profile; subsequent same-class devices auto-recognized)", percent: 8 },
-            { name: "Joint-family / multi-tenant household awareness — shared vs private devices; per-user access matrix on shared devices", percent: 5 },
-            { name: "Indian device ecosystem priority (Mi Home / Tuya / Realme / Wipro Garnet / Crompton / Atomberg / Boat alpha; Western ecosystem alongside)", percent: 8 },
-            { name: "Device-offline UX (last-known state + timestamp + queued-action TTL + offline indicator on related primitives)", percent: 12 },
-            { name: "Streaming degradation discipline (camera quality drop → snapshot fallback; bandwidth-aware; persistent connection tracking)", percent: 8 },
-            { name: "Device-command prompt-injection defense (high-stakes commands require user-initiated trigger; never auto-triggered from external content)", percent: 10 },
+            { name: "Discovery: phone + desktop + accessory devices (alpha scope)", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Capability signature modeling (display / audio / camera / biometric / payment / storage / etc.)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Routing engine (best-fit device per kernel function invocation)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Trust tiers: Personal (vault-readable) / Shared (vault-writable not readable) / Public (control-only)", vision: true, arch_impl: true, code: 25, test: null },
+            { name: "Failover graceful degradation", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "User-preference learning over time", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Cross-device session affinity + handoff (<2s pulse, Beta scope)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "IoT / smart-home discovery (via Home Auto vertical, Beta-extended)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Vehicle / wearable / smart-speaker DSM expansion (Beta+ / V1.5+)", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Remote device lifecycle management (Wake-on-LAN + remote shutdown + scheduled power)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Command queueing for offline devices (deliver-when-online + TTL + Task Tray surfacing)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Auto-Onboarding Loop — proactive discovery + identify + attempt connect + ask user for help + persist learning", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Curated protocol library (~200 device-class schemas at alpha; Matter / MQTT / Bluetooth / HTTP-API / Home Assistant 2000+ as substrate)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Rich capability schemas per device class — state queries + actions + parameters + sensitivity tiers + streams + events + constraints", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Five-path capability discovery (curated / Home Assistant / vendor cloud / VLM companion-app exploration / user-assisted)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Live data streaming as DSM capability class (camera / audio / sensor) — P2P-first, cloud-relay fallback", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Device-action sensitivity tiers per capability — drives biometric-gate behavior", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Best-effort connection escalation (try most-likely â†’ fallback â†’ ask user; never silent-fail)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Per-device-class one-time onboarding (first encounter establishes class profile)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Joint-family / multi-tenant household awareness — shared vs private devices; per-user access matrix", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Indian device ecosystem priority (Mi Home / Tuya / Realme / Wipro Garnet / Crompton / Atomberg / Boat alpha)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Device-offline UX (last-known state + timestamp + queued-action TTL + offline indicator)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Streaming degradation discipline (camera quality drop â†’ snapshot fallback; bandwidth-aware)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Device-command prompt-injection defense (high-stakes commands require user-initiated trigger)", vision: true, arch_impl: true, code: 10, test: null },
           ],
           issues: [
-            "DSM as universal device-and-service abstraction is a new architectural commitment — no existing single product spans Apple Continuity + Google Cast + Matter + Home Assistant scope.",
-            "DSM Auto-Onboarding Loop (locked session 2) extends DSM from routing-among-known-devices to active integration engine that extends its own reach: discovers, identifies, attempts connect, asks for help, persists learning. Major differentiator vs Apple/Google/Amazon (which require manual app-by-app integration).",
-            "Alpha scope: phone + desktop + connected cloud services + remote-device lifecycle (Wake-on-LAN / shutdown / scheduled power) for Personal devices + auto-onboarding for high-confidence-safe device classes (lights/speakers/displays/sensors); full IoT (beyond Home Auto vertical) + wearable + vehicle defer to Beta.",
-            "Privacy boundary: untrusted devices (shared TV, guest's speaker, public display) get control-only, never vault-readable; remote shutdown gated to Personal-tier devices with secondary confirmation.",
-            "Best-effort posture: Nimbus never silently fails (always surfaces inability + asks at action boundary), never silently risks user state. Auto-Onboarding feeds the auto-Skill-acquisition loop — new devices may surface observed-pattern Skill proposals.",
+            "Universal device-and-service abstraction; spans Apple Continuity + Google Cast + Matter + Home Assistant scope.",
+            "Auto-Onboarding Loop extends DSM from routing to active integration: discovers, identifies, attempts connect, asks for help, persists learning. Differentiator vs Apple/Google/Amazon.",
+            "Alpha scope: phone + desktop + connected cloud services + remote-device lifecycle + auto-onboarding for high-confidence-safe device classes; full IoT + wearable + vehicle defer to Beta.",
+            "Privacy boundary: untrusted devices control-only, never vault-readable; remote shutdown gated to Personal-tier with secondary confirmation.",
+            "Best-effort posture: never silent-fail; surfaces inability + asks at action boundary. Auto-Onboarding feeds auto-Skill-acquisition.",
           ],
         },
         {
           name: "Preview Intelligence Layer",
           percent: 14,
           weight: 1,
+          v1_weight: 0.4,
           confidence: null,
           submodules: [
-            { name: "Universal Content Ingestion (web / app screen / file / video / audio / user-captured / paste / share-target)", percent: 18 },
-            { name: "Multi-modal extraction pipeline (VLM visual + LLM text + STT audio + frame-sampled video + structured entity/date/price/address extraction)", percent: 15 },
-            { name: "Vault contextualization (extracted info enriched against user's known entities + relationships + recent interactions + cross-vertical routing)", percent: 12 },
-            { name: "Composable preview primitives (~22: entity card / detail / list / tile grid / comparison / timeline / map / media player / document viewer / spreadsheet / quote / confirmation / summary / reference frame / chart / tree / diff / code / image / gallery / live stream viewer / home dashboard / multi-pane composite)", percent: 15 },
-            { name: "Smart primitive selection (Nimbus auto-picks which composable primitive(s) for given extracted content; user can override)", percent: 12 },
-            { name: "Bi-directional editability (Preview-edits write back to source via API or VLM-action where source allows)", percent: 10 },
-            { name: "Confidence + provenance tagging (every extracted item: source-of-truth + confidence tier + Open-in-App affordance)", percent: 18 },
-            { name: "Cross-vertical routing (extracted content auto-tagged: flight → Calendar; invoice → Bills; recipe → Notes; meeting agenda → Goal Tray)", percent: 10 },
+            { name: "Universal Content Ingestion (web / app screen / file / video / audio / user-captured / paste / share-target)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Multi-modal extraction pipeline (VLM visual + LLM text + STT audio + frame-sampled video + structured extraction)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Vault contextualization (extracted info enriched against user's entities + relationships + recent interactions)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Composable preview primitives (~22)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Smart primitive selection (auto-picks composable primitive(s); user can override)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Bi-directional editability (Preview-edits write back to source via API or VLM-action)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Confidence + provenance tagging (every extracted item: source + confidence tier + Open-in-App)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Cross-vertical routing (extracted content auto-tagged: flight â†’ Calendar; invoice â†’ Bills; recipe â†’ Notes)", vision: true, arch_impl: true, code: 10, test: null },
           ],
           issues: [
-            "Preview Intelligence is the engine behind the Preview Bar canvas — Nimbus's universal content extraction + contextualization + Nimbus-native rendering pipeline.",
-            "Per principal session-2 lock: 'we cannot hardcode calls from all apps or services or have APIs; our VLM and LLM models should be leveraged well to give well structured output.' This is the architectural realization.",
-            "Same VLM/LLM substrate as the VLM-action layer (action vs extraction = same model class, different use); same layered fallback (Native API → Accessibility → fine-tuned VLM → frontier VLM).",
-            "Composable primitive library renders consistently via the Nimbus Visual Framework regardless of source.",
+            "Engine behind the Preview Bar canvas — universal extraction + contextualization + Nimbus-native rendering.",
+            "Per principal lock: 'we cannot hardcode calls from all apps; VLM and LLM models should be leveraged for well-structured output.'",
+            "Same VLM/LLM substrate as VLM-action layer (action vs extraction = same model class, different use); same layered fallback.",
           ],
         },
         {
           name: "Nimbus Visual Framework / Design System",
           percent: 12,
           weight: 1,
+          v1_weight: 0.5,
           confidence: null,
           submodules: [
-            { name: "Typography system (Inter or equivalent + system fallback; size scale + weight scale + contextual line-height)", percent: 18 },
-            { name: "Color tokens (light/dark/high-contrast + Nimbus accent identity: indigo/violet/cyan gradient seed)", percent: 22 },
-            { name: "Iconography (curated library — Lucide/Phosphor — + custom Nimbus marks for verbs/primitives/status)", percent: 12 },
-            { name: "Motion design (animation curves + durations + choreography rules + reduced-motion variants)", percent: 8 },
-            { name: "Component library (every UI element composed from shared components; consistency by construction)", percent: 10 },
-            { name: "Layout grids + spacing system (responsive across phone/tablet/desktop/web; 4px base spacing scale)", percent: 15 },
-            { name: "Information density modes (compact / standard / spacious; user-selectable + auto-adaptive)", percent: 8 },
-            { name: "Accessibility variants (high-contrast + large-text + reduced-motion + screen-reader-optimized — realizes Pass 2 Accessibility Bundle)", percent: 10 },
-            { name: "Theme support (system-following + manual override + per-user customization within brand identity)", percent: 12 },
-            { name: "Cross-form-factor consistency (same Nimbus feel on phone / desktop / web / future watch+TV+car)", percent: 15 },
+            { name: "Typography system (Inter or equivalent + system fallback; size + weight + contextual line-height)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Color tokens (light/dark/high-contrast + Nimbus accent identity: indigo/violet/cyan gradient seed)", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Iconography (Lucide/Phosphor + custom Nimbus marks for verbs/primitives/status)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Motion design (animation curves + durations + choreography rules + reduced-motion variants)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Component library (every UI element composed from shared components; consistency by construction)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Layout grids + spacing system (responsive across phone/tablet/desktop/web; 4px base scale)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Information density modes (compact / standard / spacious; user-selectable + auto-adaptive)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Accessibility variants (high-contrast + large-text + reduced-motion + screen-reader-optimized)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Theme support (system-following + manual override + per-user customization within brand identity)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Cross-form-factor consistency (same Nimbus feel across phone / desktop / web / future watch+TV+car)", vision: true, arch_impl: true, code: 15, test: null },
           ],
           issues: [
-            "Visual Framework is the design substrate every UI element depends on — consistency across 30 cross-cutting primitives + 9 verb-mapped surfaces + 20 preview primitives + widget canvas + all form factors.",
-            "Reference points (for bar-setting, not copying): Apple HIG, Material 3, Fluent, Carbon, Polaris — years-of-investment systems; Nimbus needs equivalent at MVP scale evolving toward full maturity by GA.",
-            "Existing Nimbus tracker UI (Inter + indigo/violet/cyan + clean spacing + soft shadows + restrained motion) is the candidate seed; already feels like Nimbus.",
-            "Inconsistency at this scale would be lethal — 30 primitives × 3 canvases × multi-form-factor × 20-primitive Preview rendering pipeline without coherent visual substrate = unnavigable.",
+            "Design substrate every UI element depends on — consistency across 31 cross-cutting primitives + 9 verb-mapped surfaces + 22 preview primitives + widget canvas + all form factors.",
+            "Reference points: Apple HIG, Material 3, Fluent, Carbon, Polaris — years-of-investment systems; Nimbus needs equivalent at MVP scale evolving to full maturity by GA.",
+            "Existing Nimbus tracker UI is the candidate seed; already feels like Nimbus.",
           ],
         },
         {
           name: "Inference infrastructure (hot-GPU + multi-model routing + STT/TTS)",
           percent: 14,
           weight: 1,
+          v1_weight: 0,
           confidence: null,
           submodules: [
-            { name: "Hot-GPU per-session-affinity inference (H100/H200 class, in-country)", percent: 12 },
-            { name: "Multi-model routing: orchestration + VLM-action + background + intent classifier", percent: 18 },
-            { name: "Streaming STT (Hindi+English alpha; regional Beta+)", percent: 10 },
-            { name: "Streaming TTS (Hindi+English alpha; regional Beta+)", percent: 10 },
-            { name: "Intent classifier (small fast model, <100ms latency budget)", percent: 8 },
-            { name: "Open-weight self-hosted model strategy (Hermes 4 / Qwen 3 / Llama 4 family)", percent: 22 },
-            { name: "Tiered routing (Personal=smaller-shared / Premium=dedicated)", percent: 16 },
-            { name: "In-country deployment (Mumbai / Chennai / Hyderabad)", percent: 5 },
-            { name: "Speculative decoding + continuous batching", percent: 8 },
-            { name: "KV-cache persistence per-user-session (warm across turns + trailing window)", percent: 10 },
-            { name: "Edge-routing for remote-device segments (DSM-routed flows)", percent: 5 },
+            { name: "Hot-GPU per-session-affinity inference (H100/H200 class, in-country)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Multi-model routing: orchestration + VLM-action + background + intent classifier", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Streaming STT (Hindi+English alpha; regional Beta+)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Streaming TTS (Hindi+English alpha; regional Beta+)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Intent classifier (small fast model, <100ms latency budget)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Open-weight self-hosted model strategy (Hermes 4 / Qwen 3 / Llama 4 family)", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Tiered routing (Personal=smaller-shared / Premium=dedicated)", vision: true, arch_impl: true, code: 16, test: null },
+            { name: "In-country deployment (Mumbai / Chennai / Hyderabad)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Speculative decoding + continuous batching", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "KV-cache persistence per-user-session (warm across turns + trailing window)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Edge-routing for remote-device segments (DSM-routed flows)", vision: true, arch_impl: true, code: 5, test: null },
           ],
           issues: [
             "Hot-GPU strategy locked: per-session affinity + persistent KV cache + speculative decoding + continuous batching + pre-warmed pools + in-country deployment.",
             "Latency SLAs: barge-in <200ms, steer-ack <500ms, first-word <800ms. Tighter than typical SaaS; constrains model + region choices.",
-            "Self-hosted open-weight on partner infra > pay-per-inference frontier APIs at scale (partner-pitch updated to specify H100/H200-class with low-latency interconnect, in-country, session-affine).",
+            "Self-hosted open-weight on partner infra > pay-per-inference frontier APIs at scale.",
+            "Not in V1 scope — V1 uses Claude OAuth direct without frontier routing or hot-GPU.",
+          ],
+        },
+        {
+          name: "Common Knowledge Substrate (CKS) — centralized multimodal ingest",
+          percent: 5,
+          weight: 1,
+          v1_weight: 0,
+          confidence: null,
+          submodules: [
+            { name: "Multimodal ingest pipeline (news / social / markets / weather / public datasets)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Indexing + embedding (one-time per ingest; served to all clients)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Per-data-class refresh cadence (markets 15s / news 5min / social 1min during active windows)", vision: true, arch_impl: true, code: 6, test: null },
+            { name: "Per-user filtering at consumption time (vault + Goal context â†’ CKS slice)", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Source attribution preserved (Inform / Anticipate output cites CKS metadata)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Strict one-way flow (query data never enters CKS)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Source-deal partnership matrix (paid API vs scrape-and-attribute vs first-party RSS)", vision: true, arch_impl: true, code: 2, test: null },
+            { name: "Network-effect rank-signal (opt-in user signals improve surface ranker without exposing user-specific data)", vision: true, arch_impl: true, code: 3, test: null },
+          ],
+          issues: [
+            "Shared world-state, NOT user-state. Public/world data only — bank balances, private docs, calendar never enter CKS.",
+            "Amortizes scraping/API cost across users; major unit-economics win at scale; significant upfront capex.",
+            "V1-skippable (single user — on-demand scraping fine); Alpha day-one.",
+            "Composes with Preview Intelligence Layer (rendered surfaces draw from CKS) + DSM (some device-side data contributes opt-in) + federated learning (rank signals).",
+          ],
+        },
+        {
+          name: "Private Inference Substrate (PIS) — Premium-tier sealed-enclave for private data",
+          percent: 4,
+          weight: 1,
+          v1_weight: 0,
+          confidence: null,
+          submodules: [
+            { name: "Per-Premium-user dedicated small model (7-14B class; model choice pending)", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Sealed enclave: no outbound network beyond allowlisted ops; no logging beyond per-user encrypted state", vision: true, arch_impl: true, code: 6, test: null },
+            { name: "Verb-dispatch data classification (vault-tagged 'private' â†’ PIS; never frontier)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "PIS execution surfaces: alerts / strategies / surfacing / suggestions on private data", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Privacy-scrubbed handoff package (abstract claims for cross-routing if frontier orchestration needed)", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Composes with trustless hybrid vault (extends server-side ephemeral with compute)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Composes with hot-GPU per-session (additional substrate, not replacement)", vision: true, arch_impl: true, code: 6, test: null },
+            { name: "Privacy-scrubbing protocols (numeric abstraction / entity anonymization / temporal blurring / refusal-when-degrades-output)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Audit trail: every PISâ†”frontier crossing logged in vault audit; zero crossings without data-classification + scrub-pass", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Geographic constraint (EU â†’ EU; India â†’ India per GDPR/DPDP)", vision: true, arch_impl: true, code: 3, test: null },
+          ],
+          issues: [
+            "Premium-tier differentiator beyond hot-GPU. Privacy-by-architecture, not privacy-by-promise.",
+            "Guarantees: 'your bank balance never reaches OpenAI/Anthropic/Google'; 'your private docs never read by model outside your sealed enclave.'",
+            "Open questions: PIS model size (7-13B vs 30-70B); fine-tune per user vs LoRA adapter; PIS for Professional tier (currently Premium-only).",
+            "Not in V1 scope — V1 is single-user; no tier-Premium concept yet.",
           ],
         },
         {
           name: "VLM-action substrate (layered)",
           percent: 12,
           weight: 1,
+          v1_weight: 0.3,
           confidence: null,
           submodules: [
-            { name: "Layer 1: Native API (Microsoft Graph / BBPS / UPI Intent / Google APIs / Paytm)", percent: 15 },
-            { name: "Layer 2: Accessibility tree + curated selector library (top-50 Indian apps at alpha)", percent: 10 },
-            { name: "Layer 3: Fine-tuned open-weight VLM (Qwen 2.5-VL family on aggregated trajectories)", percent: 12 },
-            { name: "Layer 4: Frontier VLM API fallback (Claude Computer Use / Gemini Pro Vision)", percent: 18 },
-            { name: "User-assisted training loop (per-trajectory consent + on-device PII scrubbing + forget-my-contributions)", percent: 8 },
-            { name: "App-version monitoring + selector breakage auto-detection", percent: 5 },
-            { name: "Action-boundary discipline (atomic vs interruptible blocks declared per Skill)", percent: 20 },
-            { name: "Sensitive-action verification (app-checkmark + URL-match + biometric summary)", percent: 12 },
-            { name: "Low-confidence gate (defaults to user-confirmation tile below threshold)", percent: 15 },
+            { name: "Layer 1: DOL (Deterministic Op Lane) — Native API + Printing Press auto-CLIs (Microsoft Graph / BBPS / UPI Intent / Google APIs / Paytm); single deterministic-dispatch surface", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Layer 2: Accessibility tree + curated selector library (top-50 Indian apps at alpha)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Layer 3: Fine-tuned open-weight VLM (Qwen 2.5-VL family on aggregated trajectories)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Layer 4: Frontier VLM API fallback (Claude Computer Use / Gemini Pro Vision)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "User-assisted training loop (per-trajectory consent + on-device PII scrubbing + forget-my-contributions)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "App-version monitoring + selector breakage auto-detection", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Action-boundary discipline (atomic vs interruptible blocks declared per Skill)", vision: true, arch_impl: true, code: 20, test: null },
+            { name: "Sensitive-action verification (app-checkmark + URL-match + biometric summary)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Low-confidence gate (defaults to user-confirmation tile below threshold)", vision: true, arch_impl: true, code: 15, test: null },
           ],
           issues: [
-            "Four-layer substrate (Native API → Accessibility/Selector → Fine-tuned VLM → Frontier API) amortizes cost + maximizes reliability + app-update-resilience.",
+            "Four-layer substrate amortizes cost + maximizes reliability + app-update-resilience.",
             "User-assisted training loop is the scaling mechanism — Tesla-fleet-learning model applied to GUI agents. Per-action consent (not just per-app).",
             "Selector library Nimbus-team-authored at alpha (top-50 apps); community + auto-learning open at Beta.",
           ],
@@ -915,183 +1118,205 @@
           name: "Trustless vault + biometric + privacy substrate",
           percent: 16,
           weight: 1,
+          v1_weight: 0.4,
           confidence: null,
           submodules: [
-            { name: "Hybrid decryption: device-side (crown-jewel data) + server-side ephemeral (working context)", percent: 18 },
-            { name: "Vault entity schemas (contacts/places/files/items with rich identity for tile-disambiguation)", percent: 22 },
-            { name: "Biometric gates (Face ID / Touch ID / Windows Hello / Android Biometric Prompt)", percent: 15 },
-            { name: "Voice-biometric for high-stakes actions (deepfake-resistance)", percent: 8 },
-            { name: "Permission/consent gates (visible + biometric-confirmed + plain-language)", percent: 18 },
-            { name: "Vault Transparency surface (browsable + searchable + forget-this)", percent: 22 },
-            { name: "Vault Universal Search (across entities + conversations + tasks + relationships)", percent: 15 },
-            { name: "Compression redaction discipline (sensitive context → vault-pointer references, not inline-summary)", percent: 12 },
-            { name: "Trust-tier-aware DSM routing (Personal / Shared / Public devices)", percent: 18 },
-            { name: "Plugin sandbox + untrusted-content sanitization", percent: 10 },
-            { name: "Indian relationship-name field (Raghu uncle / Aarti didi, auto-detected)", percent: 15 },
+            { name: "Hybrid decryption: device-side (crown-jewel data) + server-side ephemeral (working context)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Vault entity schemas (contacts/places/files/items with rich identity for tile-disambiguation)", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Biometric gates (Face ID / Touch ID / Windows Hello / Android Biometric Prompt)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Voice-biometric for high-stakes actions (deepfake-resistance)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Permission/consent gates (visible + biometric-confirmed + plain-language)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Vault Transparency surface (browsable + searchable + forget-this)", vision: true, arch_impl: true, code: 22, test: null },
+            { name: "Vault Universal Search (across entities + conversations + tasks + relationships)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Compression redaction discipline (sensitive context â†’ vault-pointer references, not inline-summary)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Trust-tier-aware DSM routing (Personal / Shared / Public devices)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Plugin sandbox + untrusted-content sanitization", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Indian relationship-name field (Raghu uncle / Aarti didi, auto-detected)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "PIS integration — vault is trust boundary that contains PIS enclave (Premium tier)", vision: true, arch_impl: true, code: 6, test: null },
           ],
           issues: [
-            "Trustless storage is structural lock — Nimbus cannot read user's crown-jewel data server-side even if it wanted to. Investor-pitch differentiator.",
-            "Biometric is non-negotiable for spending / sending-to-people / vault-access / credential-unlock / sensitive comms.",
-            "Voice-biometric for high-stakes added at Pass 1 lock (deepfake voice attack defense).",
+            "Trustless storage is structural lock — Nimbus cannot read user's crown-jewel data server-side. Investor-pitch differentiator.",
+            "Biometric non-negotiable for spending / sending-to-people / vault-access / credential-unlock / sensitive comms.",
+            "Voice-biometric for high-stakes is deepfake voice-attack defense.",
+            "PIS extends the trust boundary with compute, not just storage — Premium tier only.",
           ],
         },
         {
           name: "Verticals (alpha-8)",
           percent: 10,
           weight: 1,
+          v1_weight: 0.3,
           confidence: null,
           submodules: [
-            { name: "Calendar (Nimbus-native canvas; sync Google/Outlook/iCal; cultural calendar awareness baked in)", percent: 12 },
-            { name: "Comms (Email native canvas + Gmail/Outlook sync; WhatsApp via VLM-action; sensitivity-screen)", percent: 10 },
-            { name: "Food Ordering (Swiggy/Zomato/Blinkit VLM-action + tile-simplification)", percent: 8 },
-            { name: "Home Automation (DSM auto-discovery + protocol library; Home Assistant integration pattern)", percent: 12 },
-            { name: "Information Retrieval (web search + doc summarization + uncertainty indicator + citation/source)", percent: 15 },
-            { name: "Bills + Payments + P2P (BBPS read + UPI Intent + Paytm partner; Nimbus = initiator, not processor)", percent: 8 },
-            { name: "Document Editing (desktop — Word/Excel native editing via chat; OneDrive/Drive sync)", percent: 8 },
-            { name: "Local Files + Code/Web/Program Creation (desktop; Shell Execution Surface as substrate — natural-language → PowerShell/bash → results-focused preview; tier-gated by command-class)", percent: 12 },
-            { name: "Per-vertical tile-schemas (decision-tile mapping for transactional flows)", percent: 10 },
-            { name: "Auto-Skill acquisition per-vertical (observed-workflow → proposal, user-approved)", percent: 5 },
+            { name: "Calendar (Nimbus-native canvas; sync Google/Outlook/iCal; cultural calendar awareness baked in)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Comms (Email native canvas + Gmail/Outlook sync; WhatsApp via VLM-action; sensitivity-screen)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Food Ordering (Swiggy/Zomato/Blinkit VLM-action + tile-simplification)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Home Automation (DSM auto-discovery + protocol library; Home Assistant integration pattern)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Information Retrieval (web search + doc summarization + uncertainty indicator + citation/source)", vision: true, arch_impl: true, code: 15, test: null },
+            { name: "Bills + Payments + P2P (BBPS read + UPI Intent + Paytm partner; Nimbus = initiator, not processor)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Document Editing (desktop — Word/Excel native editing via chat; OneDrive/Drive sync)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Local Files + Code/Web/Program Creation (desktop; Shell Execution Surface substrate)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Per-vertical tile-schemas (decision-tile mapping for transactional flows)", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Auto-Skill acquisition per-vertical (observed-workflow â†’ proposal, user-approved)", vision: true, arch_impl: true, code: 5, test: null },
           ],
           issues: [
             "Alpha-8 vertical lock: 6 mobile (Calendar / Comms / Food / Home / Info / Bills+Payments) + 2 desktop superset (Document Editing / Local Files+Code).",
             "Travel + Shopping + Entertainment defer to Beta; additional integrations layer in V1.0–V1.5.",
-            "Each transactional vertical ships with curated tile-schema; Nimbus extracts user-decision-points from third-party app UI, re-renders as Nimbus tiles.",
+            "V1 picks 2–3 of 8 (Calendar + Information Retrieval + 1 TBD); Alpha runs all 8.",
+            "Each transactional vertical ships with curated tile-schema; Nimbus extracts user-decision-points from third-party app UI.",
           ],
         },
         {
           name: "Extension model (user-shapeable surfaces)",
           percent: 12,
           weight: 1,
+          v1_weight: 0,
           confidence: null,
           submodules: [
-            { name: "User-supplied credentials (any OAuth/token service)", percent: 18 },
-            { name: "BYO-AI-model API keys (route specific tasks through user's quota — Beta scope)", percent: 8 },
-            { name: "User-authored plugins (natural-language description → Nimbus builds — Beta scope)", percent: 5 },
-            { name: "User-authored widgets (DSL primitives, preview-before-deploy — Beta scope)", percent: 5 },
-            { name: "Curated widget library (alpha-shipped defaults)", percent: 18 },
-            { name: "Plugin sandbox + untrusted-content discipline (stricter than Skills)", percent: 12 },
-            { name: "Marketplace architecture (App-Store-strict curation; soft-launch Beta, open GA)", percent: 8 },
-            { name: "Revenue model: free + paid one-time + paid subscription; Nimbus takes 15-20%", percent: 15 },
+            { name: "User-supplied credentials (any OAuth/token service)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "BYO-AI-model API keys (route specific tasks through user's quota — Beta scope)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "User-authored plugins (natural-language description â†’ Nimbus builds — Beta scope)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "User-authored widgets (DSL primitives, preview-before-deploy — Beta scope)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Curated widget library (alpha-shipped defaults)", vision: true, arch_impl: true, code: 18, test: null },
+            { name: "Plugin sandbox + untrusted-content discipline (stricter than Skills)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Marketplace architecture (App-Store-strict curation; soft-launch Beta, open GA)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Revenue model: free + paid one-time + paid subscription; Nimbus takes 15-20%", vision: true, arch_impl: true, code: 15, test: null },
           ],
           issues: [
             "Extension surfaces share infrastructure: trustless vault + biometric + task tray + revoke surface.",
             "Marketplace architected from day one; ships Beta+ to avoid alpha-scope-creep.",
-            "Positioning: Nimbus is an open extension platform within a closed default — 'AI that does things for you AND that you shape to fit your life.'",
+            "Positioning: open extension platform within a closed default — 'AI that does things for you AND that you shape to fit your life.'",
+            "Not in V1 scope — V1 ships no extensions.",
           ],
         },
         {
           name: "Multi-tenant SaaS infrastructure",
           percent: 6,
           weight: 1,
+          v1_weight: 0,
           confidence: null,
           submodules: [
-            { name: "Multi-tenant orchestration layer (per-user instances, session-affine)", percent: 8 },
-            { name: "Per-user vault sharding + encryption-at-rest", percent: 8 },
-            { name: "Billing (Stripe/Razorpay) + subscription tiers (Personal / Professional / Premium)", percent: 5 },
-            { name: "Admin / operator surfaces (user management, abuse handling, observability)", percent: 4 },
-            { name: "Phase 1 compute partnership (in-country H100/H200 + low-latency interconnect + session affinity)", percent: 12 },
-            { name: "Observability + monitoring (latency SLAs, hot-GPU utilization, vault audit)", percent: 4 },
-            { name: "Security posture (SOC2-ready baseline + India data residency)", percent: 3 },
-            { name: "Scalability path (1k → 10k → 100k → 1M users)", percent: 5 },
-            { name: "Fair-use bounds (per-tier compute caps; soft-degrade to smaller-model fallback)", percent: 8 },
+            { name: "Multi-tenant orchestration layer (per-user instances, session-affine)", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Per-user vault sharding + encryption-at-rest", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Billing (Stripe/Razorpay) + subscription tiers (Personal / Professional / Premium)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Admin / operator surfaces (user management, abuse handling, observability)", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Phase 1 compute partnership (in-country H100/H200 + low-latency interconnect + session affinity)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Observability + monitoring (latency SLAs, hot-GPU utilization, vault audit)", vision: true, arch_impl: true, code: 4, test: null },
+            { name: "Security posture (SOC2-ready baseline + India data residency)", vision: true, arch_impl: true, code: 3, test: null },
+            { name: "Scalability path (1k â†’ 10k â†’ 100k â†’ 1M users)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Fair-use bounds (per-tier compute caps; soft-degrade to smaller-model fallback)", vision: true, arch_impl: true, code: 8, test: null },
           ],
           issues: [
-            "Partner-compute pitch updated: H100/H200-class with low-latency interconnect, in-country (Mumbai/Chennai/Hyderabad), session affinity for hot-GPU.",
+            "Partner-compute pitch: H100/H200-class with low-latency interconnect, in-country (Mumbai/Chennai/Hyderabad), session affinity for hot-GPU.",
             "Multi-tenant orchestration + per-user vault are critical-path; build begins post-compute commitment.",
-            "Fair-use: per-tier monthly compute caps with soft-degrade (smaller-model fallback) — not hard-cut. Transparent in Vault Transparency surface.",
+            "Fair-use: per-tier monthly compute caps with soft-degrade (smaller-model fallback) — not hard-cut.",
+            "Not in V1 scope — V1 is single-tenant (Goutham).",
           ],
         },
         {
           name: "Cross-platform surfaces (one Nimbus, capability-graded by device)",
           percent: 8,
           weight: 1,
+          v1_weight: 0.5,
           confidence: null,
           submodules: [
-            { name: "Mobile (iOS + Android) — primary consumer surface, voice-first", percent: 8 },
-            { name: "Desktop (macOS + Windows + Linux) — productivity superset with filesystem + code + Office editing", percent: 10 },
-            { name: "Web — accessible-everywhere fallback", percent: 8 },
-            { name: "Same Nimbus across form factors (vault + identity + tasks + widgets sync)", percent: 12 },
-            { name: "Cross-device handoff + pasteboard (Beta scope)", percent: 5 },
-            { name: "Voice-first input + Eyes-Free Mode (mandatory for mobile)", percent: 6 },
-            { name: "Watch + smart-speaker + TV + car form-factors (Beta+ / V1.5+)", percent: 0 },
+            { name: "Mobile (iOS + Android) — primary consumer surface, voice-first", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Desktop (macOS + Windows + Linux) — productivity superset with filesystem + code + Office editing", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Web — accessible-everywhere fallback", vision: true, arch_impl: true, code: 8, test: null },
+            { name: "Same Nimbus across form factors (vault + identity + tasks + widgets sync)", vision: true, arch_impl: true, code: 12, test: null },
+            { name: "Cross-device handoff + pasteboard (Beta scope)", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "Voice-first input + Eyes-Free Mode (mandatory for mobile)", vision: true, arch_impl: true, code: 6, test: null },
+            { name: "Watch + smart-speaker + TV + car form-factors (Beta+ / V1.5+)", vision: true, arch_impl: true, code: 0, test: null },
           ],
           issues: [
-            "One Nimbus across form factors; device determines what it can physically do. Mobile = consumer default; Desktop = superset.",
-            "Cross-device handoff is a Beta scope addition; alpha ships single-device-with-session-resume.",
-            "Watch / smart-speaker / car / wearable DSM expansion is V1.5+.",
+            "One Nimbus across form factors; device determines what it can physically do.",
+            "Cross-device handoff Beta scope; alpha ships single-device-with-session-resume.",
+            "V1 = phone + PC only; full cross-form-factor at Alpha+.",
           ],
         },
         {
-          name: "Tier × Capability matrix",
+          name: "Tier Ã— Capability matrix",
           percent: null,
           is_commitments: true,
+          weight: 0,
+          v1_weight: 0,
           submodules: [
-            { name: "Personal ₹1,000/mo — warm-shared GPU (7-14B model) + <800ms latency + 6mo memory + 5 concurrent goals + curated extensions only", percent: null, is_commitment: true },
-            { name: "Professional ₹2,500/mo — dedicated-on-shared (30-70B model) + <500ms latency + 2yr memory + 25 goals + BYO-models + user plugins (Beta+)", percent: null, is_commitment: true },
-            { name: "Premium ₹5,000/mo — dedicated hot-GPU + speculative decoding + <300ms latency + unlimited memory + voice-biometric pre-enrolled + family-of-3 (V1.5)", percent: null, is_commitment: true },
+            { name: "Personal ₹1,000/mo — warm-shared GPU (7-14B model) + <800ms latency + 6mo memory + 5 concurrent goals + curated extensions only; private data stays out or surfaces with disclosure", percent: null, is_commitment: true },
+            { name: "Professional ₹2,500/mo — dedicated-on-shared (30-70B model) + <500ms latency + 2yr memory + 25 goals + BYO-models + user plugins (Beta+); private data stays out or surfaces with disclosure", percent: null, is_commitment: true },
+            { name: "Premium ₹5,000/mo — dedicated hot-GPU + speculative decoding + <300ms latency + unlimited memory + voice-biometric pre-enrolled + family-of-3 (V1.5) + Private Inference Substrate (PIS) for vault-tagged private data", percent: null, is_commitment: true },
             { name: "Universal across tiers: trustless vault + biometric gates + vault transparency + no-ads + 3 core canvases + tile patterns + auto-handoff + auto-Skill-acquisition", percent: null, is_commitment: true },
             { name: "Hot-GPU per-session inference is Premium-only — Personal/Professional get tiered-down warm-shared / dedicated-shared variants", percent: null, is_commitment: true },
+            { name: "PIS (Private Inference Substrate) is Premium-only — Premium-tier differentiator for private-data inference inside sealed enclave", percent: null, is_commitment: true },
             { name: "VLM-action layer access: Personal = layers 1/2/4 (skip fine-tuned VLM); Professional + Premium = all 4 layers", percent: null, is_commitment: true },
             { name: "Compute fair-use: soft-degrade (smaller-model fallback) above per-tier cap, never hard-cut. Premium cap highest with degrade only to mid-tier model.", percent: null, is_commitment: true },
-            { name: "Tier upgrade is physical — users feel real latency + capability + memory differences, not just feature gates", percent: null, is_commitment: true },
+            { name: "Tier upgrade is physical — users feel real latency + capability + memory + privacy-substrate differences, not just feature gates", percent: null, is_commitment: true },
           ],
           issues: [
-            "Tier matrix locked session 2 — supersedes implicit 'hot-GPU for everyone' framing. Premium tier carries hot-GPU cost; lower tiers get tiered-down compute.",
-            "Hard rules (no-ads / biometric / vault-visible / never-claim-memory-loss / privacy guarantees) are universal across all tiers.",
-            "Marketplace + cross-device handoff + live translation + form-factor expansion all tier-graded post-alpha (Beta+ scope).",
+            "Tier matrix supersedes implicit 'hot-GPU for everyone' framing. Premium tier carries hot-GPU + PIS cost.",
+            "Hard rules (no-ads / biometric / vault-visible / never-claim-memory-loss / privacy guarantees) universal across all tiers.",
+            "Marketplace + cross-device handoff + live translation + form-factor expansion tier-graded post-alpha (Beta+).",
           ],
         },
         {
           name: "Locked architectural commitments (Goals)",
           percent: null,
           is_commitments: true,
+          weight: 0,
+          v1_weight: 0,
           submodules: [
+            { name: "Two-rung product roadmap: V1 (single-client demo on local PC with Claude OAuth, essential subset) + Alpha (data-centre-secured, 50–100 users, full feature suite). V1 â†’ Alpha is additive (same architectural shape, no rebuilds).", percent: null, is_commitment: true },
             { name: "Three-layer architecture: harness substrate / orchestration brain / regular-user kernel", percent: null, is_commitment: true },
+            { name: "Per-Goal/Task CLAUDE.md mirror — every Goal carries goal_context.md, every Task carries task_context.md; declarative status fields per step; source-of-truth for any Claude instance entering context cold; Goal progress = weighted sum of task progress; surfaced in Goal Tray + Task Tray; versioned + auto-snapshotted on status transitions", percent: null, is_commitment: true },
+            { name: "Deterministic Op Lane (DOL) — Layer-1 substrate component; LLM does NLâ†’op-name+args mapping (tokens spent); DOL executes deterministically via Python op registry (zero LLM tokens); auto-extended per Hermes pattern; eliminates round-trip for routine ops; LLM never delegates JUDGMENT to DOL — only EXECUTION", percent: null, is_commitment: true },
+            { name: "Common Knowledge Substrate (CKS) — centralized multimodal world-state ingest (news / social / markets / weather / public datasets); indexed + embedded once; served to all clients; 5 verbs read from CKS not per-client scrapers; per-user filtering at consumption; strict one-way flow (query data never enters CKS); V1-skippable, Alpha day-one", percent: null, is_commitment: true },
+            { name: "Private Inference Substrate (PIS) — Premium-tier dedicated per-user sandboxed small model on Nimbus cloud inside trustless vault trust boundary; sealed enclave (no outbound network beyond allowlisted ops; no logging beyond per-user encrypted state); verb-dispatch routes vault-tagged 'private' data to PIS — never frontier; PIS handles alerts/strategies/surfacing; privacy-scrubbed handoff for cross-routing; Premium differentiator beyond hot-GPU", percent: null, is_commitment: true },
             { name: "Full-duplex voice steering: interrupt + queue + steer mid-action", percent: null, is_commitment: true },
-            { name: "Trustless hybrid vault (device-side crown-jewel + server-side ephemeral working context)", percent: null, is_commitment: true },
-            { name: "Device-Service Mesh (universal device-and-service abstraction with auto-routing + Auto-Onboarding Loop: proactive discovery + identify + attempt connect + ask for help + persist learning)", percent: null, is_commitment: true },
-            { name: "Shell Execution Surface as desktop kernel system (PowerShell on Windows; bash/zsh on macOS/Linux) — tier-gated by command-class; biometric + sandboxed-dry-run for destructive ops; audit-logged + replayable", percent: null, is_commitment: true },
-            { name: "Pass 2 kernel UX primitives (13): Why?/Reasoning + Audit Log w/Replay + Trust/Confidence Indicator + Status Pill + Privacy Mode (Incognito) + Snooze + Severity Hierarchy + Pre-Send Preview + Side-by-Side + Drag Manipulation + Accessibility Bundle + Continuity Digest + Multi-Party Presence", percent: null, is_commitment: true },
-            { name: "Preview Intelligence Layer — universal content extraction (web/app/file/video/audio) + VLM+LLM multi-modal pipeline + vault contextualization + ~20 composable preview primitives + smart primitive selection + bi-directional editability + confidence/provenance tagging + cross-vertical routing", percent: null, is_commitment: true },
-            { name: "Nimbus Visual Framework / Design System — typography + color tokens + iconography + motion + component library + spacing + density modes + accessibility variants + theme support + cross-form-factor consistency. The design substrate every UI element depends on.", percent: null, is_commitment: true },
-            { name: "Auto-Extension Loop — Nimbus continuously extends itself in 5 dimensions: Skills (auto-acquired) + Goals (auto-classified) + Devices (DSM auto-onboarded) + Capabilities (DSM-schemas auto-learned) + Memory (auto-handoff w/auto-rehydration). One unified principle, five manifestations.", percent: null, is_commitment: true },
-            { name: "DSM rich capability schemas (state queries + actions + parameters + per-action sensitivity tier + data streams + events + constraints) — not just on/off; replaces trivial-device model with full command surface", percent: null, is_commitment: true },
-            { name: "Live data streaming as DSM + Preview primitives — camera feeds + audio + sensor streams via P2P-first routing (cloud relay fallback); rendered via Live Stream Viewer + Home Dashboard + Multi-Pane Composite preview primitives", percent: null, is_commitment: true },
-            { name: "Pass 3 safety + privacy locks: SOS physical-safety integration / AI-vision confidence threshold / family-child safety mode / kernel-level recording indicators / Privacy Mode auto-mutes sensitive devices / device-action sensitivity tiers per capability / deepfake camera-feed defense / device-command prompt-injection defense", percent: null, is_commitment: true },
-            { name: "Joint-family / multi-tenant household awareness — DSM trust tiers extended for shared-household devices with per-user access matrix", percent: null, is_commitment: true },
-            { name: "Federated learning / centralized schema repository — opt-in upload of novel learnings (device capabilities + Skills + selectors) to central Nimbus knowledge base; PII-scrubbed; curated; propagates to all users; network effect compounds with user base growth", percent: null, is_commitment: true },
-            { name: "Screen Watch as kernel system #8 (desktop) — Nimbus observes user's screen with consent + persistent indicator; 'are you seeing this?' chat-starter; live-narrate-while-working feeds auto-Skill-acquisition", percent: null, is_commitment: true },
-            { name: "AI-generation UI/UX framework — model-selection surface + progress-with-cancel + output review tile-grid + iterate/refine + cost/usage indicator + save-to-vault with provenance + optional 'Generated with Nimbus' attribution on shared outputs", percent: null, is_commitment: true },
-            { name: "Centralized issue tracking + AI-based resolution — failed ops + error reports + low-confidence flags + denied confirmations all logged centrally; AI analyzes patterns; generates patch proposals + Skill refinements + bug alerts. Outbound counterpart to federated learning's inbound", percent: null, is_commitment: true },
-            { name: "Future-proof architecture / conversion logic — versioned interfaces at every layer + explicit migration code per upgrade + parallel-run validation + strict no-regression rule (upgrades only improve UX, never worsen) + rollback path within 24h", percent: null, is_commitment: true },
-            { name: "Custom widget builder — 'entire business from one widget' ambition — rich UI primitives + data sources + multi-step flows + persistence + sync + natural-language authoring + Beta+ sharable/remixable marketplace. Widgets as user-authored mini-apps, not decoration", percent: null, is_commitment: true },
-            { name: "Hardware kernel access — network adapters + Bluetooth (BLE+classic) + GPS + sensors (accelerometer/gyroscope/magnetometer/ambient light/barometer/NFC/proximity) + biometric sensors; gated by per-capability consent; informs DSM + Auto-Extension Loop", percent: null, is_commitment: true },
-            { name: "AskUser tile primitive (kernel primitive #31) — composable multi-modal user-input request: yes/no + multi-select + contact picker + image picker + map/location picker + date/time picker + color picker + slider + free-form + composite. Unifies all 'Nimbus needs input' surfaces", percent: null, is_commitment: true },
-            { name: "User feedback as self-improvement input — thumbs up/down per output + 'this was wrong/perfect' gestures + detailed error reports + feature request channel + beta-tester surface. Hermes-inspired explicit feedback flowing into auto-Skill loops + centralized issue tracking", percent: null, is_commitment: true },
-            { name: "Printing Press (or equivalent CLI-generation framework) as Layer-1 substrate — auto-generate CLIs for any web service via browser HAR capture + reverse-engineer; 35x more token-efficient than MCP; ships with 50+ pre-built CLIs; massively expands Layer-1 API coverage without manual integration work; CLIs are tools, Skills are playbooks that wrap CLIs", percent: null, is_commitment: true },
+            { name: "Trustless hybrid vault (device-side crown-jewel + server-side ephemeral working context; PIS extends server-side ephemeral with compute for Premium)", percent: null, is_commitment: true },
+            { name: "Device-Service Mesh (universal device-and-service abstraction with auto-routing + Auto-Onboarding Loop)", percent: null, is_commitment: true },
+            { name: "Shell Execution Surface as desktop kernel system — tier-gated by command-class; biometric + sandboxed-dry-run for destructive ops; audit-logged + replayable", percent: null, is_commitment: true },
+            { name: "Pass 2 kernel UX primitives (13)", percent: null, is_commitment: true },
+            { name: "Preview Intelligence Layer — universal content extraction + VLM+LLM multi-modal pipeline + vault contextualization + ~22 composable preview primitives + smart selection + bi-directional editability + confidence/provenance tagging + cross-vertical routing", percent: null, is_commitment: true },
+            { name: "Nimbus Visual Framework / Design System — typography + color tokens + iconography + motion + component library + spacing + density modes + accessibility variants + theme support + cross-form-factor consistency", percent: null, is_commitment: true },
+            { name: "Auto-Extension Loop — 5 dimensions of autonomous self-extension: Skills (auto-acquired) + Goals (auto-classified) + Devices (DSM auto-onboarded) + Capabilities (DSM-schemas auto-learned) + Memory (auto-handoff w/auto-rehydration)", percent: null, is_commitment: true },
+            { name: "DSM rich capability schemas (state queries + actions + parameters + per-action sensitivity tier + data streams + events + constraints)", percent: null, is_commitment: true },
+            { name: "Live data streaming as DSM + Preview primitives — camera feeds + audio + sensor streams via P2P-first routing", percent: null, is_commitment: true },
+            { name: "Pass 3 safety + privacy locks: SOS physical-safety / AI-vision confidence threshold / family-child safety mode / kernel-level recording indicators / Privacy Mode auto-mutes / device-action sensitivity tiers / deepfake camera-feed defense / device-command prompt-injection defense", percent: null, is_commitment: true },
+            { name: "Joint-family / multi-tenant household awareness — DSM trust tiers extended for shared-household devices", percent: null, is_commitment: true },
+            { name: "Federated learning / centralized schema repository — opt-in upload of novel learnings; PII-scrubbed; curated; propagates to all users", percent: null, is_commitment: true },
+            { name: "Screen Watch as kernel system (desktop, consent-gated)", percent: null, is_commitment: true },
+            { name: "AI-generation UI/UX framework — model-selection + progress-with-cancel + output review tile-grid + iterate/refine + cost/usage indicator + save-to-vault with provenance", percent: null, is_commitment: true },
+            { name: "Centralized issue tracking + AI-based resolution — failed ops + error reports + low-confidence flags logged centrally; AI generates patch proposals + Skill refinements + bug alerts", percent: null, is_commitment: true },
+            { name: "Future-proof architecture / conversion logic — versioned interfaces + explicit migration code per upgrade + parallel-run validation + strict no-regression rule + rollback path within 24h", percent: null, is_commitment: true },
+            { name: "Custom widget builder — 'entire business from one widget' ambition — rich UI primitives + data sources + multi-step flows + persistence + sync + natural-language authoring + Beta+ marketplace", percent: null, is_commitment: true },
+            { name: "Hardware kernel access — network adapters + Bluetooth + GPS + sensors + biometric; gated by per-capability consent", percent: null, is_commitment: true },
+            { name: "AskUser tile primitive (kernel primitive #31) — composable multi-modal user-input request", percent: null, is_commitment: true },
+            { name: "User feedback as self-improvement input — thumbs up/down + 'this was wrong/perfect' gestures + detailed error reports + feature request channel", percent: null, is_commitment: true },
+            { name: "Printing Press (or equivalent CLI-generation framework) as Layer-1 substrate — auto-generate CLIs for any web service via browser HAR capture; ships with 50+ pre-built CLIs", percent: null, is_commitment: true },
             { name: "Hot-GPU per-session-affinity conversational inference (premium-tier-justified cost)", percent: null, is_commitment: true },
             { name: "Self-hosted open-weight models on partner infra (multi-model routing)", percent: null, is_commitment: true },
             { name: "Tile-simplification (transactional) + tile-disambiguation (ambiguity) as core consumer patterns", percent: null, is_commitment: true },
-            { name: "Auto-Skill-acquisition (Hermes-pattern, context-driven autonomous default; user explicit-command is the optional override) + Auto-Goal-classification (per-user heuristics)", percent: null, is_commitment: true },
+            { name: "Auto-Skill-acquisition (Hermes-pattern, context-driven autonomous default) + Auto-Goal-classification (per-user heuristics)", percent: null, is_commitment: true },
             { name: "Invisible auto-handoff (3-tier hot/warm/cold + lossless-fact extraction + auto-rehydration)", percent: null, is_commitment: true },
             { name: "Biometric-gated sensitive actions + voice-biometric for high-stakes", percent: null, is_commitment: true },
             { name: "No advertising ever / subscription only / vault-visible + user-forgettable / never-claim-memory-loss", percent: null, is_commitment: true },
             { name: "Extension platform (credentials + BYO-models + plugins + widgets + marketplace Beta+)", percent: null, is_commitment: true },
             { name: "Nimbus-native-canvas vs ecosystem-passthrough pattern (Calendar/Docs/Tasks native; WhatsApp/Music passthrough)", percent: null, is_commitment: true },
             { name: "One Nimbus across form factors; device determines capability gradation", percent: null, is_commitment: true },
-            { name: "India-first cultural + regional language ramp (Hindi+English alpha → regional Beta → broader GA)", percent: null, is_commitment: true },
-            { name: "Streaming-first end-to-end (STT → intent → LLM → TTS → tool/VLM cancellable + restartable)", percent: null, is_commitment: true },
+            { name: "India-first cultural + regional language ramp (Hindi+English alpha â†’ regional Beta â†’ broader GA)", percent: null, is_commitment: true },
+            { name: "Streaming-first end-to-end (STT â†’ intent â†’ LLM â†’ TTS â†’ tool/VLM cancellable + restartable)", percent: null, is_commitment: true },
           ],
           issues: [
-            "These commitments are vision-level locks from sessions 1–2; treated as immutable for V1 design surface.",
-            "K=3 architecture-perfection-check methodology used; Pass 1 surfaced ~30 material gaps, all locked this session.",
-            "Pass 2 (refining against Pass 1 fixes) + Pass 3 (final convergence check) pending principal direction.",
+            "Vision-level locks from sessions 1–3; treated as immutable for V1 + Alpha design surface.",
+            "Session 3 added 5 locks: V1 product rung / Per-Goal/Task CLAUDE.md mirror / Deterministic Op Lane / Common Knowledge Substrate / Private Inference Substrate.",
+            "K=3 architecture-perfection-check methodology used; Passes 1–3 complete; Pass 4 pending against session-3 additions.",
           ],
         },
         {
           name: "Deferred to Beta (V1.0) and GA (V1.5+) — vision-locked, alpha-deferred",
           percent: null,
           is_deferred: true,
+          weight: 0,
+          v1_weight: 0,
           submodules: [
             { name: "User-authored widgets (DSL-based via natural language)", percent: null, is_deferred: true },
             { name: "BYO-AI-model routing (user supplies own API keys)", percent: null, is_deferred: true },
@@ -1111,7 +1336,7 @@
             { name: "Native Notes canvas (open vision question)", percent: null, is_deferred: true },
           ],
           issues: [
-            "Deferred items are vision-locked + alpha-deferred — not dropped. Beta opens at Phase 2 (months 7–12); GA at Phase 3 (months 13–18); V1.5+ at Phase 4 (months 19–24+).",
+            "Vision-locked + alpha-deferred — not dropped. Beta opens at Phase 2 (months 7–12); GA at Phase 3 (months 13–18); V1.5+ at Phase 4 (months 19–24+).",
             "Alpha scope deliberately bounded to prove the thesis (continuous personal AI + full-duplex + trustless + multi-surface + regular-user-accessible) without over-extending.",
           ],
         },
@@ -1119,26 +1344,34 @@
           name: "Phased roadmap (informational)",
           percent: null,
           is_timeline: true,
+          weight: 0,
+          v1_weight: 0,
           timeline: [
-            { phase: "1", title: "Dev + closed alpha", detail: "Core architecture build; 8-vertical alpha; 50–100 invited users across archetypes", status: "active", window: "Months 1–6" },
-            { phase: "2", title: "Open beta", detail: "Extension surfaces (widgets/plugins/BYO-models); marketplace soft-launch; cross-device handoff; 1k–10k paying users", status: "planned", window: "Months 7–12" },
-            { phase: "3", title: "General availability", detail: "Marketplace open; full DSM IoT; expanded verticals; regional languages; 50k–100k users", status: "planned", window: "Months 13–18" },
-            { phase: "4", title: "Mobile + scale + form-factor expansion", detail: "Watch/speaker/car/wearable form-factors; auto-Skill fine-tuning live; 500k+ users", status: "planned", window: "Months 19–24" },
+            { phase: "V1", title: "Single-client demo", detail: "Phone + PC on local PC server with Claude OAuth; essential 5-verb surface; demoable to one prospect", status: "active", window: "Months 1–3 from V1 kickoff" },
+            { phase: "Î±", title: "Closed alpha", detail: "8-vertical kernel; 50–100 invited users across archetypes; partner-compute data centre; tier matrix live", status: "planned", window: "Months 1–6 from data-centre commitment" },
+            { phase: "Î²", title: "Open beta", detail: "Extension surfaces (widgets/plugins/BYO-models); marketplace soft-launch; cross-device handoff; 1k–10k paying users", status: "planned", window: "Months 7–12" },
+            { phase: "GA", title: "General availability", detail: "Marketplace open; full DSM IoT; expanded verticals; regional languages; 50k–100k users", status: "planned", window: "Months 13–18" },
+            { phase: "1.5", title: "Form-factor expansion", detail: "Watch/speaker/car/wearable form-factors; auto-Skill fine-tuning live; 500k+ users", status: "planned", window: "Months 19–24" },
           ],
         },
         {
           name: "Testing confidence",
           percent: 0,
           is_testing_section: true,
+          weight: 0,
+          v1_weight: 0,
           submodules: [
-            { name: "Phase 1 closed alpha (ship bar)", percent: null, is_confidence: true },
-            { name: "Layer 1 — Harness substrate", percent: null, is_confidence: true },
-            { name: "Layer 2 — Orchestration brain (Five Verbs)", percent: null, is_confidence: true },
+            { name: "V1 — single-client demonstration", percent: null, is_confidence: true },
+            { name: "Alpha — closed alpha (ship bar)", percent: null, is_confidence: true },
+            { name: "Layer 1 — Harness substrate (incl. DOL)", percent: null, is_confidence: true },
+            { name: "Layer 2 — Orchestration brain (Five Verbs + per-Goal/Task mirror)", percent: null, is_confidence: true },
             { name: "Layer 3 — Regular-user kernel surface", percent: null, is_confidence: true },
             { name: "Device-Service Mesh (DSM)", percent: null, is_confidence: true },
             { name: "Preview Intelligence Layer", percent: null, is_confidence: true },
             { name: "Nimbus Visual Framework / Design System", percent: null, is_confidence: true },
             { name: "Inference infrastructure", percent: null, is_confidence: true },
+            { name: "Common Knowledge Substrate (CKS)", percent: null, is_confidence: true },
+            { name: "Private Inference Substrate (PIS)", percent: null, is_confidence: true },
             { name: "VLM-action substrate", percent: null, is_confidence: true },
             { name: "Trustless vault + biometric + privacy", percent: null, is_confidence: true },
             { name: "Verticals (alpha-8)", percent: null, is_confidence: true },
@@ -1149,7 +1382,7 @@
           issues: [
             "Module test-confidence scores populate after dedicated test passes run on each surface; test passes scheduled per phase.",
             "Until dedicated tests run, module percent scores fold in vision-lock + architecture-spec progress + an untested-work discount; once measured, confidence scores replace the discount.",
-            "K=3 architecture-perfection-check Pass 1 surfaced + locked structural gaps; Passes 2 and 3 pending to declare audit-converged.",
+            "K=3 architecture-perfection-check Passes 1–3 complete; Pass 4 pending against session-3 architectural additions (V1 rung + per-Goal/Task mirror + DOL + CKS + PIS).",
           ],
         },
       ],
@@ -1182,17 +1415,49 @@
       if (c >= 60) return 0.85;             // moderate confidence — mild discount
       return 0.70;                          // weak confidence — significant discount
     }
+    // ===== Canonical 4-dim schema (per-submodule) =====
+    // {vision, arch_impl, code, test}; eff% = vision*25 + arch_impl*25 + code*0.25 + (test??0)*0.25
+    // Module % = mean of submodule eff %. Overall % = weighted mean of modules.
+    function submoduleEffPercent(s) {
+      if (s.is_commitment || s.is_deferred || s.is_confidence) return null;
+      if (typeof s.code !== "number") return null;
+      var v = s.vision ? 25 : 0;
+      var a = s.arch_impl ? 25 : 0;
+      var c = (s.code || 0) * 0.25;
+      var t = (s.test || 0) * 0.25;
+      return v + a + c + t;
+    }
+    function moduleAggPercent(m) {
+      if (!m.submodules || !m.submodules.length) return null;
+      var effs = [];
+      for (var i = 0; i < m.submodules.length; i++) {
+        var e = submoduleEffPercent(m.submodules[i]);
+        if (e !== null) effs.push(e);
+      }
+      if (!effs.length) return null;
+      var sum = 0;
+      for (var j = 0; j < effs.length; j++) sum += effs[j];
+      return sum / effs.length;
+    }
     function effectivePercent(m) {
+      // Prefer 4-dim aggregation from submodules; fall back to hardcoded module.percent.
+      var agg = moduleAggPercent(m);
+      if (agg !== null) return agg * confidenceMultiplier(m.confidence);
       if (typeof m.percent !== "number") return null;
       return m.percent * confidenceMultiplier(m.confidence);
     }
-    function computeOverallPercent(modules) {
+    function computeRungPercent(modules, scope) {
       var weightedSum = 0, totalWeight = 0;
       for (var i = 0; i < modules.length; i++) {
         var m = modules[i];
         if (m.is_testing_section || m.is_timeline) continue;
-        if (typeof m.percent !== "number") continue;
-        var w = (typeof m.weight === "number") ? m.weight : 1;
+        if (m.is_commitments || m.is_deferred) continue;
+        var w;
+        if (scope === "v1") {
+          w = (typeof m.v1_weight === "number") ? m.v1_weight : 0;
+        } else {
+          w = (typeof m.weight === "number") ? m.weight : 0;
+        }
         if (w <= 0) continue;
         var eff = effectivePercent(m);
         if (eff == null) continue;
@@ -1243,13 +1508,25 @@
     }
 
     function renderHeader() {
-      var computedOverall = computeOverallPercent(DATA.modules);
-      DATA.overall_percent = computedOverall;
-      document.getElementById("overall-percent").textContent = pct(computedOverall);
-      document.getElementById("overall-bar").style.width = pct(computedOverall);
-      const fillEl = document.getElementById("overall-bar");
-      fillEl.className = fillClassFor(computedOverall);
-      document.getElementById("overall-detail").textContent = DATA.overall_detail || "";
+      var v1Pct = computeRungPercent(DATA.modules, "v1");
+      var alphaPct = computeRungPercent(DATA.modules, "alpha");
+      // V1 rung
+      document.getElementById("v1-percent").textContent = pct(v1Pct);
+      document.getElementById("v1-bar").style.width = pct(v1Pct);
+      var v1Bar = document.getElementById("v1-bar");
+      v1Bar.className = "bar-fill v1" + (v1Pct >= 100 ? " done" : (v1Pct <= 0 ? " empty" : ""));
+      document.getElementById("v1-detail").textContent = DATA.v1.overall_detail || "";
+      document.getElementById("v1-target").textContent = DATA.v1.target || "";
+      document.getElementById("v1-window").textContent = DATA.v1.window || "";
+      // Alpha rung
+      document.getElementById("alpha-percent").textContent = pct(alphaPct);
+      document.getElementById("alpha-bar").style.width = pct(alphaPct);
+      var alphaBar = document.getElementById("alpha-bar");
+      alphaBar.className = "bar-fill alpha" + (alphaPct >= 100 ? " done" : (alphaPct <= 0 ? " empty" : ""));
+      document.getElementById("alpha-detail").textContent = DATA.alpha.overall_detail || "";
+      document.getElementById("alpha-target").textContent = DATA.alpha.target || "";
+      document.getElementById("alpha-window").textContent = DATA.alpha.window || "";
+      // Subtitle + footer
       const subtitle = document.getElementById("subtitle");
       subtitle.textContent = "Snapshot generated " + DATA.generated_at + " · source: " + DATA.source;
       document.getElementById("footer").innerHTML =
@@ -1287,13 +1564,24 @@
       let iconEl = null;
       if (isTimeline) iconEl = el("span", { class: "status-dot dot-info", title: "timeline" });
       else if (isTestingSection) iconEl = el("span", { class: "status-dot dot-info", title: "testing section" });
+      else if (m.is_v1_ship) iconEl = el("span", { class: "status-dot dot-v1", title: "V1 ship bar" });
+      else if (m.is_alpha_ship) iconEl = el("span", { class: "status-dot dot-alpha", title: "Alpha ship bar" });
       else if (m.percent >= 100) iconEl = el("span", { class: "status-dot dot-done", title: "complete" });
       else if (hasIssues) iconEl = el("span", { class: "status-dot dot-progress", title: "in progress" });
 
-      const nameRow = el("div", { class: "module-name-row" }, [
-        iconEl,
-        el("span", { class: "module-name" }, m.name),
-      ]);
+      // Scope tag (V1 / Alpha-only) for non-ship modules
+      var scopeTag = null;
+      if (!m.is_v1_ship && !m.is_alpha_ship && !isTimeline && !isTestingSection && !m.is_commitments && !m.is_deferred) {
+        if ((m.v1_weight || 0) > 0 && (m.weight || 0) > 0) {
+          scopeTag = el("span", { class: "module-scope-tag v1", title: "Counts toward both V1 and Alpha" }, "V1 + Î±");
+        } else if ((m.weight || 0) > 0 && (m.v1_weight || 0) === 0) {
+          scopeTag = el("span", { class: "module-scope-tag alpha-only", title: "Alpha only — not in V1 scope" }, "Î± only");
+        }
+      }
+
+      const nameRowChildren = [iconEl, el("span", { class: "module-name" }, m.name)];
+      if (scopeTag) nameRowChildren.push(scopeTag);
+      const nameRow = el("div", { class: "module-name-row" }, nameRowChildren);
 
       const percentSpan = m.percent == null
         ? el("span", { class: "module-percent empty" }, "—")
@@ -1301,7 +1589,7 @@
 
       const meta = el("div", { class: "module-meta" }, [
         percentSpan,
-        el("span", { class: "chevron", title: "expand / collapse" }, "▾"),
+        el("span", { class: "chevron", title: "expand / collapse" }, "â–¾"),
       ]);
       const bar = el("div", { class: "module-bar" }, [progressBar(m.percent)]);
       const header = el("div", {
@@ -1326,20 +1614,24 @@
           const isSubConfidence = !!s.is_confidence;
           const isSubCommitment = !!s.is_commitment;
           const isSubDeferred = !!s.is_deferred;
-          const st = statusFor(s.percent, { isConfidence: isSubConfidence, isCommitment: isSubCommitment, isDeferred: isSubDeferred });
-          const statusText = isSubConfidence && s.percent == null ? "not measurable" : st.text;
+          // 4-dim schema: regular submodules read s.code; confidence/commitment/deferred keep s.percent semantics
+          const subVal = (isSubCommitment || isSubDeferred || isSubConfidence)
+            ? s.percent
+            : (typeof s.code === "number" ? s.code : s.percent);
+          const st = statusFor(subVal, { isConfidence: isSubConfidence, isCommitment: isSubCommitment, isDeferred: isSubDeferred });
+          const statusText = isSubConfidence && subVal == null ? "not measurable" : st.text;
           const percentLabel = isSubConfidence
-            ? (s.percent == null ? "—" : s.percent + " / 100")
+            ? (subVal == null ? "—" : subVal + " / 100")
             : (isSubCommitment ? "locked"
             : (isSubDeferred ? "deferred"
-            : pct(s.percent)));
-          const percentCls = "sub-percent" + (s.percent == null && !isSubCommitment && !isSubDeferred ? " empty" : "");
+            : pct(subVal)));
+          const percentCls = "sub-percent" + (subVal == null && !isSubCommitment && !isSubDeferred ? " empty" : "");
           const subTop = el("div", { class: "sub-top" }, [
             el("span", { class: "sub-name" }, s.name),
             el("span", { class: percentCls }, percentLabel),
             el("span", { class: "sub-status " + st.cls }, statusText),
           ]);
-          const subBar = (isSubCommitment || isSubDeferred) ? null : el("div", { class: "sub-bar" }, [progressBar(s.percent)]);
+          const subBar = (isSubCommitment || isSubDeferred) ? null : el("div", { class: "sub-bar" }, [progressBar(subVal)]);
           const subChildren = subBar ? [subTop, subBar] : [subTop];
           bodyChildren.push(el("div", { class: "sub" }, subChildren));
         }
@@ -1358,7 +1650,7 @@
         const ul = el("ul", { class: "issues-list" });
         for (const issue of m.issues) {
           ul.appendChild(el("li", { class: "issue" }, [
-            el("span", { class: "issue-icon" }, isTimeline || isTestingSection ? "◆" : "→"),
+            el("span", { class: "issue-icon" }, isTimeline || isTestingSection ? "â—†" : "â†’"),
             el("span", { html: issue }),
           ]));
         }
@@ -1368,7 +1660,9 @@
 
       const rootCls = "module"
         + (openByDefault ? " open" : "")
-        + (isTimeline ? " timeline" : "");
+        + (isTimeline ? " timeline" : "")
+        + (m.is_v1_ship ? " v1-ship" : "")
+        + (m.is_alpha_ship ? " alpha-ship" : "");
       const root = el("div", { class: rootCls }, [header, body]);
 
       function toggle() {
@@ -1389,6 +1683,7 @@
     function renderModules() {
       const host = document.getElementById("modules");
       DATA.modules.forEach(function (m, idx) {
+        // Open V1 ship bar by default
         host.appendChild(renderModule(m, { openByDefault: idx === 0 }));
       });
     }
