@@ -931,14 +931,14 @@
        Source of truth for the module tree: nimbus_kernel/MODULE_TREE.md.
        ===================================================================== */
     const DATA = {
-      generated_at: "2026-05-25 (session 9 close)",
-      source: "session 9 close — Tier-2 canonical scaffold extended (10 new modules at nimbus_v1/): Migration-In validator + Google Workspace adapter (Calendar/Email/Contacts, fixture-backed) + DOL handler bindings + DIS in-memory adapter + Confirmation dispatcher (severity-to-canvas + cross-device hand-off) + Notification dispatcher (dedup + LWW reconcile) + Multi-Device Coherence substrate (per-data-class consistency policy) + Tailscale tunnel UCS adapter (stub-loopback) + push-to-talk STT session + drift-log writer + 3 baseline drift entries · APC G2/G6/G8/G14 bridges materialized in code · smoke test extended 9 → 19 checks; 19/19 green",
+      generated_at: "2026-05-26 (session 10 close)",
+      source: "session 10 close — Tier-3 (b) Vault canvas detailed UX landed (6 sub-views: Audit Log review + Compliance V1-basic export+delete + Migration-In sources/provenance + Substrate Health drift readout + 2 Alpha-deferred canonical placeholders per S7-6) · Honcho SaaS rip — honcho-ai PyPI dep dropped, per-user fact storage + UPSERT + provenance + snapshot absorbed into local SQLite-backed LocalUserModelAdapter (Spike-2 boundary contract preserved) · Theory-of-Mind + Dialectic API + Attention-residual user-model layering blocked out as post-V1 substrate-concept reservations (memos locked) · Claude OAuth auto-refresh manager — reads ~/.claude/.credentials.json, refreshes at T-5min via console.anthropic.com/v1/oauth/token, atomic write-back so Claude Code stays in sync · Tailscale tunnel auto-detect — host-daemon mode active when daemon enrolled (no auth-key string required for peer enumeration) · smoke test extended 19 → 24 checks; 24/24 green",
 
       v1: {
         label: "V1 — single-client demonstration",
         target: "Phone + PC clients on local PC server with Claude OAuth; essential 5-verb surface; 3 starter verticals (Calendar + Information Retrieval + Food Ordering); demoable to one prospect at a time",
         window: "Target window: 2–3 months from V1 kickoff",
-        overall_detail: "Essential subset; no partner-compute dependency. Architecture comprehensively locked across 67 substrate decisions; Tier-2 canonical scaffold standing under S5-19 canonical-vs-adapter discipline. 27 canonical-substrate modules at nimbus_v1/; 19/19 cross-substrate smoke checks green. Fixture-backed adapters for Calendar/Email/Contacts/DIS/STT/Tailscale ready for real-backing swap. Live Claude + Honcho validation gated on .env key population.",
+        overall_detail: "Essential subset; no partner-compute dependency. Architecture locked across 67 substrate decisions; Tier-3 (b) Vault canvas opened. Honcho SaaS dependency dropped; user-model store is local SQLite-backed (Spike-2 boundary contract preserved). Claude OAuth auto-refreshing; Tailscale host-daemon auto-detected. 24/24 cross-substrate smoke checks green (5 Vault canvas plumbing checks added session 10). Tier-3 (c) Food Ordering vertical + UPI Intent + live-map-tile = next.",
       },
 
       alpha: {
@@ -964,21 +964,21 @@
             { name: "Android phone client (paired with PC; iOS deferred to Alpha)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "PC client (desktop)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "5-verb surface — push-to-talk voice (full-duplex deferred to Alpha)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "3 core canvases (Chat + Preview + Task Tray) — basic", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "4 V1 canvases (Chat + Preview + Task Tray + Vault) — basic; Vault canvas Tier-3 sub-views scaffolded (Audit Log review, Compliance V1-basic, Migration-In sources, Substrate Health)", phase: "V1", vision: true, arch_impl: true, code: 45, test: 30 },
             { name: "Goal Tray + Task Tray with per-Goal/Task CLAUDE.md mirror", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "DOL — 16-op V1 seed (vault/calendar/task/clipboard/file/web/payment/index ops + settings.write)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "3 V1 verticals: Calendar + Information Retrieval + Food Ordering (incl. live-map-tile primitive)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "UPI Intent payments (Android phone-client; P2P + merchant via system intent)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Claude OAuth direct (no frontier routing or hot-GPU)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Claude OAuth direct (no frontier routing) — auto-refresh manager reads ~/.claude/.credentials.json + refreshes at T-5min + atomic write-back", phase: "V1", vision: true, arch_impl: true, code: 75, test: 30 },
             { name: "Anticipate verb — V1 degraded mode (calendar + vault + task-deadline signals)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "Basic trustless vault (single-user, local)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Universal Action Audit Log (V1-basic)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Notification + Reminder + Confirmation substrate (unified cross-vertical)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Migration-In V1-basic (email + calendar + contacts)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Identity Lifecycle V1-basic (peer-device re-enrollment)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Compliance V1-basic (vault export + delete + consent capture)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "Universal Action Audit Log (V1-basic) — canonical InMemoryAuditLog + Vault-canvas review surface (paginated, filter-by-vertical/op/status, expand)", phase: "V1", vision: true, arch_impl: true, code: 55, test: 35 },
+            { name: "Notification + Reminder + Confirmation substrate (unified cross-vertical) — dispatchers wired (severity-to-canvas + LWW dedup + cross-device hand-off)", phase: "V1", vision: true, arch_impl: true, code: 50, test: 35 },
+            { name: "Migration-In V1-basic (email + calendar + contacts) — 5-stage validator + GoogleWorkspaceAdapter (fixture) + Vault-canvas sources view + quarantine inbox + approve/reject flow", phase: "V1", vision: true, arch_impl: true, code: 55, test: 35 },
+            { name: "Identity Lifecycle V1-basic (peer-device re-enrollment) — canonical state-machine locked; UI surface Alpha-deferred per S7-6", phase: "V1", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "Compliance V1-basic (vault export + delete + consent capture) — ComplianceView export bundle + 7-step erasure cascade (APC G7) + consent ledger + compensating Audit Log on erasure", phase: "V1", vision: true, arch_impl: true, code: 50, test: 30 },
             { name: "Multi-Language V1 (Hindi + English + Hinglish)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Multi-Device Coherence V1 (LAN-direct phone+PC sync)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "Multi-Device Coherence V1 (phone+PC sync; Tailscale host-daemon auto-detected for peer enumeration; data-sync transport deferred to MDC vertical scaffold)", phase: "V1", vision: true, arch_impl: true, code: 35, test: 30 },
             { name: "Form-Factor Adaptation V1 (phone + PC)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "Accessibility V1-basic (screen reader + contrast + tap targets + reduced motion + caption)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "Time/Timezone discipline", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
@@ -1066,7 +1066,7 @@
           confidence: null,
           submodules: [
             { name: "Layer 1 — orchestration core (Hermes-absorbed + Claude Code patterns + Nimbus additions)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Honcho user-modeling absorption — Plastic Labs framework as Layer 1 substrate behind \"knows you across years\"", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "Layer-1 user-model store — Honcho-inspired patterns absorbed locally; SQLite-backed LocalUserModelAdapter behind \"knows you across years\"; Spike-2 boundary contract preserved (no SaaS dep)", phase: "V1", vision: true, arch_impl: true, code: 70, test: 30 },
             { name: "Steering as first-class op — interrupt / cancel / steer; steer = mid-action redirect without restart; default for non-atomic ops", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "Layer 2 — Five-verb action surface (Serve / Anticipate / Guide / Safeguard / Represent / Care)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "Persistent personal identity (vault-backed knowledge-of-user)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
@@ -1582,10 +1582,14 @@
             { name: "Identity Lifecycle V1.5-full (social recovery + hardware key + inheritance)", percent: null, is_deferred: true },
             { name: "Anomaly correlation across tenants (privacy-preserving aggregate)", percent: null, is_deferred: true },
             { name: "Long-horizon inheritance / account migration / NimbusOS-tier features", percent: null, is_deferred: true },
+            { name: "Theory-of-Mind user-model layer — Honcho-style belief modeling (what user knows/believes/wants/feels) absorbed post-V1; natural consumers = Anticipate verb + ConfirmationDispatcher pre-check", percent: null, is_deferred: true },
+            { name: "Dialectic API — multi-perspective user-model query (\"what would the user think about X\") with structured confidence + sources; absorbed post-V1 alongside ToM", percent: null, is_deferred: true },
+            { name: "Attention-residual user-model layering — additive residual-stream architecture for the user-model store (cold-start / observation / inferred / ToM / dialectic layers, decomposable + ablatable); blocked out post-V1 as canonical absorption shape for ToM + Dialectic", percent: null, is_deferred: true },
           ],
           issues: [
             "Vision-locked + alpha-deferred — not dropped. Beta opens at Phase 2 (months 7–12); GA at Phase 3 (months 13–18); V1.5+ at Phase 4 (months 19–24+).",
             "Alpha scope deliberately bounded to prove the thesis (continuous personal AI + persistent identity + private + multi-surface + regular-user-accessible) without over-extending.",
+            "Post-V1 substrate-concept reservations (Theory-of-Mind / Dialectic API / Attention-residual user-model layering) blocked out at session 10 — explicit conceptual reservations so post-V1 absorption has a coherent architectural target. Not on V1 critical path; the canonical UserModelStore interface is shaped to accept these as additive extensions when they land.",
           ],
         },
 
