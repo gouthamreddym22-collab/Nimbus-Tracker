@@ -835,16 +835,17 @@
       <p>
         Architecturally anchored on the <em>Universal Conversion Substrate</em> (every internal substrate is rotatable
         without breaking user state), the <em>Nimbus Standard Library</em> (federated capability schemas that compound
-        across users), <em>trustless vault</em> + <em>universal Action Audit Log</em> (privacy by structure, not promise),
-        the <em>Private Inference Substrate</em> (Premium-tier sealed enclave for private-data inference), and a
-        <em>unified Notification/Reminder/Confirmation substrate</em> every vertical consumes.
+        across users), <em>trustless vault</em>, the <em>Private Inference Substrate</em> (Premium-tier sealed enclave),
+        and a <em>unified Notification / Reminder / Confirmation substrate</em> every vertical consumes — with
+        <em>magical cross-integration</em> routing each surface to the device best suited for it.
       </p>
       <p>
         This tracker measures honest progress toward two product rungs.
-        <strong>V1</strong> — single-client demo: phone + PC on a local PC server with Claude OAuth; essential
-        5-verb surface; 3 starter verticals; demoable to one prospect at a time; no partner-compute dependency.
-        <strong>Alpha</strong> — closed alpha: 50–100 invited users across consumer archetypes; full 8-vertical
-        kernel; 3-tier matrix; partner-compute data centre.
+        <strong>V1</strong> — dual-client magical demo: Android + Desktop via Compose Multiplatform; liquid-glass UI
+        quality bar; six magical cross-integration beats (M1–M6) that route biometric to phone, broad tiles to desktop,
+        and keep both screens live; real backings on every storyboard moment (Hue / Gmail / Whisper / WhatsApp /
+        Calendar / Swiggy). <strong>Alpha</strong> — closed alpha: 50–100 invited users across consumer archetypes;
+        full 8-vertical kernel; 3-tier matrix; partner-compute data centre.
       </p>
     </div>
 
@@ -931,21 +932,21 @@
        Source of truth for the module tree: nimbus_kernel/MODULE_TREE.md.
        ===================================================================== */
     const DATA = {
-      generated_at: "2026-05-26 (session 11 close)",
-      source: "V1 vision-align — 8 substrate locks; Native Android scaffold opened; DOL adapter networking live PC↔Android",
+      generated_at: "2026-05-26 (session 12 — V1 re-locked under dual-client magical framing)",
+      source: "V1 scope re-anchored: Compose Multiplatform (Android + Desktop) · liquid-glass UI quality bar · magical cross-integration beats M1–M6 · real backings (Hue / Gmail / Whisper / WhatsApp / Calendar)",
 
       v1: {
-        label: "V1 — single-client demonstration",
-        target: "Phone + PC clients on local PC server with Claude OAuth; essential 5-verb surface; 3 starter verticals (Calendar + Information Retrieval + Food Ordering); demoable to one prospect at a time",
-        window: "Target window: 2–3 months from V1 kickoff",
-        overall_detail: "Essential subset; no partner-compute dependency. Architecture locked across 75 substrate decisions. Native Kotlin+Compose Android client scaffolded; DOL adapter networking carries traffic PC↔Android. 25/25 cross-substrate smoke checks green. Working disciplines locked: canonical-ships / UI-defers; fact-kind naming convention; Confirmation severity tier enumeration. Tier-3 (c) Food Ordering vertical + UPI Intent + live-map-tile = next.",
+        label: "V1 — dual-client magical demo",
+        target: "Android + Desktop (Compose Multiplatform) — both polished to the tracker-aesthetic UI quality bar; magical cross-integration where each device handles the surface it's best for (biometric on phone, broad tiles on desktop); real backings on every storyboard beat",
+        window: "Target window: 3–4 weeks of focused work from session-12 close",
+        overall_detail: "V1 = a real demo on real hardware with real data. Backend at 32/32 smoke green. Android Compose UI mid-build (Scene 7 capable). Compose Multiplatform restructure pending. Desktop client pending. Real Gmail OAuth + Real Whisper STT + Real Philips Hue + Real WhatsApp send + real Swiggy/Zomato adapter pending. Six magical cross-integration beats (M1–M6) anchor the demo arc.",
       },
 
       alpha: {
         label: "Alpha — closed alpha",
-        target: "50–100 invited users across consumer archetypes; full 8-vertical kernel; 3-tier matrix; partner-compute data centre; full Compliance / Audit Log / Migration-In / PIS surface",
+        target: "50–100 invited users across consumer archetypes; full 8-vertical kernel; 3-tier matrix; partner-compute data centre; full Compliance / Migration-In / PIS surface",
         window: "Target window: 6 months from data-centre commitment",
-        overall_detail: "Full feature suite. Architecture comprehensively locked; greenfield blocked on partner-compute + Contract v1 + harness-survey close + Pre-Alpha-gate (Brand finalization, scope re-lock).",
+        overall_detail: "Full feature suite. Architecture comprehensively locked; greenfield blocked on partner-compute + Contract v1 + Pre-Alpha-gate (Brand finalization, scope re-lock).",
       },
 
       modules: [
@@ -953,44 +954,88 @@
            V1 SHIP BAR
            ========================================================= */
         {
-          name: "V1 — single-client demonstration (V1 ship bar)",
+          name: "V1 — dual-client magical demo (V1 ship bar)",
           percent: null,
           weight: 8,
           v1_weight: 16,
           is_v1_ship: true,
           confidence: null,
           submodules: [
-            { name: "PC server runtime (local machine, no partner-DC) — FastAPI /health + /ops + /turn endpoints", phase: "V1", vision: true, arch_impl: true, code: 30, test: 25 },
-            { name: "Android phone client (Kotlin+Compose; iOS deferred to Alpha) — 4-canvas scaffold + DOL Ktor client + canonical placeholders for native bindings", phase: "V1", vision: true, arch_impl: true, code: 25, test: null },
-            { name: "PC client (desktop)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "5-verb surface — push-to-talk voice (full-duplex deferred to Alpha)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "4 V1 canvases (Chat + Preview + Task Tray + Vault) — basic; Vault canvas Tier-3 sub-views scaffolded (Audit Log review, Compliance V1-basic, Migration-In sources, Substrate Health)", phase: "V1", vision: true, arch_impl: true, code: 45, test: 30 },
-            { name: "Goal Tray + Task Tray with per-Goal/Task CLAUDE.md mirror", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "DOL — 16-op V1 seed (vault/calendar/task/clipboard/file/web/payment/index ops + settings.write)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "3 V1 verticals: Calendar + Information Retrieval + Food Ordering (incl. live-map-tile primitive)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "UPI Intent payments (Android phone-client; P2P + merchant via system intent)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Claude OAuth direct (no frontier routing) — auto-refresh manager reads ~/.claude/.credentials.json + refreshes at T-5min + atomic write-back", phase: "V1", vision: true, arch_impl: true, code: 75, test: 30 },
-            { name: "Anticipate verb — V1 degraded mode (calendar + vault + task-deadline signals)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Basic trustless vault (single-user, local)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Universal Action Audit Log (V1-basic) — canonical InMemoryAuditLog + Vault-canvas review surface (paginated, filter-by-vertical/op/status, expand)", phase: "V1", vision: true, arch_impl: true, code: 55, test: 35 },
-            { name: "Notification + Reminder + Confirmation substrate (unified cross-vertical) — dispatchers wired (severity-to-canvas + LWW dedup + cross-device hand-off)", phase: "V1", vision: true, arch_impl: true, code: 50, test: 35 },
-            { name: "Migration-In V1-basic (email + calendar + contacts) — 5-stage validator + GoogleWorkspaceAdapter (fixture) + Vault-canvas sources view + quarantine inbox + approve/reject flow", phase: "V1", vision: true, arch_impl: true, code: 55, test: 35 },
-            { name: "Identity Lifecycle V1-basic (peer-device re-enrollment) — canonical state-machine locked; UI surface Alpha-deferred per S7-6", phase: "V1", vision: true, arch_impl: true, code: 10, test: null },
-            { name: "Compliance V1-basic (vault export + delete + consent capture) — ComplianceView export bundle + 7-step erasure cascade (APC G7) + consent ledger + compensating Audit Log on erasure", phase: "V1", vision: true, arch_impl: true, code: 50, test: 30 },
-            { name: "Multi-Language V1 (Hindi + English + Hinglish)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Multi-Device Coherence V1 (phone+PC sync; Tailscale host-daemon auto-detected for peer enumeration; data-sync transport deferred to MDC vertical scaffold)", phase: "V1", vision: true, arch_impl: true, code: 35, test: 30 },
-            { name: "Form-Factor Adaptation V1 (phone + PC)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Accessibility V1-basic (screen reader + contrast + tap targets + reduced motion + caption)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Time/Timezone discipline", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Entity Canonicalization (V1)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Offline / Degradation Matrix V1-basic", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Anomaly substrate scaffold (no active response at V1)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Billing/Subscription substrate spec (not activated at V1)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            /* ----- W1 Foundation ----- */
+            { name: "W1 · Compose Multiplatform restructure — Android code moves to commonMain + androidMain; desktopMain skeleton; one source of truth for shared UI", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "W2 · Dev harness — dev.ps1 launches FastAPI server (uvicorn --reload) + Android emulator + Desktop app concurrently; unified log surface; hot-reload verified all three", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
+            { name: "W3 · Design system — NimbusDesignTokens + NimbusTheme + GlassCard / BrandMark / PhasePill / GradientBar primitives matching tracker aesthetic; Inter + JetBrains Mono; liquid-glass on tiles", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
+
+            /* ----- W4 Clients ----- */
+            { name: "W4a · Android client (Kotlin+Compose) — Chat / Preview / Task / Vault canvases; NimbusViewModel + StateFlow; NimbusTurnCoordinator + RealBiometricGate + RealUpiIntentLauncher + RealTtsAdapter + RealSmsOtpRetriever", phase: "V1", vision: true, arch_impl: true, code: 50, test: 20 },
+            { name: "W4b · Desktop client (Compose Multiplatform) — native window; sidebar nav replacing phone bottom-nav; canvases shared from commonMain; keyboard shortcuts; system-tray notifier", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
+
+            /* ----- W5 Magical cross-integration ----- */
+            { name: "W5 · Magical cross-integration substrate — server-side per-op target_devices + device-role inference; SSE/WebSocket push channel; both-clients-subscribed Notification primitive; enables M1–M6", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+
+            /* ----- W7 Real backings ----- */
+            { name: "W7a · Philips Hue — local Bridge API; NL → scene/brightness/color; principal hardware available", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W7b · Real Google OAuth + Calendar API v3 — replaces GoogleAuthMode.NONE_STUB fixture; Scene 1 + 3 backed", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W7c · Real STT (Whisper or equivalent) — push-to-talk gives real transcripts; STT canonical adapter rotation", phase: "V1", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "W7d · Real Gmail send via OAuth + Gmail API — comms.send backed; replaces FixtureCommsAdapter on email channel", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W7e · WhatsApp send — Meta Business API (preferred) or whatsapp-web bridge (fallback); comms.send WhatsApp channel", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W7f · Real Swiggy/Zomato adapter — real-backing strategy decision pending (Printing Press / HAR / partner API / BYO-session); replaces FixtureFoodOrderingAdapter", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W7g · Real map tiles — Google Maps SDK or Mapbox; replaces FixtureMapTileAdapter scripted polyline for Scene 7 delivery tracking", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W7h · Real Migration-In pump — Gmail + Calendar + Contacts batch ingest; replaces validator-only stub; backs Scene 2 + 3", phase: "V1", vision: true, arch_impl: true, code: 10, test: null },
+            { name: "W7i · Quick lookups — weather / currency / unit / math / sports score; small adapter, big magic", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W7j · Reminders + cross-device fire — local scheduler + Notification primitive (substrate built); fires on phone when set from desktop", phase: "V1", vision: true, arch_impl: true, code: 5, test: null },
+            { name: "W7k · Wake-up brief chain — calendar + weather + traffic in one chain; \"Brief me on tomorrow\" agentic moment", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+
+            /* ----- W9 Harness remaining ----- */
+            { name: "W9a · Real LLM classifier — flip force_stub=False; production Claude OAuth path; prompt tuning", phase: "V1", vision: true, arch_impl: true, code: 50, test: null },
+            { name: "W9b · Streaming-first end-to-end — STT → intent → LLM → TTS / tool cancellable + restartable; replaces turn-by-turn", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W9c · Steering primitive (already wired via LangGraph interrupt) — UI affordance for mid-action redirect on Task Tray; Scene-4 demo cut but primitive ships", phase: "V1", vision: true, arch_impl: true, code: 30, test: null },
+            { name: "W9d · Auto-Skill acquisition loop [V1] — 5+ tool-call trajectories → Skill proposal → user-approved → registered to Short-Circuit Router Tier-3 fast-path; Skill Acquired UI indicator surfaces in Vault canvas", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W9e · Subagent Consolidation Loop [V1.5→V1 promoted session 12] — related Skills consolidate into specialized subagents over time; user-approved + quality-gated; demo-visible \"Nimbus just got better at this\" moment", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+
+            /* ----- W8 + W10 Polish + delivery ----- */
+            { name: "W8 · Per-scene UI polish — tiles + transitions + glass surfaces + micro-interactions for every scene, both clients; raises bar to \"amazing\"", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "W10 · End-to-end run-through both clients + demo recording", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+
+            /* ----- Foundational substrates already green (background) ----- */
+            { name: "Orchestration harness (LangGraph + DOL + Confirmation flow + /turn /turn/resume wire) — 32/32 smoke green", phase: "V1", vision: true, arch_impl: true, code: 85, test: 70 },
+            { name: "Multi-Device Coherence + Tailscale tunnel — substrate green; cross-integration exercise pending W5", phase: "V1", vision: true, arch_impl: true, code: 50, test: 35 },
+            { name: "DOL 16-op V1 seed + bindings (calendar / info / food / comms / dis / settings) — all wired; fixture backings swap to real per W7", phase: "V1", vision: true, arch_impl: true, code: 70, test: 60 },
+            { name: "Confirmation primitive — severity tiers (LOW/MEDIUM/HIGH/PAYMENT/EMERGENCY) + dispatcher + ConfirmationGate (Auto/Client/PreApproved) + biometric integration", phase: "V1", vision: true, arch_impl: true, code: 80, test: 70 },
+            { name: "OTP Sorter Skill (PC canonical + Android SMS Retriever binding) — Scene 7 sub-beat", phase: "V1", vision: true, arch_impl: true, code: 75, test: 60 },
+
+            /* ----- V1 demo-cut items (kept as backend infra, removed from demo beats) ----- */
+            { name: "Universal Action Audit Log — backend logging keeps running (handlers depend on stores_touched ordering); demo Scene 6 trust beat CUT per session-12 reframe", phase: "V1", vision: true, arch_impl: true, code: 70, test: 50 },
+            { name: "Compliance V1-basic (export + delete cascade) — backend logic kept; demo UI CUT per session-12 reframe", phase: "V1", vision: true, arch_impl: true, code: 60, test: 40 },
           ],
           issues: [
-            "V1 is the adapter-exposure phase in disguise — Goutham's real Google/UPI/WhatsApp accounts seed canonical-vs-real fit testing for Migration-In + DOL + Entity Canon adapters before Alpha.",
-            "V1 → Alpha is additive — same architectural shape, expanded scope; no rebuilds. UCS discipline (Forever) protects against substrate churn.",
-            "Pre-Alpha-gate items (Brand finalization, harness decision, Contract v1, scope re-lock) gate Alpha entry, not V1.",
+            "V1 re-locked at session 12: dual-client (Android + Desktop via Compose Multiplatform) · liquid-glass tracker-aesthetic UI quality bar · magical cross-integration (M1–M6) · real backings on every storyboard beat. NOT a fixture demo.",
+            "Demo cuts from prior storyboard: Scene 6 Trust beat (Audit Log + Compliance UI) and Scene 4 Steering mid-action removed from the demo arc. Backend substrates kept (handlers depend on Audit Log; Steering primitive ships in W9c).",
+            "Dev harness (W2) is the loop the build runs through: PC server + Android emulator + Desktop app side-by-side with hot-reload, troubleshoot on the go.",
+          ],
+        },
+
+        /* =========================================================
+           MAGICAL CROSS-INTEGRATION BEATS (V1 demo arc anchors)
+           ========================================================= */
+        {
+          name: "Magical cross-integration beats (M1–M6 — V1 demo arc anchors)",
+          percent: null,
+          weight: 4,
+          v1_weight: 8,
+          confidence: null,
+          submodules: [
+            { name: "M1 · Order from desktop, pay on phone — desktop Chat input + restaurant tile + tracking polyline; phone confirmation tile + BiometricPrompt + UPI Intent + delivery push. Scene 7 anchor.", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "M2 · Wake-up brief split — \"Brief me on tomorrow\" from either device: calendar overview + weather radar to desktop; reminder push + quick to-do list to phone", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "M3 · Lights from phone, scene tile on desktop — \"Set movie mode\" voice on phone fires Hue scene; desktop shows current bulb states live", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "M4 · Hand-off mid-thought — \"Continue on phone\" prompt; conversation state preserved both ways; auto-focus the receiving device", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "M5 · Email drafted on desktop, send-confirmation on phone — draft tile + edit on desktop; tap-to-send + BiometricPrompt (HIGH severity tap-to-confirm) on phone", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "M6 · OTP magic — Swiggy OTP arrives mid-tracking; phone surfaces push + Vault OTP Inbox; desktop sidebar shows OTP code in Vault rail", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+          ],
+          issues: [
+            "Magical beats define the V1 demo arc. Each requires: (a) magical cross-integration substrate (W5) + (b) real backings (W7) + (c) per-scene UI polish (W8). Demo bar = the beat must \"just work\" in front of an audience.",
+            "Principle: Nimbus actively routes each surface to the device best suited for it. Watching from outside, it feels like the devices \"know\" who should do what.",
+            "M1 + M7 (Food Order) is the showcase — biometric+UPI MUST be on phone (hardware-gated), tile+tracking play best on desktop (real estate).",
           ],
         },
 
@@ -1073,7 +1118,7 @@
             { name: "Auto-Skill acquisition loop (5+ tool-call trajectories → proposal, user-approved, rate-limited)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "Invisible auto-handoff (3-tier hot/warm/cold + lossless-fact extraction + auto-rehydration)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "Subagent fan-out (Claude Code Agent pattern absorbed)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Subagent Consolidation Loop — related Skills consolidate into specialized subagents over time; user-approved + quality-gated; PIS-routable Premium private-domain subagents", phase: "V1-5", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "Subagent Consolidation Loop [V1.5→V1 promoted session 12] — related Skills consolidate into specialized subagents over time; user-approved + quality-gated; PIS-routable Premium private-domain subagents", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "VLM-action substrate (layered: DOL / accessibility tree + curated selectors / fine-tuned open-weight VLM / frontier VLM API fallback)", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "Deterministic Op Lane (DOL) — LLM does NL→op+args mapping, Python op registry executes deterministically; auto-extended; absorbs VLM-action Layer 1", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
             { name: "Per-Goal/Task CLAUDE.md mirror — goal_context.md + task_context.md with declarative status fields; rehydration substrate behind auto-handoff", phase: "V1", vision: true, arch_impl: true, code: 0, test: null },
@@ -1411,7 +1456,7 @@
             { name: "User-authored widgets (DSL primitives, preview-before-deploy)", phase: "Beta", vision: true, arch_impl: true, code: 0, test: null },
             { name: "User-authored plugins (natural-language description → Nimbus builds)", phase: "Beta", vision: true, arch_impl: true, code: 0, test: null },
             { name: "BYO-AI-model API keys (route specific tasks through user's quota)", phase: "Alpha", vision: true, arch_impl: true, code: 0, test: null },
-            { name: "Subagent Consolidation Loop — related Skills consolidate into specialized subagents over time; user-approved + quality-gated; PIS-routable Premium private-domain subagents", phase: "V1-5", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "Subagent Consolidation Loop [V1.5→V1 promoted session 12] — related Skills consolidate into specialized subagents over time; user-approved + quality-gated; PIS-routable Premium private-domain subagents", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
           ],
           issues: [
             "Plugin code NEVER runs inside PIS sealed enclave (privacy-by-architecture violation); PIS-eligible plugins are operator-reviewed Nimbus-curated only.",
@@ -1479,77 +1524,35 @@
            ARCHITECTURAL COMMITMENTS (60 locks, sessions 2–5)
            ========================================================= */
         {
-          name: "Locked architectural commitments (60 locks, sessions 2–5)",
+          name: "Locked architectural commitments (essentials — full list lives in MODULE_TREE.md)",
           percent: null,
           is_commitments: true,
           weight: 0,
           v1_weight: 0,
           submodules: [
-            { name: "Two-rung product roadmap: V1 (single-client demo, no partner-DC) + Alpha (closed alpha, partner-compute, 50–100 users). Additive — same architectural shape, no rebuilds.", percent: null, is_commitment: true },
-            { name: "Three-layer architecture: harness substrate (Layer 1) / orchestration brain (Layer 2 — five verbs) / regular-user kernel (Layer 3 — three canvases + tile patterns)", percent: null, is_commitment: true },
-            { name: "Universal Conversion Substrate (UCS) [S4-12 CORE] — substrate-agnosticism at every interface boundary; canonical contracts versioned + additive-only; strict no-regression release-gate", percent: null, is_commitment: true },
+            { name: "Two-rung product roadmap: V1 (dual-client magical demo) + Alpha (closed alpha, partner-compute). Additive — same architectural shape, no rebuilds.", percent: null, is_commitment: true },
+            { name: "Universal Conversion Substrate (UCS) [S4-12 CORE] — substrate-agnosticism at every interface boundary; canonical contracts versioned + additive-only", percent: null, is_commitment: true },
             { name: "Nimbus Standard Library (NSL) [S4-4] — DSM capability schemas federate across users; proprietary network-effect IoT/API standard", percent: null, is_commitment: true },
-            { name: "Honcho user-modeling absorption [S4-1] — Plastic Labs framework as third absorbed prior art alongside Hermes + Claude Code", percent: null, is_commitment: true },
-            { name: "Steering as first-class op [S4-2] — interruptibility contract exposes 3 ops (interrupt/cancel/steer); steer = default for non-atomic ops", percent: null, is_commitment: true },
-            { name: "Document Index Substrate (DIS) [S4-5] — OCR/extract/embed ONCE at ingest; per-user vault-encrypted; sub-second retrieval; PIS-routed at Premium; +3 DOL ops", percent: null, is_commitment: true },
-            { name: "Visual Quality Bar [S4-6] — Apple Liquid Glass + 60fps minimum all form factors; jank = ship-blocker; visual debt = feature debt", percent: null, is_commitment: true },
-            { name: "PIS framing correction [S4-7] — all tiers do private-data inference (privacy-by-DISCIPLINE); PIS adds privacy-by-ARCHITECTURE for Premium — categorical not magnitudinal", percent: null, is_commitment: true },
-            { name: "Call Integration (Beta+ Comms vertical extension) [S4-8] — phone-call summarization + in-call co-pilot + screening + delegate-answer + outbound + real-time translation + jurisdictional recording-law UX", percent: null, is_commitment: true },
-            { name: "Live-tracking primitive class (V1 cross-vertical) [S4-9] — live-map-tile + animated path + multi-party tracking + ETA + status badges", percent: null, is_commitment: true },
-            { name: "Inference model + pricing flexibility [S4-10] — tier prices PLACEHOLDER; model strategy flexible (open-weight OR licensed-paid OR mix); conversion logic load-bearing", percent: null, is_commitment: true },
-            { name: "Nimbus-Native Comms Substrate (NNC, Beta+/V1.5+) [S4-11] — optional in-built messaging/calls/video/native-UPI between Nimbus users; E2E encrypted (Signal-class); network-effect substrate", percent: null, is_commitment: true },
-            { name: "Skill Acquired UI indicator [S4-13] — Live Action Ribbon notification + persistent Vault Transparency badge every user-approved Skill; NL-editable frequency", percent: null, is_commitment: true },
-            { name: "Subagent Consolidation Loop [S4-14] — related Skills consolidate into specialized subagents over time; user-approved + quality-gated; PIS-routable Premium private-domain subagents", percent: null, is_commitment: true },
-            { name: "Identity Lifecycle + Account Recovery Substrate [S5-1] — biometric loss / device loss / inheritance / suspension / multi-device continuity; operator never holds vault keys", percent: null, is_commitment: true },
-            { name: "Compliance Substrate (DPDP/GDPR-ready) [S5-2] — vault export + erasure + residency + consent UX + breach disclosure + age gates; Indian alpha legally blocked without", percent: null, is_commitment: true },
-            { name: "Migration-In / Cold-Start Substrate [S5-3] — ChatGPT/Claude/Google/email/calendar/contacts/photos/prior-assistant on day 1; consent-gated per-source per-data-class", percent: null, is_commitment: true },
-            { name: "Universal Action Audit Log [S5-4] — replayable trace of every action Nimbus took on user's behalf, universal across tiers; symmetric trust pair with Output Scrubbing", percent: null, is_commitment: true },
-            { name: "Notification + Reminder + Confirmation Substrate [S5-5] — unified cross-vertical primitive every vertical consumes; three op-classes + severity-modality matrix + multi-device dedup", percent: null, is_commitment: true },
-            { name: "Billing + Subscription Substrate [S5-6] — distinct from UPI Intent; trial + refund + grace + cancellation-vault-retention + upgrade/downgrade + family-plan + GST invoices", percent: null, is_commitment: true },
-            { name: "Multi-Language / Localization Substrate [S5-7] — V1 Hindi+English minimum + Hinglish code-switching; Alpha top-5 Indic; no machine-translated UI ships", percent: null, is_commitment: true },
-            { name: "Offline / Degradation Matrix [S5-8] — explicit UX per failure branch; Premium PIS never silently fails over", percent: null, is_commitment: true },
-            { name: "Entity Canonicalization Substrate [S5-9] — semantic glue between Honcho user-model and per-vertical data; same person/place/thing across email+calendar+contacts+payments+photos → unified vault-graph entity", percent: null, is_commitment: true },
-            { name: "Multi-Device Coherence Substrate [S5-10] — real-time state sync + handoff + conflict resolution + notification dedup + device-loss recovery; CRDT-class for vault", percent: null, is_commitment: true },
-            { name: "Form-Factor Adaptation Substrate [S5-11] — density rules + input/output modality matrix per device class; distinct axis from UCS substrate-rotation", percent: null, is_commitment: true },
-            { name: "Accessibility Substrate [S5-12] — screen reader / contrast / motor / dyslexia-font / captioning / switch / voice-only; V1-basic + Alpha-WCAG-2.1-AA; symmetric pair with Visual Quality Bar", percent: null, is_commitment: true },
-            { name: "Time / Timezone Discipline [S5-13] — UTC canonical + travel-state detection + NL time parsing + recurrence engine + Indian holiday overlay + cross-TZ scheduling", percent: null, is_commitment: true },
-            { name: "Model Eval Suite [S5-14] — Nimbus-specific benchmarks gating UCS substrate rotation; no production rollout without pass", percent: null, is_commitment: true },
-            { name: "Plugin SDK + Trust Model [S5-15] — developer SDK + capability sandbox + permission grants + review process + marketplace economics; plugins never run inside PIS enclave", percent: null, is_commitment: true },
-            { name: "Anomaly / Session Security [S5-16] — behavioral baseline + graduated response (notify→re-auth→device-freeze→suspend); kill-switch from paired device; Premium runs in PIS enclave", percent: null, is_commitment: true },
-            { name: "Support Substrate [S5-17] — Nimbus-as-first-line + human escalation + status page + incident comms; self-serve never fabricates fix", percent: null, is_commitment: true },
+            { name: "Layer-1 user-model store (Honcho-absorbed) [S4-1 / S10-1] — local SQLite-backed LocalUserModelAdapter; Spike-2 boundary contract preserved", percent: null, is_commitment: true },
+            { name: "Steering as first-class op [S4-2] — interrupt / cancel / steer; default for non-atomic ops", percent: null, is_commitment: true },
+            { name: "Visual Quality Bar — liquid-glass + tracker-aesthetic (light theme, indigo→violet→cyan accent, Inter+JetBrains Mono, 18-20px tiles, backdrop-blur on glass)", percent: null, is_commitment: true },
+            { name: "PIS framing [S4-7] — all tiers do private-data inference (privacy-by-DISCIPLINE); PIS adds privacy-by-ARCHITECTURE for Premium — categorical not magnitudinal", percent: null, is_commitment: true },
+            { name: "Identity Lifecycle + Account Recovery [S5-1] — biometric loss / device loss / inheritance / suspension / multi-device continuity; operator never holds vault keys", percent: null, is_commitment: true },
+            { name: "Compliance Substrate [S5-2] — DPDP/GDPR-ready; vault export + erasure + residency + consent UX + breach disclosure", percent: null, is_commitment: true },
+            { name: "Migration-In / Cold-Start [S5-3] — Day-1 ingest of email/calendar/contacts/photos/prior-assistant; consent-gated per-source per-data-class", percent: null, is_commitment: true },
+            { name: "Notification + Reminder + Confirmation Substrate [S5-5] — unified cross-vertical primitive every vertical consumes; severity-modality matrix + multi-device dedup + push channel", percent: null, is_commitment: true },
+            { name: "Entity Canonicalization Substrate [S5-9] — same person/place/thing across email+calendar+contacts+payments+photos → unified vault-graph entity", percent: null, is_commitment: true },
+            { name: "Multi-Device Coherence [S5-10] — real-time state sync + handoff + conflict resolution + notification dedup; CRDT-class for vault; tunnel-relayed cross-network", percent: null, is_commitment: true },
+            { name: "Form-Factor Adaptation [S5-11] — density rules + input/output modality matrix per device class; V1 = phone + desktop; expansion at V1.5", percent: null, is_commitment: true },
+            { name: "Confirmation severity tiers [S11-A] — LOW / MEDIUM / HIGH / PAYMENT / EMERGENCY; PAYMENT = native BiometricPrompt floor; AUTO_APPROVED never crosses HIGH/PAYMENT/EMERGENCY", percent: null, is_commitment: true },
+            { name: "Canonical-ships / UI-defers discipline [S5-19 / S11-1] — canonical substrate scaffolds; UI surface defers to per-scene polish. V1 demo-infra opening IS the adapter-exposure phase by design.", percent: null, is_commitment: true },
             { name: "Brand Finalization [S5-18 Pre-Alpha-gate blocker] — final name + visual + voice + tone + domain + trademark; substrate string-swap is mechanical", percent: null, is_commitment: true },
-            { name: "Per-Goal/Task CLAUDE.md mirror — goal_context.md + task_context.md with declarative status fields; rehydration substrate behind invisible auto-handoff", percent: null, is_commitment: true },
-            { name: "Deterministic Op Lane (DOL) — LLM does NL→op+args mapping, Python op registry executes deterministically; auto-extended per Hermes pattern; absorbs VLM-action Layer 1", percent: null, is_commitment: true },
-            { name: "Common Knowledge Substrate (CKS) — centralized multimodal world-state ingest; indexed + embedded once; strict one-way flow", percent: null, is_commitment: true },
-            { name: "Private Inference Substrate (PIS) — Premium-tier dedicated per-user sandboxed small model inside trustless vault trust boundary; sealed enclave", percent: null, is_commitment: true },
-            { name: "Full-duplex voice steering (Alpha) — interrupt + queue + steer mid-action", percent: null, is_commitment: true },
-            { name: "Trustless hybrid vault — device-side crown-jewel + server-side ephemeral working context; PIS extends server-side ephemeral with compute for Premium", percent: null, is_commitment: true },
-            { name: "Device-Service Mesh (DSM) + Auto-Onboarding Loop — universal device-and-service abstraction with auto-routing", percent: null, is_commitment: true },
-            { name: "Shell Execution Surface (desktop) — tier-gated; biometric + sandboxed-dry-run for destructive ops; audit-logged + replayable", percent: null, is_commitment: true },
-            { name: "Preview Intelligence Layer — universal content extraction + VLM+LLM multi-modal pipeline + vault contextualization + ~22 composable preview primitives", percent: null, is_commitment: true },
-            { name: "Nimbus Visual Framework / Design System — typography + color tokens + iconography + motion + component library", percent: null, is_commitment: true },
-            { name: "Auto-Extension Loop — 5 dimensions: Skills (auto-acquired) + Goals (auto-classified) + Devices (DSM auto-onboarded) + Capabilities (DSM-schemas auto-learned) + Memory (auto-handoff w/ auto-rehydration)", percent: null, is_commitment: true },
-            { name: "Output Scrubbing Discipline (universal) — every output sanitized for cross-conversation leakage + PII regression; universal across tiers", percent: null, is_commitment: true },
-            { name: "Universal NL Settings Editing — every setting is editable via natural language", percent: null, is_commitment: true },
-            { name: "Tile-simplification (transactional) + tile-disambiguation (max-5) as core consumer patterns", percent: null, is_commitment: true },
-            { name: "Auto-Skill-acquisition (Hermes-pattern, context-driven autonomous default) + Auto-Goal-classification (per-user heuristics)", percent: null, is_commitment: true },
-            { name: "Invisible auto-handoff (3-tier hot/warm/cold + lossless-fact extraction + auto-rehydration)", percent: null, is_commitment: true },
-            { name: "Biometric-gated sensitive actions + voice-biometric for high-stakes", percent: null, is_commitment: true },
-            { name: "Hard rules at bootstrap: no abliteration / server-encrypted state / one Nimbus per user / ToS-governed (not Hard-Rule infra) / no self-modification / persistent identity / investor-visible posture", percent: null, is_commitment: true },
-            { name: "Universal: no-ads / biometric-gated / vault-visible+forgettable / never-claim-memory-loss / trustless vault", percent: null, is_commitment: true },
-            { name: "Extension platform (credentials + BYO-models + plugins + widgets + marketplace Beta+)", percent: null, is_commitment: true },
-            { name: "Nimbus-native-canvas vs ecosystem-passthrough pattern (Calendar/Docs/Tasks native; WhatsApp/Music passthrough)", percent: null, is_commitment: true },
-            { name: "One Nimbus across form factors; device determines capability gradation", percent: null, is_commitment: true },
-            { name: "India-first cultural + regional language ramp (Hindi+English V1 → top-5 Indic Alpha → broader Beta)", percent: null, is_commitment: true },
-            { name: "Streaming-first end-to-end (STT → intent → LLM → TTS → tool/VLM cancellable + restartable)", percent: null, is_commitment: true },
-            { name: "Eyes-Free Mode hybrid + Focus Mode hybrid + Privacy Mode ephemeral", percent: null, is_commitment: true },
-            { name: "Progressive-disclosure escalation + Undo grace tier-based + Why?/Reasoning auto-attach selective", percent: null, is_commitment: true },
-            { name: "Long-horizon NimbusOS goal — multi-decade trajectory; \"ten years from now, same Nimbus\" depends on UCS + Compliance + Identity Lifecycle inheritance", percent: null, is_commitment: true },
+            { name: "Hard rules at bootstrap — no abliteration / server-encrypted state / one Nimbus per user / ToS-governed / no self-modification / persistent identity / investor-visible posture", percent: null, is_commitment: true },
+            { name: "Magical cross-integration discipline [session 12] — Nimbus actively routes each surface to the device best suited for it. Biometric-class → phone. Broad-tile-class → desktop. Both subscribed to live updates.", percent: null, is_commitment: true },
           ],
           issues: [
-            "Vision-level locks from sessions 2–5; treated as immutable for V1 + Alpha design surface.",
-            "Sessions 2–4 = 42 locks; Session 5 added 18 substrate additions (S5-1..S5-18) covering trust / identity / compliance / migration / notification / billing / language / time / form-factor / accessibility / multi-device / entity / offline-degradation / eval-suite / plugin SDK / anomaly / support / brand.",
-            "K=3 architecture-perfection-check Passes 1–3 complete; Pass 4 pending against full 60-lock corpus.",
+            "Architectural spine — vision-level locks from sessions 2–11 + session-12 dual-client magical reframe. Full lock corpus (75+ items) lives in MODULE_TREE.md.",
+            "Bloat reduced session-12: 60-item list trimmed to 19 essentials; per-substrate detail lives in §1–§15 module sections below + MODULE_TREE.md.",
           ],
         },
 
@@ -1603,12 +1606,12 @@
           weight: 0,
           v1_weight: 0,
           timeline: [
-            { phase: "0", title: "Scaffold + MVP scoping (current)", detail: "Vision + architecture comprehensively locked (60 substrate decisions across sessions 2–5); MODULE_TREE.md phase-bin spine authored; pre-Alpha-gate activities pending (brand, harness, Contract v1, scope re-lock)", status: "active", window: "Now" },
-            { phase: "V1", title: "Single-client demonstration", detail: "Phone + PC on local PC server with Claude OAuth; essential 5-verb surface; 3 starter verticals; doubles as adapter-exposure phase for canonical-vs-real-data fit testing", status: "planned", window: "Months 1–3 from V1 kickoff" },
-            { phase: "α", title: "Closed alpha", detail: "8-vertical kernel; 50–100 invited users across archetypes; partner-compute data centre; tier matrix live; full Compliance / Audit Log / Migration-In / PIS surface", status: "planned", window: "Months 1–6 from data-centre commitment" },
-            { phase: "β", title: "Open beta", detail: "Extension surfaces (widgets/plugins/BYO-models); marketplace soft-launch; cross-device handoff; Call Integration; NNC scope decision; 1k–10k paying users", status: "planned", window: "Months 7–12" },
-            { phase: "GA", title: "General availability", detail: "Marketplace open; full DSM IoT; expanded verticals; broader Indic + international languages; 50k–100k users", status: "planned", window: "Months 13–18" },
-            { phase: "1.5", title: "Form-factor expansion", detail: "Watch / smart-speaker / car / wearable form-factors via Form-Factor Adaptation Substrate; auto-Skill fine-tuning live; Identity Lifecycle V1.5-full; Family-of-3 Premium; 500k+ users", status: "planned", window: "Months 19–24" },
+            { phase: "0", title: "Scaffold + MVP scoping (current)", detail: "Vision + architecture comprehensively locked (75+ substrate decisions across sessions 2–12); MODULE_TREE.md phase-bin spine authored; PC backend at 32/32 smoke green; pre-Alpha-gate activities pending (brand, Contract v1, scope re-lock)", status: "active", window: "Now" },
+            { phase: "V1", title: "Dual-client magical demo", detail: "Android + Desktop via Compose Multiplatform; liquid-glass UI quality bar; six magical cross-integration beats M1–M6; real backings (Hue / Gmail / Whisper / WhatsApp / Calendar / Swiggy); auto-Skill acquisition active. Demoable to investors + promoters on real hardware with real data.", status: "planned", window: "3–4 weeks from session-12 close (focused work)" },
+            { phase: "α", title: "Closed alpha", detail: "8-vertical kernel; 50–100 invited users across archetypes; partner-compute data centre; tier matrix live; full Compliance / Migration-In / PIS surface", status: "planned", window: "Months 1–6 from data-centre commitment" },
+            { phase: "β", title: "Open beta", detail: "Extension surfaces (widgets / Plugin SDK / BYO-models); marketplace soft-launch; Call Integration; NNC scope decision; 1k–10k paying users", status: "planned", window: "Months 7–12 after α" },
+            { phase: "GA", title: "General availability", detail: "Marketplace open; full DSM IoT; expanded verticals; broader Indic + international languages; 50k–100k users", status: "planned", window: "Months 13–18 after α" },
+            { phase: "1.5", title: "Form-factor expansion + Plugin SDK + Identity full", detail: "Watch / smart-speaker / car / wearable form-factors; Plugin SDK + capability sandbox + marketplace soft-launch; Identity Lifecycle V1.5-full (social recovery + hardware key + inheritance); Family-of-3 Premium. NOTE: auto-Skill acquisition pulled forward into V1 at session 12.", status: "planned", window: "Months 19–24 after α" },
           ],
         },
 
