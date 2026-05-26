@@ -971,7 +971,7 @@
             { name: "Desktop client — same canvases on the larger surface; phone-side reroute for biometric-class moments", phase: "V1", vision: true, arch_impl: true, code: 30, test: null },
 
             /* ----- Magical cross-integration ----- */
-            { name: "Magical cross-integration substrate — per-op device routing, role inference, and live push so both clients react to the same conversation in real time", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "Magical cross-integration substrate — per-op device routing, role inference, and live push so both clients react to the same conversation in real time", phase: "V1", vision: true, arch_impl: true, code: 70, test: 65 },
 
             /* ----- Real-world backings ----- */
             { name: "Calendar — read + write the user's real calendar across providers", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
@@ -979,7 +979,7 @@
             { name: "Messaging — draft + send via WhatsApp (and other chat surfaces over time)", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "Voice in — real speech-to-text with push-to-talk; quality bar matches typed input", phase: "V1", vision: true, arch_impl: true, code: 5, test: null },
             { name: "Voice out — real text-to-speech; spoken summaries match the on-screen tile", phase: "V1", vision: true, arch_impl: true, code: 20, test: null },
-            { name: "Smart-home — control physical lights / scenes through Nimbus", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "Smart-home — control physical lights with scene + color + brightness through Nimbus", phase: "V1", vision: true, arch_impl: true, code: 80, test: 65 },
             { name: "Food ordering — order + track delivery against a real food platform", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "Maps + live tracking — real map tiles driving the live-delivery tracking surface", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "Migration-In — bulk ingest of the user's email / calendar / contacts so day-1 feels personal", phase: "V1", vision: true, arch_impl: true, code: 15, test: null },
@@ -991,7 +991,7 @@
             { name: "File lookup — find any file across the user's documents, downloads, desktop, and pictures by natural language", phase: "V1", vision: true, arch_impl: true, code: 75, test: 60 },
             { name: "Photo lookup — find any photo / screenshot / video across the user's library by natural language", phase: "V1", vision: true, arch_impl: true, code: 70, test: 55 },
             { name: "Web lookup — search the open web and open a chosen page; readability extraction strips ads + nav to surface the substance", phase: "V1", vision: true, arch_impl: true, code: 70, test: 55 },
-            { name: "Context bundles — personas / modes (personal / work / project) the assistant auto-routes between, with tap-to-pick when uncertain", phase: "V1", vision: true, arch_impl: true, code: 70, test: 60 },
+            { name: "Context bundles — personas / modes (personal / work / project) the assistant auto-routes between, with tap-to-pick when uncertain", phase: "V1", vision: true, arch_impl: true, code: 95, test: 85 },
 
             /* ----- Universal UX principles ----- */
             { name: "Tile-first ambiguity — every \"ask the user\" moment surfaces tappable choices instead of asking a question (chat + voice remain reachable as escape hatches)", phase: "V1", vision: true, arch_impl: true, code: 65, test: 55 },
@@ -1033,8 +1033,8 @@
           submodules: [
             { name: "Order from desktop, pay on phone — restaurant tile + tracking polyline play on desktop; biometric + payment land on phone where the hardware lives", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "Morning brief split — calendar overview + weather on desktop; reminder push + quick to-do on phone, from one request", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Lights from phone, scene tile on desktop — voice command on phone fires the scene; desktop reflects bulb states live", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
-            { name: "Hand-off mid-thought — \"continue on phone\" preserves the conversation; the receiving device auto-focuses", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
+            { name: "Lights from phone, scene tile on desktop — voice command on phone fires the scene; desktop reflects bulb states live", phase: "V1", vision: true, arch_impl: true, code: 75, test: 55 },
+            { name: "Hand-off mid-thought — \"continue on phone\" preserves the conversation; the receiving device auto-focuses", phase: "V1", vision: true, arch_impl: true, code: 70, test: 50 },
             { name: "Email drafted on desktop, send-confirmation on phone — draft + edit on the larger surface; tap-to-send + biometric on the device that has it", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
             { name: "OTP magic — an incoming OTP routes from the phone's SMS to a vault inbox surface visible on both clients", phase: "V1", vision: true, arch_impl: false, code: 0, test: null },
           ],
